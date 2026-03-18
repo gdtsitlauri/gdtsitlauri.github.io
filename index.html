@@ -1028,9 +1028,10 @@ footer span {
 
   .pill:hover {
     background: var(--gm);
-    border-color: transparent;
     color: #fff;
-    transform: translateY(-3px) scale(1.05);
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    transform: translateY(-3px);
   }
 
   .lcard:hover .lflag {
