@@ -436,20 +436,21 @@ nav {
   animation: fadeUp .75s .4s ease both;
 }
 
-.si {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1.5px solid #5e00f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ts);
-  text-decoration: none;
-  font-size: 1rem;
-  transition: color .25s, border-color .25s, transform .35s cubic-bezier(.34,1.56,.64,1), background .25s;
-  background: var(--cb);
-}
+  .si {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid #5e00f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ts);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color .25s, border-color .25s, transform .35s cubic-bezier(.34,1.56,.64,1), background .25s;
+    background: var(--cb);
+    box-sizing: border-box;
+  }
 
 /* ── SECTION TITLES ── */
 .slabel {
@@ -974,7 +975,8 @@ footer span {
     color: #fff;
     background: var(--gm);
     border-color: transparent;
-    transform: translateY(-4px) scale(1.1);
+    background-clip: padding-box;
+    transform: translateY(-4px);
   }
 
   .card.reveal.visible:hover {
