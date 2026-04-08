@@ -31,13 +31,10 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
 <style>
-
-
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
-
 
 html, body {
   max-width: 100%;
@@ -436,21 +433,21 @@ nav {
   animation: fadeUp .75s .4s ease both;
 }
 
-  .si {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1.5px solid #5e00f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--ts);
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color .25s, border-color .25s, transform .35s cubic-bezier(.34,1.56,.64,1), background .25s;
-    background: var(--cb);
-    box-sizing: border-box;
-  }
+.si {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid #5e00f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ts);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color .25s, border-color .25s, transform .35s cubic-bezier(.34,1.56,.64,1), background .25s;
+  background: var(--cb);
+  box-sizing: border-box;
+}
 
 /* ── SECTION TITLES ── */
 .slabel {
@@ -520,9 +517,13 @@ nav {
 }
 
 /* ── ABOUT ── */
+#about {
+  max-width: 1560px;
+}
+
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 22px;
 }
 
@@ -530,6 +531,15 @@ nav {
   display: flex;
   gap: 16px;
   align-items: flex-start;
+  grid-column: span 4;
+}
+
+.about-grid > .acard:nth-child(4) {
+  grid-column: 3 / span 4;
+}
+
+.about-grid > .acard:nth-child(5) {
+  grid-column: 7 / span 4;
 }
 
 .aico,
@@ -572,6 +582,47 @@ nav {
   align-items: flex-start;
 }
 
+.thesis-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.thesis-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.thesis-list {
+  display: grid;
+  gap: 22px;
+}
+
+.thesis-meta {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: .77rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #fff;
+  background: var(--gm);
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+
+.thesis-meta.bsc {
+  color: #fff;
+  background: var(--gm);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
 .tico {
   width: 54px;
   height: 54px;
@@ -595,9 +646,10 @@ nav {
 }
 
 .thesis-card h3 a {
-  color: var(--eb);
+  color: var(--tp);
   text-decoration: none;
-  transition: color .2s;
+  pointer-events: none;
+  cursor: default;
 }
 
 .thesis-card p {
@@ -635,11 +687,67 @@ nav {
   color: var(--ep);
 }
 
+/* ── RESEARCHES ── */
+#researches {
+  max-width: 1320px;
+}
+
+.rgrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.rgrid > .pc {
+  grid-column: span 4;
+}
+
+.rgrid > .pc:nth-child(1),
+.rgrid > .pc:nth-child(2),
+.rgrid > .pc:nth-child(6),
+.rgrid > .pc:nth-child(7) {
+  grid-column: span 6;
+}
+
 /* ── PROJECTS ── */
+#projects {
+  max-width: 1320px;
+}
+
 .pgrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(305px,1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
+}
+
+#projects .pc {
+  min-height: 100%;
+}
+
+#projects .pc h3 {
+  line-height: 1.35;
+}
+
+#projects .pc .ptags {
+  margin-top: auto;
+}
+
+.project-private {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--ts);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.project-private i {
+  color: var(--ep);
+  font-size: .72rem;
 }
 
 .pc {
@@ -691,10 +799,35 @@ nav {
 }
 
 /* ── SKILLS ── */
+#skills {
+  max-width: 1320px;
+}
+
 .sgrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(235px,1fr));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 20px;
+}
+
+.sgrid > .scat {
+  grid-column: span 4;
+}
+
+.sgrid > .scat:nth-child(4) {
+  grid-column: 3 / span 4;
+}
+
+.sgrid > .scat:nth-child(5) {
+  grid-column: 7 / span 4;
+}
+
+.skill-tools .pills {
+  gap: 6px;
+}
+
+.skill-tools .pill {
+  font-size: .75rem;
+  padding: 4px 11px;
 }
 
 .scat h3 {
@@ -998,10 +1131,6 @@ footer span {
     transform: scale(1.12);
   }
 
-  .thesis-card h3 a:hover {
-    color: var(--ep);
-  }
-
   .tag:hover {
     background: var(--eb);
     color: #fff;
@@ -1103,10 +1232,6 @@ footer span {
     transform: translateY(-4px) scale(1.1);
   }
 
-  .thesis-card h3 a:active {
-    color: var(--ep);
-  }
-
   .pl:active {
     color: var(--eb);
     transform: scale(1.18);
@@ -1165,6 +1290,47 @@ footer span {
   .nav-cv {
     display: none;
   }
+
+  .rgrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rgrid > .pc,
+  .rgrid > .pc:nth-child(1),
+  .rgrid > .pc:nth-child(2),
+  .rgrid > .pc:nth-child(6),
+  .rgrid > .pc:nth-child(7) {
+    grid-column: auto;
+  }
+
+  .pgrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sgrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sgrid > .scat,
+  .sgrid > .scat:nth-child(4),
+  .sgrid > .scat:nth-child(5) {
+    grid-column: auto;
+  }
+
+  .skill-ai,
+  .skill-os {
+    align-self: stretch;
+  }
+
+  .about-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-grid > .acard,
+  .about-grid > .acard:nth-child(4),
+  .about-grid > .acard:nth-child(5) {
+    grid-column: auto;
+  }
 }
 
 @media (max-width: 680px) {
@@ -1203,18 +1369,25 @@ footer span {
     grid-template-columns: 1fr;
   }
 
+  .sgrid {
+    grid-template-columns: 1fr;
+  }
+
   .lgrid {
     flex-direction: column;
   }
 }
 
 @media (max-width: 560px) {
-    section {
-      padding: 60px 2% 40px;
-    }
-    .pgrid {
-      grid-template-columns: 1fr;
-    }
+  section {
+    padding: 60px 2% 40px;
+  }
+
+  .rgrid,
+  .pgrid {
+    grid-template-columns: 1fr;
+  }
+
   nav {
     padding: 14px 4%;
   }
@@ -1256,6 +1429,7 @@ footer span {
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#thesis">Thesis</a></li>
+      <li><a href="#researches">Researches</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -1270,17 +1444,15 @@ footer span {
   <div class="hero-text">
     <div class="hero-tag">
       <i class="fas fa-microchip" style="color:#fff"></i>
-      Computer Scientist
+      AI
       <span style="background: linear-gradient(90deg,#0074FF,#5e00f5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">&amp;</span>
-      <span style="color:#5e00f5">Developer</span>
+      <span style="color:#5e00f5">Systems Engineer</span>
     </div>
 
     <h1>George David<br/><span>Tsitlauri</span></h1>
 
     <p class="hero-sub">
-      <strong>BSc</strong> in <strong>Informatics</strong> &amp; <strong>Telecommunications</strong> ·
-      Specializing in <strong>Data Management &amp; AI</strong> ·
-      Building everything from cryptographic processors to full-stack web apps.
+      From low-level hardware and secure architectures to advanced AI and intelligent systems—engineering across the full technology stack.
     </p>
 
     <div class="hero-btns">
@@ -1317,10 +1489,18 @@ footer span {
 
   <div class="about-grid">
     <div class="card acard reveal">
-      <div class="aico"><i class="fas fa-graduation-cap"></i></div>
+      <div class="aico"><i class="fas fa-book-open-reader"></i></div>
       <div>
-        <h3>Education</h3>
-        <p>BSc in Informatics &amp; Telecommunications, University of Thessaly (DIT/UTh), Greece — 2021–2026.</p>
+        <h3>MSc Education</h3>
+        <p>Artificial Intelligence and Applications, University of Thessaly, Greece (2026–2027).</p>
+      </div>
+    </div>
+
+    <div class="card acard reveal">
+      <div class="aico"><i class="fas fa-user-graduate"></i></div>
+      <div>
+        <h3>BSc Education</h3>
+        <p>Informatics &amp; Telecommunications, University of Thessaly, Greece (2021–2026).</p>
       </div>
     </div>
 
@@ -1344,7 +1524,7 @@ footer span {
       <div class="aico"><i class="fas fa-code"></i></div>
       <div>
         <h3>Interests</h3>
-        <p>Hardware security, parallel computing, distributed systems, cloud computing, artificial intelligence &amp; full-stack web development.</p>
+        <p>Hardware security, parallel and distributed systems, cloud infrastructure, artificial intelligence, and full-stack development.</p>
       </div>
     </div>
   </div>
@@ -1352,27 +1532,170 @@ footer span {
 
 <section id="thesis" class="section-anim anim-right">
   <div class="slabel"><i class="fas fa-scroll"></i> Thesis</div>
-  <h2 class="stitle">BSc <span>Thesis</span></h2>
+  <h2 class="stitle">Academic <span>Theses</span></h2>
 
-  <div class="card thesis-card reveal">
-    <div class="tico"><i class="fas fa-microchip"></i></div>
-    <div>
-      <h3>
-        <a href="https://github.com/gdtsitlauri/CryptoCPU" target="_blank" rel="noopener noreferrer">
-          Design and Implementation of an Encrypted Instruction Set Processor (CryptoCPU) on FPGA
-          <i class="fas fa-external-link-alt" style="font-size:.7em;margin-left:5px"></i>
-        </a>
-      </h3>
-      <p>
-        Developed a custom cryptographic processor supporting encrypted instructions, focusing on secure execution and hardware-level cryptographic protection. Utilized C++ and MIPS Assembly, with Xilinx Vivado for development and testing on FPGA.
-      </p>
-      <div class="ttags">
-        <span class="tag">C++</span>
-        <span class="tag">MIPS Assembly</span>
-        <span class="tag">Xilinx Vivado</span>
-        <span class="tag p">FPGA</span>
-        <span class="tag p">Cryptography</span>
+  <div class="thesis-list">
+    <div class="card thesis-card reveal">
+      <div class="tico"><i class="fas fa-shield-halved"></i></div>
+      <div class="thesis-body">
+        <div class="thesis-top">
+          <div class="thesis-meta">MSc Thesis</div>
+          <a href="https://github.com/gdtsitlauri/cps-ids-generalization" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open MSc Thesis GitHub repository"><i class="fab fa-github"></i></a>
+        </div>
+        <h3>
+          <a href="https://github.com/gdtsitlauri/cps-ids-generalization" target="_blank" rel="noopener noreferrer">
+            Robust and Generalizable AI-based Intrusion Detection for Cyber-Physical Systems (CPS IDS)
+          </a>
+        </h3>
+        <p>
+          Cross-domain analysis of AI-based intrusion detection across heterogeneous IDS datasets, centered on robustness, transferability, and the GRACE-IDS approach.
+        </p>
+        <div class="ttags">
+          <span class="tag">Python</span>
+          <span class="tag">Intrusion Detection</span>
+          <span class="tag">GRACE-IDS</span>
+          <span class="tag p">Cybersecurity</span>
+          <span class="tag p">CPS</span>
+          <span class="tag p">Cross-Domain AI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card thesis-card reveal">
+      <div class="tico"><i class="fas fa-microchip"></i></div>
+      <div class="thesis-body">
+        <div class="thesis-top">
+          <div class="thesis-meta bsc">BSc Thesis</div>
+          <a href="https://github.com/gdtsitlauri/CryptoCPU" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open BSc Thesis GitHub repository"><i class="fab fa-github"></i></a>
+        </div>
+        <h3>
+          <a href="https://github.com/gdtsitlauri/CryptoCPU" target="_blank" rel="noopener noreferrer">
+            Design and Implementation of an Encrypted Instruction Set Processor (CryptoCPU) on FPGA
+          </a>
+        </h3>
+        <p>
+          Developed a custom cryptographic processor supporting encrypted instructions, focusing on secure execution and hardware-level cryptographic protection. Utilized C++ and MIPS Assembly, with Xilinx Vivado for development and testing on FPGA.
+        </p>
+        <div class="ttags">
+          <span class="tag">C++</span>
+          <span class="tag">MIPS Assembly</span>
+          <span class="tag">Xilinx Vivado</span>
+          <span class="tag p">FPGA</span>
+          <span class="tag p">Cryptography</span>
+          <span class="tag p">Hardware Security</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="researches" class="section-anim anim-up">
+  <div class="slabel"><i class="fas fa-microscope"></i> Researches</div>
+  <h2 class="stitle">Research <span>Portfolio</span></h2>
+
+  <div class="rgrid">
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-layer-group"></i></div>
+        <a href="https://github.com/gdtsitlauri/Crypto3DStackCPU" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Crypto3DStackCPU</h3>
+      <p>CryptoCPU with Secure 3D-Stacked Memory System Design, sealed image generation, encrypted fetch and decrypt execution, contract-based security validation, executable AES instructions, and tamper-audit security checks.</p>
+      <div class="ptags">
+        <span class="tag">Processor Design</span>
+        <span class="tag">3D Memory</span>
         <span class="tag p">Hardware Security</span>
+        <span class="tag p">Cryptography</span>
+      </div>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-chess-knight"></i></div>
+        <a href="https://github.com/gdtsitlauri/caesar-framework" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>CAESAR Framework</h3>
+      <p>AI-driven co-evolutionary cyber-attack simulation and adaptive defense framework for attack, response, explainability, diffusion-based adversarial generation, and self-healing security research.</p>
+      <div class="ptags">
+        <span class="tag">Cybersecurity</span>
+        <span class="tag">Adversarial AI</span>
+        <span class="tag p">Explainability</span>
+        <span class="tag p">Self-Healing</span>
+      </div>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-sitemap"></i></div>
+        <a href="https://github.com/gdtsitlauri/atlas-trident" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>ATLAS Trident</h3>
+      <p>Prototype for decentralized cloud autonomy using digital twins, constrained LLM planning, reinforcement learning adaptation, and TRIDENT governance with a permissioned ledger.</p>
+      <div class="ptags">
+        <span class="tag">Digital Twins</span>
+        <span class="tag">LLM Planning</span>
+        <span class="tag p">Reinforcement Learning</span>
+        <span class="tag p">Cloud Autonomy</span>
+      </div>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-eye"></i></div>
+        <a href="https://github.com/gdtsitlauri/patv-x" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>PATV-X</h3>
+      <p>Training-free and explainable deepfake detection through multi-scale frequency forensics for face-centric temporal video analysis.</p>
+      <div class="ptags">
+        <span class="tag">Deepfake Detection</span>
+        <span class="tag">Computer Vision</span>
+        <span class="tag p">Explainable AI</span>
+        <span class="tag p">Frequency Forensics</span>
+      </div>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-wave-square"></i></div>
+        <a href="https://github.com/gdtsitlauri/chronos-edge-iot" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>CHRONOS Edge IOT</h3>
+      <p>Edge-IoT offloading research framework combining causal-hypergraph modeling, spiking RL, simulator-based evaluation, baselines, ablations, and reproducibility tooling.</p>
+      <div class="ptags">
+        <span class="tag">Edge-IoT</span>
+        <span class="tag">Spiking RL</span>
+        <span class="tag p">Causal Hypergraphs</span>
+        <span class="tag p">Offloading</span>
+      </div>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-diagram-project"></i></div>
+        <a href="https://github.com/gdtsitlauri/polaris-sdn-orchestrator" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>POLARIS SDN Orchestrator</h3>
+      <p>Orchestration framework for SDN and cloud environments based on parallel Pareto-Lyapunov scheduling and intent-aware service placement.</p>
+      <div class="ptags">
+        <span class="tag">SDN</span>
+        <span class="tag">Cloud Orchestration</span>
+        <span class="tag p">Service Placement</span>
+        <span class="tag p">Multi-Objective Scheduling</span>
+      </div>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-seedling"></i></div>
+        <a href="https://github.com/gdtsitlauri/evoo-adulteration-ai" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>EVOO Adulteration AI</h3>
+      <p>Reproducible machine-learning pipelines for extra-virgin olive oil authenticity and adulteration detection using FTIR and Raman spectroscopy.</p>
+      <div class="ptags">
+        <span class="tag">FTIR</span>
+        <span class="tag">Raman</span>
+        <span class="tag p">Machine Learning</span>
+        <span class="tag p">Food Authenticity</span>
       </div>
     </div>
   </div>
@@ -1383,33 +1706,220 @@ footer span {
   <h2 class="stitle">My <span>Projects</span></h2>
 
   <div class="pgrid">
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-robot"></i></div><a href="https://github.com/gdtsitlauri/advanced-machine-learning-projects" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Advanced Machine Learning Projects</h3><p>A collection of advanced ML projects including deep learning, neural networks, and data analysis.</p><div class="ptags"><span class="tag">Python</span><span class="tag">Machine Learning</span><span class="tag p">Deep Learning</span><span class="tag p">AI</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-robot"></i></div>
+        <a href="https://github.com/gdtsitlauri/advanced-machine-learning-projects" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Advanced AI Projects</h3>
+      <p>A collection of advanced machine and deep learning projects.</p>
+      <div class="ptags">
+        <span class="tag">Python</span>
+        <span class="tag">Machine Learning</span>
+        <span class="tag p">Deep Learning</span>
+        <span class="tag p">AI</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-bolt"></i></div><a href="https://github.com/gdtsitlauri/ccc-ir-optimizer" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>CCC IR Optimizer</h3><p>IR code optimizer for the CCC C front-end translator, improving intermediate representation quality.</p><div class="ptags"><span class="tag">C</span><span class="tag p">IR</span><span class="tag p">Optimization</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-lock"></i></div>
+        <a href="https://github.com/gdtsitlauri/parallel-aes-cuda" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Parallel AES CUDA</h3>
+      <p>Parallel implementation of AES encryption.</p>
+      <div class="ptags">
+        <span class="tag">CUDA</span>
+        <span class="tag">AES</span>
+        <span class="tag p">Cryptography</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-lock"></i></div><a href="https://github.com/gdtsitlauri/parallel-aes-cuda" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Parallel AES CUDA</h3><p>Parallel AES encryption implementation using CUDA for high-performance GPU-accelerated cryptography.</p><div class="ptags"><span class="tag">CUDA</span><span class="tag p">Cryptography</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-cloud"></i></div>
+        <a href="https://github.com/gdtsitlauri/weather-app-autoscaler-k8s" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Weather App Autoscaler</h3>
+      <p>A scalable weather app with auto scaling based on load and weather data.</p>
+      <div class="ptags">
+        <span class="tag">Kubernetes</span>
+        <span class="tag">Docker</span>
+        <span class="tag p">Cloud</span>
+        <span class="tag p">Auto Scaling</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-cloud"></i></div><a href="https://github.com/gdtsitlauri/weather-app-autoscaler-k8s" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Weather App Autoscaler</h3><p>A scalable weather app using Kubernetes with auto-scaling based on load and weather data.</p><div class="ptags"><span class="tag">Kubernetes</span><span class="tag">Docker</span><span class="tag p">Cloud</span><span class="tag p">DevOps</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-database"></i></div>
+        <a href="https://github.com/gdtsitlauri/big-data-spark-taxi" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Big Data Spark Taxi</h3>
+      <p>Big data analysis of taxi trips.</p>
+      <div class="ptags">
+        <span class="tag">Apache Spark</span>
+        <span class="tag">Hadoop</span>
+        <span class="tag p">Big Data</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-database"></i></div><a href="https://github.com/gdtsitlauri/big-data-spark-taxi" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Big Data Spark Taxi</h3><p>Big data analysis of taxi trips using Apache Spark and Hadoop for large-scale processing.</p><div class="ptags"><span class="tag">Apache Spark</span><span class="tag p">Hadoop</span><span class="tag p">Big Data</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-video"></i></div>
+        <a href="https://github.com/gdtsitlauri/video-coding-for-machines" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Video Coding for Machines</h3>
+      <p>Video coding techniques optimized for machine learning applications.</p>
+      <div class="ptags">
+        <span class="tag">Video</span>
+        <span class="tag">Compression</span>
+        <span class="tag p">Machine Learning</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-video"></i></div><a href="https://github.com/gdtsitlauri/video-coding-for-machines" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Video Coding for Machines</h3><p>Video coding techniques optimized for machine learning applications and automated analysis pipelines.</p><div class="ptags"><span class="tag">Video</span><span class="tag p">Deep Learning</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-gamepad"></i></div>
+        <a href="https://github.com/gdtsitlauri/reinforcement-learning-experiments" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Reinforcement Learning Experiments</h3>
+      <p>Experiments and research in reinforcement learning algorithms.</p>
+      <div class="ptags">
+        <span class="tag">Python</span>
+        <span class="tag">Reinforcement Learning</span>
+        <span class="tag p">Agents</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-gamepad"></i></div><a href="https://github.com/gdtsitlauri/reinforcement-learning-experiments" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Reinforcement Learning Experiments</h3><p>Experiments and research in RL algorithms, exploring various agent-environment interactions.</p><div class="ptags"><span class="tag">Python</span><span class="tag p">Intelligent Agent</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-chart-bar"></i></div>
+        <a href="https://github.com/gdtsitlauri/tourism-data-mining" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Tourism Data Mining</h3>
+      <p>Data mining and analysis for tourism datasets.</p>
+      <div class="ptags">
+        <span class="tag">Python</span>
+        <span class="tag">Data Mining</span>
+        <span class="tag p">Analytics</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-chart-bar"></i></div><a href="https://github.com/gdtsitlauri/tourism-data-mining" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Tourism Data Mining</h3><p>Data mining and analysis for tourism datasets, extracting patterns and insights from real-world data.</p><div class="ptags"><span class="tag">Python</span><span class="tag p">Data Mining</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-network-wired"></i></div>
+        <a href="https://github.com/gdtsitlauri/gpbft-consensus-protocol" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>GPBFT Consensus Protocol</h3>
+      <p>Implementation of a consensus protocol for distributed systems.</p>
+      <div class="ptags">
+        <span class="tag">Distributed Systems</span>
+        <span class="tag">Consensus</span>
+        <span class="tag p">Blockchain</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-network-wired"></i></div><a href="https://github.com/gdtsitlauri/gpbft-consensus-protocol" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>GPBFT Consensus Protocol</h3><p>Implementation of the GPBFT consensus protocol for distributed systems and blockchain applications.</p><div class="ptags"><span class="tag">Distributed System</span><span class="tag p">Consensus</span><span class="tag p">Blockchain</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-cogs"></i></div>
+        <a href="https://github.com/gdtsitlauri/build-a-compiler" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Build a Compiler</h3>
+      <p>Project for building a compiler from scratch.</p>
+      <div class="ptags">
+        <span class="tag">C</span>
+        <span class="tag">Compiler</span>
+        <span class="tag p">Flex</span>
+        <span class="tag p">Bison</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-cogs"></i></div><a href="https://github.com/gdtsitlauri/build-a-compiler" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Build a Compiler</h3><p>A compiler built from scratch — lexer, parser, semantic analysis, and code generation stages.</p><div class="ptags"><span class="tag">C</span><span class="tag p">Flex</span><span class="tag p">Bison</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-bolt"></i></div>
+        <a href="https://github.com/gdtsitlauri/ccc-ir-optimizer" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>CCC IR Optimizer</h3>
+      <p>IR code optimizer for the CCC front end translator.</p>
+      <div class="ptags">
+        <span class="tag">C</span>
+        <span class="tag">IR</span>
+        <span class="tag p">Optimization</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-graduation-cap"></i></div><a href="https://github.com/gdtsitlauri/egram-student-management-system" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Egram Student Management System</h3><p>A complete student management system for educational institutions with admin and student portals.</p><div class="ptags"><span class="tag">Python</span><span class="tag p">SQL</span><span class="tag p">App</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-graduation-cap"></i></div>
+        <a href="https://github.com/gdtsitlauri/egram-student-management-system" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Egram Student Management System</h3>
+      <p>Student management system for institutions.</p>
+      <div class="ptags">
+        <span class="tag">Python</span>
+        <span class="tag">SQL</span>
+        <span class="tag p">Education</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-sun"></i></div><a href="https://github.com/gdtsitlauri/Skyrianos" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>Skyrianos</h3><p>Website about the island of Skyros — culture, history, attractions and local info.</p><div class="ptags"><span class="tag">HTML5</span><span class="tag p">CSS3</span><span class="tag p">JavaScript</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-sun"></i></div>
+        <a href="https://github.com/gdtsitlauri/Skyrianos" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Skyrianos</h3>
+      <p>Website about the island of Skyros.</p>
+      <div class="ptags">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag p">JavaScript</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-feather"></i></div><a href="https://github.com/gdtsitlauri/ostrichzoopark" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div><h3>OstrichZooPark</h3><p>Website for Ostrich Zoo Park with basic details and visitor info.</p><div class="ptags"><span class="tag">HTML5</span><span class="tag p">CSS3</span><span class="tag p">JavaScript</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-feather"></i></div>
+        <a href="https://github.com/gdtsitlauri/ostrichzoopark" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>OstrichZooPark</h3>
+      <p>Website for Ostrich Zoo Park basic details and visitor info.</p>
+      <div class="ptags">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag p">JavaScript</span>
+      </div>
+    </div>
 
-    <div class="card pc reveal"><div class="pctop"><div class="pico"><i class="fas fa-shopping-cart"></i></div><span class="pl"><i class="fas fa-lock"></i></span></div><h3>Pavlidi Home E-shop</h3><p>E-commerce platform built with Next.js and Medusa.js featuring a full storefront and product management.</p><div class="ptags"><span class="tag">Next.js</span><span class="tag p">React</span><span class="tag p">Medusa.js</span></div></div>
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-shopping-cart"></i></div>
+        <span class="project-private"><i class="fas fa-lock"></i> Private</span>
+      </div>
+      <h3>Pavlidi Home E-shop</h3>
+      <p>E-commerce platform.</p>
+      <div class="ptags">
+        <span class="tag">Next.js</span>
+        <span class="tag">React</span>
+        <span class="tag p">Medusa.js</span>
+        <span class="tag p">E-commerce</span>
+      </div>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-headphones"></i></div>
+        <a href="https://github.com/gdtsitlauri/sony-audio-visualizer" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Sony Audio Visualizer</h3>
+      <p>Retro Sony-inspired desktop audio visualizer with real-time system loopback capture and smooth spectrum animation.</p>
+      <div class="ptags">
+        <span class="tag">Python</span>
+        <span class="tag">PySide6</span>
+        <span class="tag p">Audio</span>
+        <span class="tag p">Desktop App</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1426,16 +1936,30 @@ footer span {
     </div>
 
     <div class="card scat reveal">
-      <h3><i class="fas fa-tools" style="color:var(--eb)"></i> Frameworks &amp; Tools</h3>
+      <h3><i class="fas fa-cubes" style="color:var(--eb)"></i> Frameworks &amp; Platforms</h3>
       <div class="pills">
-        <span class="pill">React</span><span class="pill">Next.js</span><span class="pill">Tailwind CSS</span><span class="pill">Medusa.js</span><span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">Git</span><span class="pill">Xilinx Vivado</span><span class="pill">Wireshark</span><span class="pill">Figma</span><span class="pill">VS Code</span><span class="pill">VirtualBox</span>
+        <span class="pill">React</span><span class="pill">Next.js</span><span class="pill">Node.js</span><span class="pill">Tailwind CSS</span><span class="pill">Medusa.js</span><span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">Apache Spark</span><span class="pill">Apache Hadoop</span>
       </div>
     </div>
 
-    <div class="card scat reveal">
+    <div class="card scat reveal skill-tools">
+      <h3><i class="fas fa-tools" style="color:var(--eb)"></i> Dev &amp; Research Tools</h3>
+      <div class="pills">
+        <span class="pill">Xilinx Vivado</span><span class="pill">Git</span><span class="pill">CMake</span><span class="pill">Jupyter Notebook</span><span class="pill">Visual Studio</span><span class="pill">VS Code</span><span class="pill">Wireshark</span><span class="pill">VirtualBox</span><span class="pill">Figma</span><span class="pill">Shell/Bash</span><span class="pill">Flex</span><span class="pill">Bison</span><span class="pill">K9s</span>
+      </div>
+    </div>
+
+    <div class="card scat reveal skill-ai">
+      <h3><i class="fas fa-terminal" style="color:var(--eb)"></i> AI Coding Assistants</h3>
+      <div class="pills">
+        <span class="pill">OpenAI Codex</span><span class="pill">Claude Code</span><span class="pill">GitHub Copilot</span>
+      </div>
+    </div>
+
+    <div class="card scat reveal skill-os">
       <h3><i class="fas fa-desktop" style="color:var(--eb)"></i> Operating Systems</h3>
       <div class="pills">
-        <span class="pill">Windows</span><span class="pill">Linux</span>
+        <span class="pill">Linux</span><span class="pill">Windows</span>
       </div>
     </div>
   </div>
@@ -1529,7 +2053,6 @@ function updateNavBackground() {
 window.addEventListener('scroll', updateNavBackground);
 updateNavBackground();
 
-
 function smoothScrollTo(targetY, duration = 850) {
   const startY = window.pageYOffset;
   const distance = targetY - startY;
@@ -1570,7 +2093,6 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
       target.getBoundingClientRect().top + window.pageYOffset - navHeight - 10;
 
     smoothScrollTo(targetPosition, 900);
-    // this.blur();
   });
 });
 
@@ -1579,7 +2101,7 @@ window.addEventListener('load', function() {
   if (loader) {
     setTimeout(() => {
       loader.classList.add('hide');
-    }, 800); // 800ms τεχνητή καθυστέρηση
+    }, 800);
   }
 });
 </script>

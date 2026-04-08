@@ -1,39 +1,40 @@
 # George David Tsitlauri — Portfolio Website
 
-Personal portfolio website for **George David Tsitlauri**, showcasing academic background, thesis work, technical skills, and selected projects in **Computer Science**, **Data Management**, **Artificial Intelligence**, **Systems**, and **Web Development**.
+Personal portfolio website for **George David Tsitlauri**, presenting academic background, thesis work, research portfolio, technical skills, and selected public projects across **Computer Science**, **AI**, **Systems**, **Security**, **Infrastructure**, and **Web Development**.
 
 ## Live Website
 
-Visit the website here: **gdtsitlauri.dev**
+Visit the website here: **[gdtsitlauri.dev](https://gdtsitlauri.dev)**
 
 ## Overview
 
-This is a responsive personal portfolio built as a **static website** using plain:
+This is a responsive **static website** built with:
 
 - HTML5
 - CSS3
 - JavaScript
 
-The site presents:
+The site currently includes:
 
-- Personal introduction
-- Academic background
-- BSc thesis
-- Featured projects
-- Technical skills
+- Hero / personal introduction
+- About section
+- Academic theses
+- Research portfolio
+- Selected projects
+- Tech stack
 - Spoken languages
-- Contact information
+- Contact section
 
 ## Features
 
-- Clean and modern UI
 - Fully responsive layout
-- Animated hero section
-- Smooth scrolling navigation
-- Scroll-based reveal animations
+- Blue / purple visual identity
+- Animated hero and section transitions
+- Scroll-based reveal effects
 - Custom loading screen
-- Social/contact links
-- CV download button
+- Smooth scrolling navigation
+- Research and project cards with tags and icons
+- CV access button
 - SEO and social sharing meta tags
 - Custom domain support via `CNAME`
 
@@ -55,4 +56,33 @@ The site presents:
 ├── favicon-192x192.png
 ├── favicon-256x256.png
 ├── favicon-512.png
-└── favicon-512x512.png
+├── favicon-512x512.png
+└── README.md
+```
+
+## Main Sections
+
+- `About`: education, specialization, research lab, and interests
+- `Thesis`: MSc and BSc thesis cards with links
+- `Researches`: research-oriented repositories and directions
+- `Projects`: selected public development projects
+- `Skills`: languages, frameworks, tools, AI coding assistants, and operating systems
+- `Languages`: spoken languages
+- `Contact`: email, GitHub, and LinkedIn
+
+## Local Usage
+
+Since the site is static, you can run it locally by simply opening `index.html` in a browser.
+
+For a cleaner local preview, you can also serve the folder with any simple static server.
+
+## Deployment
+
+The site is designed for simple static hosting and includes `CNAME` support for the custom domain:
+
+- `gdtsitlauri.dev`
+
+## Notes
+
+- The main website is implemented in `index.html`
+- Local helper files such as `cv.html` and `old.md` are not part of the main site build

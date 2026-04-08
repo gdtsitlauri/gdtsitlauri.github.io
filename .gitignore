@@ -1,0 +1,19 @@
+# Local-only helper files
+cv.html
+old.md
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary / backup files
+*.tmp
+*.temp
+*.bak
+*.orig
+*~
