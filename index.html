@@ -6,7 +6,7 @@
 <title>George David Tsitlauri | Portfolio</title>
 
 <meta property="og:title" content="George David Tsitlauri | Portfolio">
-<meta property="og:description" content="Computer Scientist & Developer specializing in Data Management & AI.">
+<meta property="og:description" content="AI & Systems Engineer.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://gdtsitlauri.dev">
 <meta property="og:image" content="https://gdtsitlauri.dev/favicon-512x512.png">
@@ -15,9 +15,9 @@
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://gdtsitlauri.dev">
-<meta name="description" content="Computer Scientist & Developer specializing in Data Management & AI. Explore projects, thesis and research by George David Tsitlauri.">
+<meta name="description" content="AI & Systems Engineer. Explore thesis, researches, and projects by George David Tsitlauri.">
 <meta name="twitter:title" content="George David Tsitlauri | Portfolio">
-<meta name="twitter:description" content="Computer Scientist & Developer specializing in Data Management & AI.">
+<meta name="twitter:description" content="AI & Systems Engineer.">
 <meta name="twitter:image" content="https://gdtsitlauri.dev/favicon-512x512.png">
 
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -381,28 +381,33 @@ nav {
   animation: fadeUp .75s .3s ease both;
 }
 
-.btn-p,
+.btn-project,
+.btn-research,
 .btn-o,
 .btn-cv-hero {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 13px 28px;
   font-weight: 700;
   font-size: .9rem;
   border-radius: 100px;
   text-decoration: none;
+  min-width: 170px;
+  white-space: nowrap;
 }
 
-.btn-p {
+.btn-project,
+.btn-research {
   color: #fff;
   position: relative;
   overflow: hidden;
-  background: var(--gm);
   transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .25s;
 }
 
-.btn-p::after {
+.btn-project::after,
+.btn-research::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -410,6 +415,14 @@ nav {
   background: rgba(255,255,255,0.12);
   transform: translateX(-100%);
   transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+
+.btn-project {
+  background: var(--eb);
+}
+
+.btn-research {
+  background: var(--ep);
 }
 
 .btn-o {
@@ -1084,11 +1097,13 @@ footer span {
     transform: scale(1.04);
   }
 
-  .btn-p:hover {
+  .btn-project:hover,
+  .btn-research:hover {
     transform: translateY(-3px);
   }
 
-  .btn-p:hover::after {
+  .btn-project:hover::after,
+  .btn-research:hover::after {
     transform: translateX(0);
   }
 
@@ -1205,11 +1220,13 @@ footer span {
     transform: translateY(-2px);
   }
 
-  .btn-p:active {
+  .btn-project:active,
+  .btn-research:active {
     transform: translateY(-3px);
   }
 
-  .btn-p:active::after {
+  .btn-project:active::after,
+  .btn-research:active::after {
     transform: translateX(0);
   }
 
@@ -1383,6 +1400,22 @@ footer span {
     padding: 60px 2% 40px;
   }
 
+  .hero-btns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    width: 100%;
+  }
+
+  .hero-btns a {
+    width: 100%;
+    min-width: 0;
+    min-height: 54px;
+    padding: 12px 18px;
+    font-size: .84rem;
+    gap: 6px;
+  }
+
   .rgrid,
   .pgrid {
     grid-template-columns: 1fr;
@@ -1434,9 +1467,6 @@ footer span {
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="George_David_Tsitlauri_CV.pdf" target="_blank" rel="noopener noreferrer" class="nav-cv">
-      <i class="fas fa-file-alt"></i> CV
-    </a>
   </div>
 </nav>
 
@@ -1456,7 +1486,8 @@ footer span {
     </p>
 
     <div class="hero-btns">
-      <a href="#projects" class="btn-p"><i class="fas fa-folder-open"></i> View Projects</a>
+      <a href="#researches" class="btn-research"><i class="fas fa-microscope"></i> View Researches</a>
+      <a href="#projects" class="btn-project"><i class="fas fa-folder-open"></i> View Projects</a>
       <a href="#contact" class="btn-o"><i class="fas fa-paper-plane"></i> Contact Me</a>
       <a href="George_David_Tsitlauri_CV.pdf" target="_blank" rel="noopener noreferrer" class="btn-cv-hero"><i class="fas fa-file-alt"></i> View CV</a>
     </div>
