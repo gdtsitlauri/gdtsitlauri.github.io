@@ -218,22 +218,6 @@ nav {
   transition: right .35s cubic-bezier(.4,0,.2,1);
 }
 
-.nav-cv {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 18px;
-  font-size: .82rem;
-  font-weight: 700;
-  border-radius: 100px;
-  text-decoration: none;
-  border: 1.5px solid var(--eb);
-  color: var(--eb);
-  transition: background .25s, transform .25s, color .25s;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
@@ -656,13 +640,7 @@ nav {
   font-weight: 700;
   margin-bottom: 10px;
   line-height: 1.4;
-}
-
-.thesis-card h3 a {
   color: var(--tp);
-  text-decoration: none;
-  pointer-events: none;
-  cursor: default;
 }
 
 .thesis-card p {
@@ -718,10 +696,11 @@ nav {
 .rgrid > .pc:nth-child(1),
 .rgrid > .pc:nth-child(2),
 .rgrid > .pc:nth-child(6),
-.rgrid > .pc:nth-child(7) {
+.rgrid > .pc:nth-child(7),
+.rgrid > .pc:nth-child(8),
+.rgrid > .pc:nth-child(9) {
   grid-column: span 6;
 }
-
 /* ── PROJECTS ── */
 #projects {
   max-width: 1320px;
@@ -1087,12 +1066,6 @@ footer span {
     right: 0;
   }
 
-  .nav-cv:hover {
-    background: var(--eb);
-    color: #fff;
-    transform: translateY(-2px);
-  }
-
   .photo-wrap:hover img {
     transform: scale(1.04);
   }
@@ -1214,12 +1187,6 @@ footer span {
     transition: right .12s linear;
   }
 
-  .nav-cv:active {
-    background: var(--eb);
-    color: #fff;
-    transform: translateY(-2px);
-  }
-
   .btn-project:active,
   .btn-research:active {
     transform: translateY(-3px);
@@ -1304,10 +1271,6 @@ footer span {
     text-align: center;
   }
 
-  .nav-cv {
-    display: none;
-  }
-
   .rgrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1316,7 +1279,9 @@ footer span {
   .rgrid > .pc:nth-child(1),
   .rgrid > .pc:nth-child(2),
   .rgrid > .pc:nth-child(6),
-  .rgrid > .pc:nth-child(7) {
+  .rgrid > .pc:nth-child(7),
+  .rgrid > .pc:nth-child(8),
+  .rgrid > .pc:nth-child(9) {
     grid-column: auto;
   }
 
@@ -1493,9 +1458,9 @@ footer span {
     </div>
 
     <div class="hero-socials">
-      <a href="mailto:gdtsitlauri@gmail.com" class="si" title="Email"><i class="fas fa-envelope"></i></a>
-      <a href="https://github.com/gdtsitlauri" target="_blank" rel="noopener noreferrer" class="si" title="GitHub"><i class="fab fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/gdtsitlauri/" target="_blank" rel="noopener noreferrer" class="si" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="mailto:gdtsitlauri@gmail.com" class="si" title="Email" aria-label="Send email to George David Tsitlauri"><i class="fas fa-envelope"></i></a>
+      <a href="https://github.com/gdtsitlauri" target="_blank" rel="noopener noreferrer" class="si" title="GitHub" aria-label="Open George David Tsitlauri GitHub profile"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/gdtsitlauri/" target="_blank" rel="noopener noreferrer" class="si" title="LinkedIn" aria-label="Open George David Tsitlauri LinkedIn profile"><i class="fab fa-linkedin-in"></i></a>
     </div>
   </div>
 
@@ -1573,11 +1538,7 @@ footer span {
           <div class="thesis-meta">MSc Thesis</div>
           <a href="https://github.com/gdtsitlauri/cps-ids-generalization" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open MSc Thesis GitHub repository"><i class="fab fa-github"></i></a>
         </div>
-        <h3>
-          <a href="https://github.com/gdtsitlauri/cps-ids-generalization" target="_blank" rel="noopener noreferrer">
-            Robust and Generalizable AI-based Intrusion Detection for Cyber-Physical Systems (CPS IDS)
-          </a>
-        </h3>
+        <h3>Robust and Generalizable AI-based Intrusion Detection for Cyber-Physical Systems (CPS IDS)</h3>
         <p>
           Cross-domain analysis of AI-based intrusion detection across heterogeneous IDS datasets, centered on robustness, transferability, and the GRACE-IDS approach.
         </p>
@@ -1599,11 +1560,7 @@ footer span {
           <div class="thesis-meta bsc">BSc Thesis</div>
           <a href="https://github.com/gdtsitlauri/CryptoCPU" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open BSc Thesis GitHub repository"><i class="fab fa-github"></i></a>
         </div>
-        <h3>
-          <a href="https://github.com/gdtsitlauri/CryptoCPU" target="_blank" rel="noopener noreferrer">
-            Design and Implementation of an Encrypted Instruction Set Processor (CryptoCPU) on FPGA
-          </a>
-        </h3>
+        <h3>Design and Implementation of an Encrypted Instruction Set Processor (CryptoCPU) on FPGA</h3>
         <p>
           Developed a custom cryptographic processor supporting encrypted instructions, focusing on secure execution and hardware-level cryptographic protection. Utilized C++ and MIPS Assembly, with Xilinx Vivado for development and testing on FPGA.
         </p>
@@ -1627,8 +1584,23 @@ footer span {
   <div class="rgrid">
     <div class="card pc reveal">
       <div class="pctop">
+        <div class="pico"><i class="fas fa-memory"></i></div>
+        <a href="https://github.com/gdtsitlauri/cuda-zkml" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open CUDA zkML GitHub repository"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>CUDA zkML</h3>
+      <p>CUDA-native zkML prover for zero-knowledge proofs of neural-network inference on consumer NVIDIA GPUs.</p>
+      <div class="ptags">
+        <span class="tag">CUDA</span>
+        <span class="tag">zkML</span>
+        <span class="tag p">Zero-Knowledge</span>
+        <span class="tag p">Neural Inference</span>
+      </div>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
         <div class="pico"><i class="fas fa-layer-group"></i></div>
-        <a href="https://github.com/gdtsitlauri/Crypto3DStackCPU" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/Crypto3DStackCPU" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Crypto3DStackCPU GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Crypto3DStackCPU</h3>
       <p>CryptoCPU with Secure 3D-Stacked Memory System Design, sealed image generation, encrypted fetch and decrypt execution, contract-based security validation, executable AES instructions, and tamper-audit security checks.</p>
@@ -1643,7 +1615,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-chess-knight"></i></div>
-        <a href="https://github.com/gdtsitlauri/caesar-framework" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/caesar-framework" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open CAESAR Framework GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>CAESAR Framework</h3>
       <p>AI-driven co-evolutionary cyber-attack simulation and adaptive defense framework for attack, response, explainability, diffusion-based adversarial generation, and self-healing security research.</p>
@@ -1658,7 +1630,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-sitemap"></i></div>
-        <a href="https://github.com/gdtsitlauri/atlas-trident" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/atlas-trident" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open ATLAS Trident GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>ATLAS Trident</h3>
       <p>Prototype for decentralized cloud autonomy using digital twins, constrained LLM planning, reinforcement learning adaptation, and TRIDENT governance with a permissioned ledger.</p>
@@ -1673,7 +1645,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-eye"></i></div>
-        <a href="https://github.com/gdtsitlauri/patv-x" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/patv-x" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open PATV-X GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>PATV-X</h3>
       <p>Training-free and explainable deepfake detection through multi-scale frequency forensics for face-centric temporal video analysis.</p>
@@ -1688,7 +1660,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-wave-square"></i></div>
-        <a href="https://github.com/gdtsitlauri/chronos-edge-iot" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/chronos-edge-iot" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open CHRONOS Edge IOT GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>CHRONOS Edge IOT</h3>
       <p>Edge-IoT offloading research framework combining causal-hypergraph modeling, spiking RL, simulator-based evaluation, baselines, ablations, and reproducibility tooling.</p>
@@ -1703,7 +1675,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-diagram-project"></i></div>
-        <a href="https://github.com/gdtsitlauri/polaris-sdn-orchestrator" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/polaris-sdn-orchestrator" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open POLARIS SDN Orchestrator GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>POLARIS SDN Orchestrator</h3>
       <p>Orchestration framework for SDN and cloud environments based on parallel Pareto-Lyapunov scheduling and intent-aware service placement.</p>
@@ -1717,8 +1689,23 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
+        <div class="pico"><i class="fas fa-tower-broadcast"></i></div>
+        <a href="https://github.com/gdtsitlauri/gate-6g" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Gate-6G GitHub repository"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Gate-6G</h3>
+      <p>Goal-aware adaptive semantic transmission, split inference, and wireless-aware control for AI-native edge networks.</p>
+      <div class="ptags">
+        <span class="tag">6G Networks</span>
+        <span class="tag">Split Inference</span>
+        <span class="tag p">Semantic Transmission</span>
+        <span class="tag p">Edge AI</span>
+      </div>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
         <div class="pico"><i class="fas fa-seedling"></i></div>
-        <a href="https://github.com/gdtsitlauri/evoo-adulteration-ai" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/evoo-adulteration-ai" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open EVOO Adulteration AI GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>EVOO Adulteration AI</h3>
       <p>Reproducible machine-learning pipelines for extra-virgin olive oil authenticity and adulteration detection using FTIR and Raman spectroscopy.</p>
@@ -1740,7 +1727,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-robot"></i></div>
-        <a href="https://github.com/gdtsitlauri/advanced-machine-learning-projects" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/advanced-machine-learning-projects" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Advanced AI Projects GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Advanced AI Projects</h3>
       <p>A collection of advanced machine and deep learning projects.</p>
@@ -1755,7 +1742,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-lock"></i></div>
-        <a href="https://github.com/gdtsitlauri/parallel-aes-cuda" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/parallel-aes-cuda" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Parallel AES CUDA GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Parallel AES CUDA</h3>
       <p>Parallel implementation of AES encryption.</p>
@@ -1769,7 +1756,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-cloud"></i></div>
-        <a href="https://github.com/gdtsitlauri/weather-app-autoscaler-k8s" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/weather-app-autoscaler-k8s" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Weather App Autoscaler GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Weather App Autoscaler</h3>
       <p>A scalable weather app with auto scaling based on load and weather data.</p>
@@ -1784,7 +1771,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-database"></i></div>
-        <a href="https://github.com/gdtsitlauri/big-data-spark-taxi" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/big-data-spark-taxi" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Big Data Spark Taxi GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Big Data Spark Taxi</h3>
       <p>Big data analysis of taxi trips.</p>
@@ -1798,7 +1785,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-video"></i></div>
-        <a href="https://github.com/gdtsitlauri/video-coding-for-machines" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/video-coding-for-machines" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Video Coding for Machines GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Video Coding for Machines</h3>
       <p>Video coding techniques optimized for machine learning applications.</p>
@@ -1812,7 +1799,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-gamepad"></i></div>
-        <a href="https://github.com/gdtsitlauri/reinforcement-learning-experiments" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/reinforcement-learning-experiments" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Reinforcement Learning Experiments GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Reinforcement Learning Experiments</h3>
       <p>Experiments and research in reinforcement learning algorithms.</p>
@@ -1826,7 +1813,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-chart-bar"></i></div>
-        <a href="https://github.com/gdtsitlauri/tourism-data-mining" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/tourism-data-mining" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Tourism Data Mining GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Tourism Data Mining</h3>
       <p>Data mining and analysis for tourism datasets.</p>
@@ -1840,7 +1827,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-network-wired"></i></div>
-        <a href="https://github.com/gdtsitlauri/gpbft-consensus-protocol" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/gpbft-consensus-protocol" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GPBFT Consensus Protocol GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>GPBFT Consensus Protocol</h3>
       <p>Implementation of a consensus protocol for distributed systems.</p>
@@ -1854,7 +1841,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-cogs"></i></div>
-        <a href="https://github.com/gdtsitlauri/build-a-compiler" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/build-a-compiler" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Build a Compiler GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Build a Compiler</h3>
       <p>Project for building a compiler from scratch.</p>
@@ -1869,7 +1856,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-bolt"></i></div>
-        <a href="https://github.com/gdtsitlauri/ccc-ir-optimizer" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/ccc-ir-optimizer" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open CCC IR Optimizer GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>CCC IR Optimizer</h3>
       <p>IR code optimizer for the CCC front end translator.</p>
@@ -1883,7 +1870,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-graduation-cap"></i></div>
-        <a href="https://github.com/gdtsitlauri/egram-student-management-system" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/egram-student-management-system" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Egram Student Management System GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Egram Student Management System</h3>
       <p>Student management system for institutions.</p>
@@ -1897,7 +1884,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-sun"></i></div>
-        <a href="https://github.com/gdtsitlauri/Skyrianos" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/Skyrianos" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Skyrianos GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Skyrianos</h3>
       <p>Website about the island of Skyros.</p>
@@ -1911,7 +1898,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-feather"></i></div>
-        <a href="https://github.com/gdtsitlauri/ostrichzoopark" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/ostrichzoopark" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open OstrichZooPark GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>OstrichZooPark</h3>
       <p>Website for Ostrich Zoo Park basic details and visitor info.</p>
@@ -1940,7 +1927,7 @@ footer span {
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-headphones"></i></div>
-        <a href="https://github.com/gdtsitlauri/sony-audio-visualizer" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/gdtsitlauri/sony-audio-visualizer" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Sony Audio Visualizer GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Sony Audio Visualizer</h3>
       <p>Retro Sony-inspired desktop audio visualizer with real-time system loopback capture and smooth spectrum animation.</p>
@@ -2070,6 +2057,17 @@ document.querySelectorAll('.reveal').forEach((el) => {
 });
 
 const nav = document.querySelector('nav');
+const loader = document.getElementById('site-loader');
+let loaderHidden = false;
+
+function hideLoader(delay = 0) {
+  if (!loader || loaderHidden) return;
+
+  loaderHidden = true;
+  window.setTimeout(() => {
+    loader.classList.add('hide');
+  }, delay);
+}
 
 function updateNavBackground() {
   if (window.scrollY > 40) {
@@ -2127,13 +2125,12 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
+window.addEventListener('DOMContentLoaded', function() {
+  hideLoader(350);
+});
+
 window.addEventListener('load', function() {
-  const loader = document.getElementById('site-loader');
-  if (loader) {
-    setTimeout(() => {
-      loader.classList.add('hide');
-    }, 800);
-  }
+  hideLoader();
 });
 </script>
 
