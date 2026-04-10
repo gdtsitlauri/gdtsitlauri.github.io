@@ -15,7 +15,7 @@
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://gdtsitlauri.dev">
-<meta name="description" content="AI & Systems Engineer. Explore thesis, researches, and projects by George David Tsitlauri.">
+<meta name="description" content="AI & Systems Engineer. Explore theses, researches, and projects by George David Tsitlauri.">
 <meta name="twitter:title" content="George David Tsitlauri | Portfolio">
 <meta name="twitter:description" content="AI & Systems Engineer.">
 <meta name="twitter:image" content="https://gdtsitlauri.dev/favicon-512x512.png">
@@ -690,8 +690,14 @@ nav {
 }
 
 .rgrid > .pc {
+  grid-column: span 6;
+}
+
+.rgrid > .pc:nth-child(n+3):nth-child(-n+5),
+.rgrid > .pc:nth-child(n+8):nth-child(-n+10) {
   grid-column: span 4;
 }
+
 
 .rgrid > .pc:nth-child(1),
 .rgrid > .pc:nth-child(2),
@@ -1582,6 +1588,20 @@ footer span {
   <h2 class="stitle">Research <span>Portfolio</span></h2>
 
   <div class="rgrid">
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-atom"></i></div>
+        <a href="https://github.com/gdtsitlauri/odyssey-quantum" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Odyssey Quantum GitHub repository"><i class="fab fa-github"></i></a>
+      </div>
+      <h3>Odyssey Quantum</h3>
+      <p>Hybrid quantum-classical research framework for risk-aware intrusion detection in post-quantum environments.</p>
+      <div class="ptags">
+        <span class="tag">Quantum</span>
+        <span class="tag">Intrusion Detection</span>
+        <span class="tag p">Hybrid AI</span>
+        <span class="tag p">Post-Quantum</span>
+      </div>
+    </div>
     <div class="card pc reveal">
       <div class="pctop">
         <div class="pico"><i class="fas fa-memory"></i></div>
