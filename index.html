@@ -288,6 +288,38 @@ nav {
   100% { filter: blur(0px) brightness(1); }
 }
 
+.hero-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  animation: fadeUp .7s ease both;
+}
+
+#chip3d {
+  width: 160px;
+  height: 160px;
+  display: block;
+  flex-shrink: 0;
+}
+
+@media (max-width: 820px) {
+  #chip3d {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (min-width: 821px) {
+  .hero-tag {
+    transform: translateY(6px);
+  }
+
+  .hero h1 {
+    margin-top: -10px;
+  }
+}
+
 .hero-tag {
   position: relative;
   display: block;
@@ -297,11 +329,10 @@ nav {
   text-transform: uppercase;
   color: var(--eb);
   background: rgba(10,15,46,0.9);
-  border-radius: 999px;
+  border-radius: 10px;
   padding: 6px 16px;
-  margin-bottom: 28px;
+  margin-bottom: 0;
   width: fit-content;
-  animation: fadeUp .7s ease both;
   z-index: 0;
   isolation: isolate;
   margin-left: 0;
@@ -313,7 +344,7 @@ nav {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 999px;
+  border-radius: 10px;
   padding: 2px;
   background: linear-gradient(90deg, var(--eb), var(--ep));
   -webkit-mask:
@@ -350,8 +381,9 @@ nav {
 }
 
 .hero-sub {
-  font-size: 1rem;
-  color: var(--ts);
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: #fff;
   max-width: 560px;
   line-height: 1.7;
   margin-bottom: 38px;
@@ -374,32 +406,19 @@ nav {
   justify-content: center;
   gap: 8px;
   padding: 13px 28px;
+  font-family: 'Caveat', cursive;
   font-weight: 700;
-  font-size: .9rem;
-  border-radius: 100px;
+  font-size: 1.15rem;
+  border-radius: 20px;
   text-decoration: none;
   min-width: 170px;
   white-space: nowrap;
-}
-
-.btn-project,
-.btn-research {
   color: #fff;
   position: relative;
   overflow: hidden;
   transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .25s;
 }
 
-.btn-project::after,
-.btn-research::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 100px;
-  background: rgba(255,255,255,0.12);
-  transform: translateX(-100%);
-  transition: transform .35s cubic-bezier(.4,0,.2,1);
-}
 
 .btn-project {
   background: var(--eb);
@@ -410,17 +429,11 @@ nav {
 }
 
 .btn-o {
-  background: transparent;
-  color: var(--ep);
-  border: 2px solid var(--ep);
-  transition: background .25s, color .25s, transform .3s cubic-bezier(.4,0,.2,1);
+  background: #a31645;
 }
 
 .btn-cv-hero {
-  background: transparent;
-  color: var(--eb);
-  border: 2px solid var(--eb);
-  transition: background .25s, color .25s, transform .3s cubic-bezier(.4,0,.2,1);
+  background: #008000;
 }
 
 .hero-socials {
@@ -434,7 +447,7 @@ nav {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1.5px solid #5e00f5;
+  border: 1px solid rgba(255,255,255,0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -442,7 +455,7 @@ nav {
   text-decoration: none;
   font-size: 1rem;
   transition: color .25s, border-color .25s, transform .35s cubic-bezier(.34,1.56,.64,1), background .25s;
-  background: var(--cb);
+  background: transparent;
   box-sizing: border-box;
 }
 
@@ -545,18 +558,18 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--gg);
+  border: none;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s;
 }
 
 .aico {
   width: 46px;
   height: 46px;
   border-radius: 14px;
-  background: var(--gg);
-  border: none;
   font-size: 1.1rem;
   flex-shrink: 0;
   color: var(--eb);
-  transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s;
 }
 
 .acard h3 {
@@ -654,11 +667,15 @@ nav {
 .pills {
   display: flex;
   flex-wrap: wrap;
+  gap: 7px;
 }
 
 .ttags {
-  gap: 8px;
   margin-top: 14px;
+}
+
+.ptags {
+  gap: 6px;
 }
 
 .tag {
@@ -698,7 +715,6 @@ nav {
   grid-column: span 4;
 }
 
-
 .rgrid > .pc:nth-child(1),
 .rgrid > .pc:nth-child(2),
 .rgrid > .pc:nth-child(6),
@@ -714,7 +730,7 @@ nav {
 
 .pgrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
 }
 
@@ -744,7 +760,7 @@ nav {
 }
 
 .project-private i {
-  color: var(--ep);
+  color: var(--ts);
   font-size: .72rem;
 }
 
@@ -763,12 +779,9 @@ nav {
 .pico {
   width: 40px;
   height: 40px;
-  border-radius: 12px;
-  background: var(--gg);
-  border: none;
+  border-radius: 20px;
   font-size: 1rem;
   color: var(--ep);
-  transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s;
 }
 
 .pl {
@@ -834,15 +847,11 @@ nav {
   font-weight: 700;
   letter-spacing: .04em;
   text-transform: uppercase;
-  color: var(--ep);
+  color: var(--tp);
   margin-bottom: 14px;
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.pills {
-  gap: 7px;
 }
 
 .pill {
@@ -909,10 +918,10 @@ nav {
   width: 46px;
   height: 46px;
   border-radius: 14px;
-  background: var(--gg);
-  border: none;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
   font-size: 1.05rem;
-  color: var(--eb);
+  color: #fff;
   flex-shrink: 0;
   transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s;
 }
@@ -944,8 +953,8 @@ footer span {
   font-size: 1.15rem;
   font-weight: 700;
   display: inline-block;
-  padding: 2px 6px 5px;
-  margin: -2px -6px -5px;
+  padding: 6px 6px 5px;
+  margin: -6px -6px -5px;
   background: var(--gm);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -958,9 +967,27 @@ footer span {
   to { opacity: 1; transform: none; }
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+@keyframes floatB1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  12%  { transform: translate(-30vw, 20vh) scale(1.15); }
+  25%  { transform: translate(20vw, 50vh) scale(0.9); }
+  37%  { transform: translate(35vw, -10vh) scale(1.2); }
+  50%  { transform: translate(-10vw, -40vh) scale(0.88); }
+  63%  { transform: translate(-40vw, 35vh) scale(1.1); }
+  75%  { transform: translate(15vw, -50vh) scale(0.95); }
+  88%  { transform: translate(40vw, 40vh) scale(1.12); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes floatB2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  18%  { transform: translate(40vw, -30vh) scale(1.18); }
+  33%  { transform: translate(-25vw, -50vh) scale(0.85); }
+  48%  { transform: translate(30vw, 45vh) scale(1.22); }
+  62%  { transform: translate(-40vw, 20vh) scale(0.9); }
+  77%  { transform: translate(10vw, -35vh) scale(1.1); }
+  90%  { transform: translate(-35vw, -20vh) scale(1.15); }
+  100% { transform: translate(0, 0) scale(1); }
 }
 
 /* ── BLOBS ── */
@@ -971,7 +998,6 @@ footer span {
   opacity: .16;
   pointer-events: none;
   z-index: 0;
-  animation: float 8s ease-in-out infinite;
 }
 
 .b1 {
@@ -980,7 +1006,7 @@ footer span {
   background: var(--eb);
   top: 8%;
   right: 4%;
-  animation-delay: 0s;
+  animation: floatB1 35s cubic-bezier(.45,0,.55,1) infinite;
 }
 
 .b2 {
@@ -989,7 +1015,7 @@ footer span {
   background: var(--ep);
   top: 58%;
   left: 2%;
-  animation-delay: 3s;
+  animation: floatB2 47s cubic-bezier(.45,0,.55,1) infinite;
 }
 
 /* ── SCROLLBAR ── */
@@ -1027,7 +1053,7 @@ footer span {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 10px 22px;
+  padding: 14px 22px 13px;
   text-decoration: none;
   color: var(--ts);
   background: rgba(10,15,46,0.9);
@@ -1077,26 +1103,12 @@ footer span {
   }
 
   .btn-project:hover,
-  .btn-research:hover {
-    transform: translateY(-3px);
-  }
-
-  .btn-project:hover::after,
-  .btn-research:hover::after {
-    transform: translateX(0);
-  }
-
+  .btn-research:hover,
+  .btn-cv-hero:hover,
   .btn-o:hover {
-    background: var(--ep);
-    color: #fff;
     transform: translateY(-3px);
   }
 
-  .btn-cv-hero:hover {
-    background: var(--eb);
-    color: #fff;
-    transform: translateY(-3px);
-  }
 
   .si:hover {
     color: #fff;
@@ -1173,7 +1185,10 @@ footer span {
   }
 
   .ci:hover strong {
-    color: var(--eb);
+    background: var(--gm);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .footer-top-btn:hover {
@@ -1194,26 +1209,12 @@ footer span {
   }
 
   .btn-project:active,
-  .btn-research:active {
-    transform: translateY(-3px);
-  }
-
-  .btn-project:active::after,
-  .btn-research:active::after {
-    transform: translateX(0);
-  }
-
+  .btn-research:active,
+  .btn-cv-hero:active,
   .btn-o:active {
-    background: var(--ep);
-    color: #fff;
     transform: translateY(-3px);
   }
 
-  .btn-cv-hero:active {
-    background: var(--eb);
-    color: #fff;
-    transform: translateY(-3px);
-  }
 
   .si:active {
     color: #fff;
@@ -1237,7 +1238,10 @@ footer span {
   }
 
   .ci:active strong {
-    color: var(--eb);
+    background: var(--gm);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .footer-top-btn:active {
@@ -1267,28 +1271,52 @@ footer span {
     justify-content: center;
   }
 
-  .hero h1 {
-    display: block;
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .hero-tag {
-    margin-left: auto;
-    margin-right: auto;
+  .hero h1 {
+    display: block;
+    order: 1;
     text-align: center;
   }
 
-  .rgrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .hero-tag-row {
+    order: 2;
+    justify-content: center;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
   }
 
-  .rgrid > .pc,
-  .rgrid > .pc:nth-child(1),
-  .rgrid > .pc:nth-child(2),
-  .rgrid > .pc:nth-child(6),
-  .rgrid > .pc:nth-child(7),
-  .rgrid > .pc:nth-child(8),
-  .rgrid > .pc:nth-child(9) {
-    grid-column: auto;
+  .hero-tag {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .hero-sub {
+    order: 3;
+    text-align: center;
+  }
+
+  .hero-btns {
+    order: 4;
+  }
+
+  .hero-socials {
+    order: 5;
+  }
+
+  .rgrid {
+    grid-template-columns: 1fr;
+  }
+
+  .rgrid > .pc:nth-child(n) {
+    grid-column: auto !important;
   }
 
   .pgrid {
@@ -1371,6 +1399,11 @@ footer span {
     padding: 60px 2% 40px;
   }
 
+  .hero-sub {
+    font-size: 1.2rem;
+    max-width: 100%;
+  }
+
   .hero-btns {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1383,11 +1416,10 @@ footer span {
     min-width: 0;
     min-height: 54px;
     padding: 12px 18px;
-    font-size: .84rem;
+    font-size: 1.2rem;
     gap: 6px;
   }
 
-  .rgrid,
   .pgrid {
     grid-template-columns: 1fr;
   }
@@ -1443,17 +1475,19 @@ footer span {
 
 <section class="hero" id="home">
   <div class="hero-text">
-    <div class="hero-tag">
-      <i class="fas fa-microchip" style="color:#fff"></i>
-      AI
-      <span style="background: linear-gradient(90deg,#0074FF,#5e00f5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">&amp;</span>
-      <span style="color:#5e00f5">Systems Engineer</span>
+    <div class="hero-tag-row">
+      <canvas id="chip3d" style="width:160px;height:160px;cursor:grab;"></canvas>
+      <div class="hero-tag">
+        AI
+        <span style="background: linear-gradient(90deg,#0074FF,#5e00f5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">&amp;</span>
+        <span style="color:#5e00f5">Systems Engineer</span>
+      </div>
     </div>
 
     <h1>George David<br/><span>Tsitlauri</span></h1>
 
     <p class="hero-sub">
-      From low-level hardware and secure architectures to advanced AI and intelligent systems—engineering across the full technology stack.
+      From hardware to AI.
     </p>
 
     <div class="hero-btns">
@@ -1560,7 +1594,7 @@ footer span {
     </div>
 
     <div class="card thesis-card reveal">
-      <div class="tico"><i class="fas fa-microchip"></i></div>
+      <div class="tico"><i class="fas fa-fingerprint"></i></div>
       <div class="thesis-body">
         <div class="thesis-top">
           <div class="thesis-meta bsc">BSc Thesis</div>
@@ -1604,7 +1638,7 @@ footer span {
     </div>
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-memory"></i></div>
+        <div class="pico"><i class="fas fa-eye-slash"></i></div>
         <a href="https://github.com/gdtsitlauri/cuda-zkml" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open CUDA zkML GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>CUDA zkML</h3>
@@ -1761,7 +1795,7 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-lock"></i></div>
+        <div class="pico"><i class="fas fa-key"></i></div>
         <a href="https://github.com/gdtsitlauri/parallel-aes-cuda" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Parallel AES CUDA GitHub repository"><i class="fab fa-github"></i></a>
       </div>
       <h3>Parallel AES CUDA</h3>
@@ -1967,35 +2001,35 @@ footer span {
 
   <div class="sgrid">
     <div class="card scat reveal">
-      <h3><i class="fas fa-code" style="color:var(--eb)"></i> Languages</h3>
+      <h3><i class="fas fa-code" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Languages</h3>
       <div class="pills">
         <span class="pill">C</span><span class="pill">C++</span><span class="pill">Java</span><span class="pill">Python</span><span class="pill">SQL</span><span class="pill">CUDA</span><span class="pill">MIPS Assembly</span><span class="pill">HTML5</span><span class="pill">CSS3</span><span class="pill">JavaScript</span><span class="pill">TypeScript</span>
       </div>
     </div>
 
     <div class="card scat reveal">
-      <h3><i class="fas fa-cubes" style="color:var(--eb)"></i> Frameworks &amp; Platforms</h3>
+      <h3><i class="fas fa-cubes" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Frameworks &amp; Platforms</h3>
       <div class="pills">
         <span class="pill">React</span><span class="pill">Next.js</span><span class="pill">Node.js</span><span class="pill">Tailwind CSS</span><span class="pill">Medusa.js</span><span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">Apache Spark</span><span class="pill">Apache Hadoop</span>
       </div>
     </div>
 
     <div class="card scat reveal skill-tools">
-      <h3><i class="fas fa-tools" style="color:var(--eb)"></i> Dev &amp; Research Tools</h3>
+      <h3><i class="fas fa-tools" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Dev &amp; Research Tools</h3>
       <div class="pills">
         <span class="pill">Xilinx Vivado</span><span class="pill">Git</span><span class="pill">CMake</span><span class="pill">Jupyter Notebook</span><span class="pill">Visual Studio</span><span class="pill">VS Code</span><span class="pill">Wireshark</span><span class="pill">VirtualBox</span><span class="pill">Figma</span><span class="pill">Shell/Bash</span><span class="pill">Flex</span><span class="pill">Bison</span><span class="pill">K9s</span>
       </div>
     </div>
 
     <div class="card scat reveal skill-ai">
-      <h3><i class="fas fa-terminal" style="color:var(--eb)"></i> AI Coding Assistants</h3>
+      <h3><i class="fas fa-terminal" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> AI Coding Assistants</h3>
       <div class="pills">
         <span class="pill">OpenAI Codex</span><span class="pill">Claude Code</span><span class="pill">GitHub Copilot</span>
       </div>
     </div>
 
     <div class="card scat reveal skill-os">
-      <h3><i class="fas fa-desktop" style="color:var(--eb)"></i> Operating Systems</h3>
+      <h3><i class="fas fa-desktop" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Operating Systems</h3>
       <div class="pills">
         <span class="pill">Linux</span><span class="pill">Windows</span>
       </div>
@@ -2152,6 +2186,673 @@ window.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('load', function() {
   hideLoader();
 });
+</script>
+
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.170.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.170.0/examples/jsm/"}}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+(function() {
+  const canvas = document.getElementById('chip3d');
+  if (!canvas) return;
+
+  const deviceDpr = window.devicePixelRatio || 1;
+  const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+  const isSmallViewport = window.matchMedia('(max-width: 820px)').matches;
+  const QUALITY_MODE = 'auto'; // 'auto' | 'balanced' | 'mobile' | 'ultra'
+
+  function getQualityProfile() {
+    if (QUALITY_MODE === 'ultra') {
+      return {
+        name: 'ultra',
+        powerPreference: 'high-performance',
+        packageTextureSize: 4096,
+        layerTextureSize: 2048,
+        maxPixelRatio: 3,
+        oversample: 1.35,
+        minRenderEdge: 480,
+        maxRenderEdge: 3072,
+        shadowMapSize: 4096,
+        targetFps: 60
+      };
+    }
+
+    if (QUALITY_MODE === 'balanced') {
+      return {
+        name: 'balanced',
+        powerPreference: 'default',
+        packageTextureSize: 2048,
+        layerTextureSize: 1024,
+        maxPixelRatio: 1.8,
+        oversample: 1.2,
+        minRenderEdge: 256,
+        maxRenderEdge: 1280,
+        shadowMapSize: 2048,
+        targetFps: 60
+      };
+    }
+
+    if (QUALITY_MODE === 'mobile') {
+      return {
+        name: 'mobile',
+        powerPreference: 'low-power',
+        packageTextureSize: 1536,
+        layerTextureSize: 768,
+        maxPixelRatio: 1.35,
+        oversample: 1.05,
+        minRenderEdge: 224,
+        maxRenderEdge: 768,
+        shadowMapSize: 1024,
+        targetFps: 60
+      };
+    }
+
+    return (isCoarsePointer || isSmallViewport)
+      ? {
+          name: 'mobile',
+          powerPreference: 'low-power',
+          packageTextureSize: 1536,
+          layerTextureSize: 768,
+          maxPixelRatio: 1.35,
+          oversample: 1.05,
+          minRenderEdge: 224,
+          maxRenderEdge: 768,
+          shadowMapSize: 1024,
+          targetFps: 60
+        }
+      : {
+          name: 'balanced',
+          powerPreference: 'default',
+          packageTextureSize: 2048,
+          layerTextureSize: 1024,
+          maxPixelRatio: 1.8,
+          oversample: 1.2,
+          minRenderEdge: 256,
+          maxRenderEdge: 1280,
+          shadowMapSize: 2048,
+          targetFps: 60
+        };
+  }
+
+  const quality = getQualityProfile();
+  const PACKAGE_TEXTURE_SIZE = quality.packageTextureSize;
+  const LAYER_TEXTURE_SIZE = quality.layerTextureSize;
+  const FRAME_INTERVAL = 1000 / quality.targetFps;
+
+  // ── Renderer ──
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: quality.powerPreference, precision: 'highp' });
+  renderer.setPixelRatio(1);
+  renderer.setSize(canvas.clientWidth || 160, canvas.clientHeight || 160, false);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 0.98;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.physicallyCorrectLights = true;
+
+  // ── Scene ──
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(22, 1, 0.1, 200);
+  camera.position.set(18, 10, 19);
+
+  // ── Lighting — realistic product render setup ──
+  // Soft ambient — lights everything from all directions
+  scene.add(new THREE.AmbientLight(0xffffff, 0.62));
+
+  // Hemisphere: cool sky, warm ground
+  const hemi = new THREE.HemisphereLight(0xd0dcff, 0x786342, 0.72);
+  scene.add(hemi);
+
+  // Key light — warm, from top-right-front
+  const keyLight = new THREE.DirectionalLight(0xfff4e0, 1.8);
+  keyLight.position.set(6, 9, 7);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.set(quality.shadowMapSize, quality.shadowMapSize);
+  keyLight.shadow.camera.near = 1;
+  keyLight.shadow.camera.far = 24;
+  keyLight.shadow.camera.left = -5.5;
+  keyLight.shadow.camera.right = 5.5;
+  keyLight.shadow.camera.top = 5.5;
+  keyLight.shadow.camera.bottom = -5.5;
+  keyLight.shadow.bias = -0.0004;
+  keyLight.shadow.normalBias = 0.015;
+  scene.add(keyLight);
+
+  // Fill — left side
+  const fillLight = new THREE.DirectionalLight(0xaac4ff, 0.92);
+  fillLight.position.set(-7, 3, -5);
+  scene.add(fillLight);
+
+  // Fill — front-low (lights package under stacked layers)
+  const frontFill = new THREE.DirectionalLight(0xd8e4ff, 0.82);
+  frontFill.position.set(3, 1, 8);
+  scene.add(frontFill);
+
+  // Fill — right side
+  const rightFill = new THREE.DirectionalLight(0xffeedd, 0.62);
+  rightFill.position.set(8, 2, -4);
+  scene.add(rightFill);
+
+  // Rim / back
+  const rimLight = new THREE.DirectionalLight(0xc8e0ff, 0.72);
+  rimLight.position.set(-4, 6, -9);
+  scene.add(rimLight);
+
+  // Warm bounce from below — strong, lights the bottom face
+  const bounceLight = new THREE.DirectionalLight(0xffd580, 0.46);
+  bounceLight.position.set(0, -6, 1);
+  scene.add(bounceLight);
+
+  // Extra bottom fill — cool tint from below-back
+  const bottomFill = new THREE.DirectionalLight(0xc0d0ff, 0.34);
+  bottomFill.position.set(-3, -5, -4);
+  scene.add(bottomFill);
+
+  // Gold accent on core
+  const accent = new THREE.PointLight(0xffc060, 0.22, 10, 2.0);
+  accent.position.set(0, 3, 2);
+  scene.add(accent);
+
+  // ── Environment ──
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  pmrem.compileEquirectangularShader();
+  const envRT = pmrem.fromScene(new RoomEnvironment(), 0.0);
+  scene.environment = envRT.texture;
+  scene.environmentIntensity = 0.72;
+
+  // ── Helpers ──
+  function makeCanvasTex(size, draw) {
+    const c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    const ctx = c.getContext('2d');
+    draw(ctx, size);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy?.() || 16;
+    tex.minFilter = THREE.LinearMipmapLinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    tex.wrapS = THREE.ClampToEdgeWrapping;
+    tex.wrapT = THREE.ClampToEdgeWrapping;
+    return tex;
+  }
+
+  function noise(ctx, size, count, alpha) {
+    for (let i = 0; i < count; i++) {
+      ctx.fillStyle = `rgba(255,255,255,${alpha * Math.random()})`;
+      ctx.beginPath();
+      ctx.arc(Math.random()*size, Math.random()*size, 0.6+Math.random()*1.6, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+
+  function polyline(ctx, pts, w, style, glow) {
+    if (glow) {
+      ctx.save();
+      ctx.strokeStyle = glow.c; ctx.lineWidth = w + glow.w;
+      ctx.shadowBlur = glow.b; ctx.shadowColor = glow.c;
+      ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+      for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0], pts[i][1]);
+      ctx.stroke(); ctx.restore();
+    }
+    ctx.save();
+    ctx.strokeStyle = style; ctx.lineWidth = w;
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.stroke(); ctx.restore();
+  }
+
+  function scalePts(pts, scale) {
+    return pts.map(([x, y]) => [x * scale, y * scale]);
+  }
+
+  function fillPad(ctx, x, y, w, h, base, hi) {
+    ctx.fillStyle = base;
+    ctx.fillRect(x - w * 0.5, y - h * 0.5, w, h);
+    ctx.fillStyle = hi;
+    ctx.fillRect(x - w * 0.25, y - h * 0.2, w * 0.5, h * 0.4);
+  }
+
+  function fillVia(ctx, x, y, r, ring, core, hi) {
+    ctx.fillStyle = ring;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = core;
+    ctx.beginPath();
+    ctx.arc(x, y, r * 0.58, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = hi;
+    ctx.beginPath();
+    ctx.arc(x - r * 0.18, y - r * 0.16, r * 0.22, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawViaField(ctx, xs, ys, r, ring, core, hi) {
+    for (const x of xs) {
+      for (const y of ys) fillVia(ctx, x, y, r, ring, core, hi);
+    }
+  }
+
+  function perimeterCoords(half, edgeXs, edgeZs) {
+    const pos = [];
+    for (const x of edgeXs) {
+      pos.push([x, -half], [x, half]);
+    }
+    for (const z of edgeZs) {
+      pos.push([-half, z], [half, z]);
+    }
+    return pos;
+  }
+
+  // ── Textures ──
+  function pkgTopTex() {
+    return makeCanvasTex(PACKAGE_TEXTURE_SIZE, (ctx, S) => {
+      const u = S / 1024;
+      const g = ctx.createLinearGradient(0,0,S,S);
+      g.addColorStop(0,'#393d42'); g.addColorStop(0.4,'#2a2e33'); g.addColorStop(1,'#171a1f');
+      ctx.fillStyle = g; ctx.fillRect(0,0,S,S);
+
+      const v = ctx.createRadialGradient(S*.5,S*.48,S*.12,S*.5,S*.5,S*.72);
+      v.addColorStop(0,'rgba(255,255,255,0)'); v.addColorStop(1,'rgba(0,0,0,0.32)');
+      ctx.fillStyle = v; ctx.fillRect(0,0,S,S);
+
+      ctx.strokeStyle = 'rgba(190,195,200,0.05)'; ctx.lineWidth = 2 * u;
+      for (let i=0;i<16;i++) { const x=S*(0.12+(i/15)*0.76); ctx.beginPath(); ctx.moveTo(x,S*0.16); ctx.lineTo(x,S*0.84); ctx.stroke(); }
+      for (let i=0;i<10;i++) { const y=S*(0.18+(i/9)*0.64); ctx.beginPath(); ctx.moveTo(S*0.16,y); ctx.lineTo(S*0.84,y); ctx.stroke(); }
+
+      const traces = [
+        [[140,310],[270,310],[390,420],[620,420],[760,255],[890,255]],
+        [[140,715],[305,715],[430,590],[605,590],[750,810],[890,810]],
+        [[250,160],[250,285],[470,500],[760,500],[860,650]],
+        [[775,165],[775,335],[555,500],[280,500],[160,655]]
+      ];
+      for (const t of traces) {
+        const path = scalePts(t, u);
+        polyline(ctx,path,12 * u,'rgba(172,122,72,0.80)',{c:'rgba(218,180,102,0.14)',w:8 * u,b:10 * u});
+        polyline(ctx,path,3.2 * u,'rgba(255,245,220,0.25)');
+      }
+
+      const pads=[[118,175],[200,175],[824,175],[906,175],[118,850],[200,850],[824,850],[906,850],[160,300],[864,300],[160,725],[864,725]];
+      for (const [x,y] of pads) {
+        fillPad(ctx, x * u, y * u, 40 * u, 24 * u, 'rgba(160,103,58,0.88)', 'rgba(255,220,170,0.22)');
+      }
+
+      ctx.strokeStyle='rgba(210,216,220,0.08)'; ctx.lineWidth=2 * u;
+      ctx.strokeRect(S*0.09,S*0.11,S*0.82,S*0.78);
+      ctx.strokeRect(S*0.15,S*0.17,S*0.70,S*0.66);
+
+      ctx.fillStyle='rgba(235,239,244,0.11)'; ctx.font=`600 ${18 * u}px Inter,Arial,sans-serif`; ctx.textAlign='left';
+      ctx.fillText('GDT-C3S / SECURE STACK PROCESSOR', S * 0.19, S * 0.77);
+      ctx.fillStyle='rgba(235,239,244,0.07)'; ctx.font=`500 ${12 * u}px Inter,Arial,sans-serif`;
+      ctx.fillText('REV A1  •  ENCAPSULATED PACKAGE', S * 0.19, S * 0.805);
+      fillVia(ctx, S * 0.138, S * 0.19, 8 * u, 'rgba(232,208,150,0.88)', 'rgba(193,148,92,0.94)', 'rgba(255,245,220,0.28)');
+
+      noise(ctx,S,220,0.022);
+    });
+  }
+
+  function memTex(tA, tB, label) {
+    return makeCanvasTex(LAYER_TEXTURE_SIZE, (ctx, S) => {
+      const u = S / 1024;
+      const g=ctx.createLinearGradient(0,0,S,S);
+      g.addColorStop(0,tA); g.addColorStop(1,tB);
+      ctx.fillStyle=g; ctx.fillRect(0,0,S,S);
+
+      ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=3 * u;
+      ctx.strokeRect(S*0.08,S*0.10,S*0.84,S*0.80);
+      ctx.strokeRect(S*0.16,S*0.18,S*0.68,S*0.64);
+
+      ctx.strokeStyle='rgba(255,255,255,0.045)'; ctx.lineWidth=2 * u;
+      for(let i=0;i<18;i++){const y=S*(0.14+(i/17)*0.72);ctx.beginPath();ctx.moveTo(S*0.14,y);ctx.lineTo(S*0.86,y);ctx.stroke();}
+      ctx.strokeStyle='rgba(18,20,18,0.10)';
+      for(let i=0;i<6;i++){const x=S*(0.20+(i/5)*0.60);ctx.beginPath();ctx.moveTo(x,S*0.18);ctx.lineTo(x,S*0.82);ctx.stroke();}
+
+      drawViaField(
+        ctx,
+        [S * 0.18, S * 0.28, S * 0.72, S * 0.82],
+        [S * 0.22, S * 0.38, S * 0.62, S * 0.78],
+        6.5 * u,
+        'rgba(201,176,126,0.72)',
+        'rgba(121,89,56,0.92)',
+        'rgba(255,246,220,0.18)'
+      );
+
+      if(label){
+        ctx.fillStyle='rgba(255,255,255,0.035)'; ctx.font=`500 ${14 * u}px Inter,Arial,sans-serif`; ctx.textAlign='right';
+        ctx.fillText(label, S * 0.80, S * 0.74);
+      }
+
+      noise(ctx,S,150,0.02);
+    });
+  }
+
+  function activeTex() {
+    return makeCanvasTex(LAYER_TEXTURE_SIZE, (ctx, S) => {
+      const u = S / 1024;
+      const g=ctx.createLinearGradient(0,0,S,S);
+      g.addColorStop(0,'#9fa39d'); g.addColorStop(0.45,'#7c817b'); g.addColorStop(1,'#50554f');
+      ctx.fillStyle=g; ctx.fillRect(0,0,S,S);
+
+      ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=2 * u;
+      ctx.strokeRect(S*0.06,S*0.08,S*0.88,S*0.84);
+      ctx.strokeRect(S*0.12,S*0.14,S*0.76,S*0.72);
+
+      const traces=[
+        [[210,218],[334,218],[428,298],[656,298]],
+        [[814,218],[690,218],[596,298],[368,298]],
+        [[222,806],[350,806],[444,726],[640,726]],
+        [[802,806],[674,806],[580,726],[384,726]],
+        [[256,160],[256,322],[418,468],[418,644]],
+        [[768,160],[768,322],[606,468],[606,644]],
+        [[178,388],[320,388],[388,468],[388,640]],
+        [[846,388],[704,388],[636,468],[636,640]]
+      ];
+      for(const t of traces){
+        const path = scalePts(t, u);
+        polyline(ctx, path, 5.4 * u, 'rgba(167,120,74,0.32)', {c:'rgba(234,198,132,0.05)', w:3.5 * u, b:5 * u});
+        polyline(ctx, path, 1.2 * u, 'rgba(255,242,212,0.09)');
+      }
+
+      ctx.strokeStyle='rgba(255,255,255,0.020)'; ctx.lineWidth=1.3 * u;
+      for(let i=0;i<6;i++){const x=S*(0.26+(i/5)*0.48);ctx.beginPath();ctx.moveTo(x,S*0.20);ctx.lineTo(x,S*0.80);ctx.stroke();}
+
+      ctx.fillStyle='rgba(33,36,39,0.16)'; ctx.fillRect(S*0.20,S*0.20,S*0.60,S*0.60);
+      ctx.strokeStyle='rgba(217,178,120,0.10)'; ctx.lineWidth=2.4 * u;
+      ctx.strokeRect(S*0.24,S*0.24,S*0.52,S*0.52);
+      ctx.strokeRect(S*0.30,S*0.30,S*0.40,S*0.40);
+      drawViaField(
+        ctx,
+        [S * 0.24, S * 0.36, S * 0.64, S * 0.76],
+        [S * 0.24, S * 0.36, S * 0.64, S * 0.76],
+        4.4 * u,
+        'rgba(196,170,120,0.34)',
+        'rgba(122,90,58,0.70)',
+        'rgba(255,245,220,0.10)'
+      );
+
+      ctx.fillStyle='rgba(255,255,255,0.022)'; ctx.font=`500 ${11 * u}px Inter,Arial,sans-serif`; ctx.textAlign='right';
+      ctx.fillText('RDL / ACTIVE INTERPOSER', S * 0.79, S * 0.80);
+      noise(ctx,S,180,0.018);
+    });
+  }
+
+  function coreTex() {
+    return makeCanvasTex(LAYER_TEXTURE_SIZE, (ctx, S) => {
+      const u = S / 1024;
+      const g=ctx.createLinearGradient(0,0,S,S);
+      g.addColorStop(0,'#d0c6a7'); g.addColorStop(0.34,'#b59663'); g.addColorStop(1,'#75572f');
+      ctx.fillStyle=g; ctx.fillRect(0,0,S,S);
+
+      ctx.fillStyle='rgba(42,45,49,0.86)'; ctx.fillRect(S*0.205,S*0.205,S*0.59,S*0.59);
+
+      ctx.strokeStyle='rgba(255,248,225,0.07)'; ctx.lineWidth=1.6 * u;
+      ctx.strokeRect(S*0.12,S*0.12,S*0.76,S*0.76);
+      ctx.strokeRect(S*0.18,S*0.18,S*0.64,S*0.64);
+      ctx.strokeStyle='rgba(255,225,176,0.055)'; ctx.lineWidth=1.0 * u;
+      ctx.strokeRect(S*0.205,S*0.205,S*0.59,S*0.59);
+
+      const seams=[
+        [[210,210],[814,210]],[[210,814],[814,814]],[[210,210],[210,814]],[[814,210],[814,814]],
+        [[332,512],[692,512]],[[512,332],[512,692]]
+      ];
+      for(const s of seams) polyline(ctx, scalePts(s, u), 1.0 * u, 'rgba(230,232,235,0.024)');
+
+      const traces = [
+        [[264,302],[360,302],[426,374],[426,472]],
+        [[760,302],[664,302],[598,374],[598,472]],
+        [[296,722],[392,722],[458,650],[458,552]],
+        [[728,722],[632,722],[566,650],[566,552]],
+        [[332,248],[332,332]],
+        [[692,248],[692,332]],
+        [[332,776],[332,692]],
+        [[692,776],[692,692]]
+      ];
+      for (const t of traces) {
+        const path = scalePts(t, u);
+        polyline(ctx, path, 4.0 * u, 'rgba(154,103,58,0.22)', {c:'rgba(239,209,138,0.04)', w:2.4 * u, b:3 * u});
+        polyline(ctx, path, 0.85 * u, 'rgba(255,242,214,0.06)');
+      }
+
+      const pads=[[236,168],[348,168],[460,168],[564,168],[676,168],[788,168],[236,856],[348,856],[460,856],[564,856],[676,856],[788,856]];
+      for(const[x,y] of pads) fillPad(ctx, x * u, y * u, 18 * u, 10 * u, 'rgba(151,103,60,0.42)', 'rgba(255,231,184,0.08)');
+      const sidePads=[[168,304],[168,414],[168,610],[168,720],[856,304],[856,414],[856,610],[856,720]];
+      for(const[x,y] of sidePads) fillPad(ctx, x * u, y * u, 10 * u, 18 * u, 'rgba(151,103,60,0.36)', 'rgba(255,231,184,0.07)');
+
+      drawViaField(
+        ctx,
+        [S * 0.36, S * 0.44, S * 0.56, S * 0.64],
+        [S * 0.36, S * 0.64],
+        3.2 * u,
+        'rgba(228,205,154,0.32)',
+        'rgba(137,98,60,0.58)',
+        'rgba(255,244,220,0.07)'
+      );
+
+      ctx.fillStyle='rgba(255,240,200,0.014)'; ctx.font=`500 ${11 * u}px Inter,Arial,sans-serif`; ctx.textAlign='left';
+      ctx.fillText('DIE 0 / C3S-A1', S * 0.23, S * 0.80);
+
+      noise(ctx,S,90,0.012);
+    });
+  }
+
+  // ── Layer builder ──
+  function makeLayer(w,h,d,y,topMap,topC,sideC,botC,met,rough,cc,ccR,edgeRadius=0.03) {
+    const radius = Math.min(edgeRadius, h * 0.42, w * 0.06, d * 0.06);
+    const geo = new RoundedBoxGeometry(w, h, d, 4, radius);
+    const side = new THREE.MeshPhysicalMaterial({color:sideC,metalness:met,roughness:rough,clearcoat:cc,clearcoatRoughness:ccR,envMapIntensity:0.95});
+    const bot  = new THREE.MeshPhysicalMaterial({color:botC,metalness:Math.max(0,met-0.01),roughness:Math.min(1,rough+0.05),clearcoat:cc*0.45,clearcoatRoughness:Math.min(1,ccR+0.22),envMapIntensity:0.82});
+    const top  = new THREE.MeshPhysicalMaterial({color:topC,map:topMap,metalness:met+0.01,roughness:Math.max(0.28,rough-0.04),clearcoat:cc,clearcoatRoughness:ccR,reflectivity:0.5,envMapIntensity:1.02});
+    const mesh = new THREE.Mesh(geo,[side,side,top,bot,side,side]);
+    mesh.position.y = y;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    return mesh;
+  }
+
+  // ── Inter-Die Micro-Bumps ──
+  function makeTSVs(yBot, yTop) {
+    const group = new THREE.Group();
+    const pillarMat = new THREE.MeshPhysicalMaterial({color:0xc18d4e,metalness:1.0,roughness:0.30,clearcoat:0.18,clearcoatRoughness:0.24});
+    const padMat = new THREE.MeshPhysicalMaterial({color:0xae7841,metalness:0.98,roughness:0.38,clearcoat:0.14,clearcoatRoughness:0.28});
+    const capMat = new THREE.MeshPhysicalMaterial({color:0xe6c58c,metalness:0.92,roughness:0.24,clearcoat:0.22,clearcoatRoughness:0.16});
+    const topPillarMat = new THREE.MeshPhysicalMaterial({color:0xac7840,metalness:0.96,roughness:0.42,clearcoat:0.10,clearcoatRoughness:0.34});
+    const topPadMat = new THREE.MeshPhysicalMaterial({color:0x9b6b37,metalness:0.92,roughness:0.48,clearcoat:0.08,clearcoatRoughness:0.38});
+    const topCapMat = new THREE.MeshPhysicalMaterial({color:0xcba56a,metalness:0.84,roughness:0.34,clearcoat:0.12,clearcoatRoughness:0.26});
+
+    const interfaces = [
+      { y0: 0.43, y1: 0.50, pos: perimeterCoords(1.94, [-1.30,-0.44,0.44,1.30], [-0.90,0.90]), padR: 0.105, pillarR: 0.038 },
+      { y0: 0.66, y1: 0.72, pos: perimeterCoords(1.72, [-1.16,-0.38,0.38,1.16], [-0.76,0.76]), padR: 0.096, pillarR: 0.036 },
+      { y0: 0.88, y1: 0.94, pos: perimeterCoords(1.51, [-1.00,-0.34,0.34,1.00], [-0.64,0.64]), padR: 0.090, pillarR: 0.034 },
+      { y0: 1.12, y1: 1.22, pos: perimeterCoords(1.28, [-0.86,-0.28,0.28,0.86], [-0.52,0.52]), padR: 0.086, pillarR: 0.032 },
+      { y0: 1.46, y1: 1.52, pos: perimeterCoords(0.86, [-0.46,0.46], [-0.22,0.22]), padR: 0.076, pillarR: 0.026, muted: true }
+    ];
+
+    for (const itf of interfaces) {
+      const gap = itf.y1 - itf.y0;
+      const padH = Math.min(0.012, gap * 0.22);
+      const capH = Math.min(0.007, gap * 0.12);
+      const pillarH = Math.max(0.016, gap - (padH * 2 + capH * 2));
+      const pillarMaterial = itf.muted ? topPillarMat : pillarMat;
+      const padMaterial = itf.muted ? topPadMat : padMat;
+      const capMaterial = itf.muted ? topCapMat : capMat;
+      const pillarGeo = new THREE.CylinderGeometry(itf.pillarR, itf.pillarR, pillarH, 22);
+      const padGeo = new THREE.CylinderGeometry(itf.padR, itf.padR, padH, 22);
+      const capGeo = new THREE.CylinderGeometry(itf.padR * 0.72, itf.padR * 0.72, capH, 22);
+
+      for (const [x, z] of itf.pos) {
+        const pillar = new THREE.Mesh(pillarGeo, pillarMaterial);
+        pillar.position.set(x, (itf.y0 + itf.y1) * 0.5, z);
+        pillar.castShadow = true; pillar.receiveShadow = true;
+        group.add(pillar);
+
+        const bottomPad = new THREE.Mesh(padGeo, padMaterial);
+        bottomPad.position.set(x, itf.y0 + padH * 0.5, z);
+        bottomPad.castShadow = true; bottomPad.receiveShadow = true;
+        group.add(bottomPad);
+
+        const bottomCap = new THREE.Mesh(capGeo, capMaterial);
+        bottomCap.position.set(x, itf.y0 + padH + capH * 0.5, z);
+        bottomCap.castShadow = true; bottomCap.receiveShadow = true;
+        group.add(bottomCap);
+
+        const topCap = new THREE.Mesh(capGeo, capMaterial);
+        topCap.position.set(x, itf.y1 - padH - capH * 0.5, z);
+        topCap.castShadow = true; topCap.receiveShadow = true;
+        group.add(topCap);
+
+        const topPad = new THREE.Mesh(padGeo, padMaterial);
+        topPad.position.set(x, itf.y1 - padH * 0.5, z);
+        topPad.castShadow = true; topPad.receiveShadow = true;
+        group.add(topPad);
+      }
+    }
+    return group;
+  }
+
+  // ── Gull-wing Pins ──
+  function makePins(pkgW, pkgD, pkgY, pkgH) {
+    const group = new THREE.Group();
+    const pinMat = new THREE.MeshPhysicalMaterial({color:0xc4904c,metalness:1.0,roughness:0.26,clearcoat:0.20,clearcoatRoughness:0.18});
+    const hw = pkgW*0.5, hd = pkgD*0.5;
+    const spanW = hw-0.56, spanD = hd-0.56;
+    const count = 12;
+    const baseY = pkgY - pkgH*0.08;
+    const leadW = 0.038;
+    const leadT = 0.011;
+    const leadShape = new THREE.Shape();
+    leadShape.moveTo(-leadW, -leadT);
+    leadShape.lineTo( leadW, -leadT);
+    leadShape.lineTo( leadW,  leadT);
+    leadShape.lineTo(-leadW,  leadT);
+    leadShape.lineTo(-leadW, -leadT);
+
+    function bentPin(start, dir) {
+      const pts = [
+        new THREE.Vector3(start.x, start.y, start.z),
+        new THREE.Vector3(start.x+dir.x*0.16, start.y-0.01, start.z+dir.z*0.16),
+        new THREE.Vector3(start.x+dir.x*0.28, start.y-0.06, start.z+dir.z*0.28),
+        new THREE.Vector3(start.x+dir.x*0.30, start.y-0.34, start.z+dir.z*0.30),
+        new THREE.Vector3(start.x+dir.x*0.22, start.y-0.42, start.z+dir.z*0.22)
+      ];
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
+      const geo = new THREE.ExtrudeGeometry(leadShape, { steps: 18, bevelEnabled: false, extrudePath: curve, curveSegments: 4 });
+      const mesh = new THREE.Mesh(geo, pinMat);
+      mesh.castShadow = true; mesh.receiveShadow = true;
+      return mesh;
+    }
+
+    for (let i=0; i<count; i++) {
+      const t = (i+1)/(count+1);
+      const xW = THREE.MathUtils.lerp(-spanW, spanW, t);
+      const zD = THREE.MathUtils.lerp(-spanD, spanD, t);
+      group.add(bentPin({x:xW,y:baseY,z:-hd}, {x:0,z:-1}));
+      group.add(bentPin({x:xW,y:baseY,z: hd}, {x:0,z: 1}));
+      group.add(bentPin({x:-hw,y:baseY,z:zD}, {x:-1,z:0}));
+      group.add(bentPin({x: hw,y:baseY,z:zD}, {x: 1,z:0}));
+    }
+    return group;
+  }
+
+  // ── Build Chip ──
+  const chipRoot = new THREE.Group();
+  chipRoot.position.y = 0.02;
+  scene.add(chipRoot);
+
+  //                      w     h     d     y    tex                                              topC      sideC     botC      met   rough cc    ccR
+  const pkg = makeLayer(5.9,  0.42, 5.9,  0.22, pkgTopTex(),                                    0x484b50, 0x333840, 0x3b4048, 0.02, 0.68, 0.08, 0.34, 0.11);
+  const mC  = makeLayer(4.65, 0.16, 4.65, 0.58, memTex('#878e82','#5c655b','MEM STACK L0'),     0x8e968b, 0x72796f, 0x7a8277, 0.02, 0.62, 0.03, 0.42, 0.030);
+  const mB  = makeLayer(4.15, 0.16, 4.15, 0.80, memTex('#97a094','#687166','MEM STACK L1'),     0x98a094, 0x798177, 0x7e877c, 0.02, 0.60, 0.03, 0.42, 0.028);
+  const mA  = makeLayer(3.72, 0.18, 3.72, 1.03, memTex('#a8b0a4','#757d73','MEM STACK L2'),     0xa8b0a4, 0x828a80, 0x899187, 0.02, 0.58, 0.03, 0.40, 0.026);
+  const act = makeLayer(3.18, 0.24, 3.18, 1.34, activeTex(),                                    0x9ea39d, 0x7f847e, 0x878d87, 0.03, 0.54, 0.03, 0.36, 0.022);
+  const core= makeLayer(2.30, 0.18, 2.30, 1.61, coreTex(),                                      0xb78449, 0x976836, 0xa7743f, 0.72, 0.24, 0.16, 0.18, 0.018);
+
+  [pkg, mC, mB, mA, act, core].forEach(m => chipRoot.add(m));
+  chipRoot.add(makeTSVs(0.44, 1.68));
+  chipRoot.add(makePins(5.9, 5.9, 0.22, 0.42));
+
+  chipRoot.rotation.x = -0.22;
+  chipRoot.rotation.y = 0.72;
+  chipRoot.rotation.z = 0.02;
+
+  // ── Controls ──
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.enablePan = false;
+  controls.enableZoom = false;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 0.55;
+  controls.target.set(0, 0.9, 0);
+  controls.minPolarAngle = 0;
+  controls.maxPolarAngle = Math.PI;
+  controls.update();
+
+  // ── Resize — adaptive internal resolution for crisp small-size rendering ──
+  function resize() {
+    const r = canvas.getBoundingClientRect();
+    const cssW = Math.max(64, Math.round(r.width || 160));
+    const cssH = Math.max(64, Math.round(r.height || 160));
+    const effectiveDpr = Math.min(deviceDpr, quality.maxPixelRatio);
+    const renderW = Math.min(
+      quality.maxRenderEdge,
+      Math.max(quality.minRenderEdge, Math.round(cssW * effectiveDpr * quality.oversample))
+    );
+    const renderH = Math.min(
+      quality.maxRenderEdge,
+      Math.max(quality.minRenderEdge, Math.round(cssH * effectiveDpr * quality.oversample))
+    );
+    renderer.setSize(renderW, renderH, false); // false = don't update CSS style
+    camera.aspect = renderW / renderH;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  if (window.ResizeObserver) {
+    new ResizeObserver(resize).observe(canvas);
+  }
+  window.addEventListener('resize', resize, {passive:true});
+
+  // ── Animate ──
+  const clock = new THREE.Clock();
+  let running = true;
+  let lastFrameTime = 0;
+
+  function animate(now = 0) {
+    if (!running) return;
+    requestAnimationFrame(animate);
+    if (now - lastFrameTime < FRAME_INTERVAL) return;
+    lastFrameTime = now;
+    const dt = clock.getDelta();
+    chipRoot.rotation.x = -0.22 + Math.sin(performance.now() * 0.00035) * 0.015;
+    chipRoot.rotation.z = 0.02 + Math.sin(performance.now() * 0.00021) * 0.006;
+    controls.update(dt);
+    renderer.render(scene, camera);
+  }
+
+  // Visibility
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { running = false; clock.stop(); }
+    else { running = true; lastFrameTime = 0; clock.start(); animate(); }
+  });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      const vis = entries[0]?.isIntersecting;
+      if (vis && !running) { running = true; lastFrameTime = 0; clock.start(); animate(); }
+      else if (!vis) { running = false; clock.stop(); }
+    }, {threshold:0.02}).observe(canvas);
+  }
+
+  animate();
+})();
+
 </script>
 
 </body>
