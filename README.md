@@ -44,7 +44,7 @@ The hero canvas renders a stylized but realistic semiconductor-inspired package:
 - cryptographic processor core
 - 3D-stacked memory layers
 - package substrate and gull-wing pins
-- adaptive internal render resolution and FPS limits
+- adaptive internal render resolution, texture sizes, shadow budget, and FPS cap
 
 Quality is controlled inside [`index.html`](./index.html) with:
 
@@ -55,9 +55,11 @@ const QUALITY_MODE = 'auto'; // 'auto' | 'balanced' | 'mobile' | 'ultra'
 Current behavior:
 
 - `auto`: chooses a balanced desktop profile or lighter mobile profile
-- `balanced`: good quality with lower GPU cost
-- `mobile`: lighter profile for smaller/coarse-pointer devices
+- `balanced`: good visual quality with lower render cost on desktop
+- `mobile`: lighter internal render settings for smaller/coarse-pointer devices
 - `ultra`: maximum sharpness / highest GPU usage
+
+At the moment, all profiles target `60 FPS`; the main differences between them are internal render size, texture resolution, shadow-map size, and power preference.
 
 ## Project Structure
 

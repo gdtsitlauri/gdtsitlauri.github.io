@@ -46,6 +46,8 @@ html, body {
   --ep: #5e00f5;
   --db: #0a0f2e;
   --cb: rgba(255,255,255,0.015);
+  --cardg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
+  --cardbrd: rgba(180, 197, 255, 0.14);
   --cbrd: rgba(94,0,245,0.18);
   --tp: #f0f4ff;
   --ts: #b0bcd4;
@@ -436,57 +438,6 @@ nav {
   background: #008000;
 }
 
-.si {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ts);
-  text-decoration: none;
-  font-size: 1rem;
-  position: relative;
-  transition: color .25s, transform .35s cubic-bezier(.34,1.56,.64,1), background .25s;
-  background: transparent;
-  box-sizing: border-box;
-  isolation: isolate;
-}
-
-.si::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  padding: 1px;
-  background: conic-gradient(
-    from 210deg,
-    rgba(0,116,255,0.82),
-    rgba(0,116,255,0.92),
-    rgba(94,0,245,0.82),
-    rgba(94,0,245,0.92),
-    rgba(0,116,255,0.82)
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  z-index: -1;
-  pointer-events: none;
-  opacity: .72;
-  transition: opacity .25s ease;
-}
-
-.si:hover::before,
-.si:active::before {
-  opacity: 0;
-}
-
 /* ── SECTION TITLES ── */
 .slabel {
   font-size: .75rem;
@@ -531,11 +482,13 @@ nav {
 
 /* ── CARDS ── */
 .card {
-  background: var(--cb);
-  border: 1px solid var(--cbrd);
+  background: var(--cardg);
+  border: none;
   border-radius: 20px;
   padding: 26px 28px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
   will-change: transform, opacity;
 }
 
@@ -545,8 +498,7 @@ nav {
   transition:
     opacity .55s ease,
     transform .55s cubic-bezier(.22,1,.36,1),
-    box-shadow .18s ease,
-    border-color .18s ease;
+    box-shadow .18s ease;
 }
 
 .card.reveal.visible {
@@ -929,11 +881,11 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   flex: 0 0 auto;
-  min-width: 170px;
-  min-height: 54px;
-  padding: 13px 28px;
+  min-width: 186px;
+  min-height: 60px;
+  padding: 15px 30px;
   background: transparent;
   border: none;
   backdrop-filter: none;
@@ -941,7 +893,7 @@ nav {
 }
 
 .lflag {
-  font-size: 1.65rem;
+  font-size: 1.85rem;
   line-height: 1;
   transition: transform .35s cubic-bezier(.34,1.56,.64,1);
   display: inline-block;
@@ -949,12 +901,12 @@ nav {
 
 .li h3 {
   font-family: 'Caveat', cursive;
-  font-size: 1.08rem;
+  font-size: 1.16rem;
   font-weight: 700;
 }
 
 .li p {
-  font-size: .76rem;
+  font-size: .82rem;
   color: var(--ts);
 }
 
@@ -1163,18 +1115,8 @@ footer span {
     transform: translateY(-3px);
   }
 
-
-  .si:hover {
-    color: #fff;
-    background: var(--gm);
-    border-color: transparent;
-    background-clip: padding-box;
-    transform: translateY(-4px);
-  }
-
   .card.reveal.visible:hover {
     transform: translateY(-6px) scale(1.01);
-    border-color: rgba(0,116,255,0.35);
     box-shadow: 0 14px 36px rgba(0,0,0,0.18);
   }
 
@@ -1265,14 +1207,6 @@ footer span {
     transform: translateY(-3px);
   }
 
-
-  .si:active {
-    color: #fff;
-    background: var(--gm);
-    border-color: transparent;
-    transform: translateY(-4px) scale(1.1);
-  }
-
   .pl:active {
     background: var(--gm);
     -webkit-background-clip: text;
@@ -1308,7 +1242,6 @@ footer span {
     height: 180px;
   }
 
-  .hero-socials,
   .hero-btns {
     justify-content: center;
   }
@@ -1347,10 +1280,6 @@ footer span {
 
   .hero-btns {
     order: 4;
-  }
-
-  .hero-socials {
-    order: 5;
   }
 
   .rgrid {
@@ -1460,11 +1389,23 @@ footer span {
   }
 
   .lcard {
-    width: 200px;
-    min-width: 200px;
-    min-height: 46px;
-    padding: 6px 0;
+    width: 220px;
+    min-width: 220px;
+    min-height: 54px;
+    padding: 8px 0;
     justify-content: flex-start;
+  }
+
+  .lflag {
+    font-size: 1.95rem;
+  }
+
+  .li h3 {
+    font-size: 1.16rem;
+  }
+
+  .li p {
+    font-size: .82rem;
   }
 
   .cgrid {
