@@ -168,7 +168,7 @@ nav {
 
 .nav-logo {
   font-family: 'Caveat', cursive;
-  font-size: 1.4rem;
+  font-size: 1.55rem;
   font-weight: 700;
   display: inline-block;
   padding: 2px 6px 5px;
@@ -328,7 +328,7 @@ nav {
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--eb);
-  background: rgba(10,15,46,0.9);
+  background: transparent;
   border-radius: 10px;
   padding: 6px 16px;
   margin-bottom: 0;
@@ -436,27 +436,55 @@ nav {
   background: #008000;
 }
 
-.hero-socials {
-  display: flex;
-  gap: 18px;
-  margin-top: 46px;
-  animation: fadeUp .75s .4s ease both;
-}
-
 .si {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--ts);
   text-decoration: none;
   font-size: 1rem;
-  transition: color .25s, border-color .25s, transform .35s cubic-bezier(.34,1.56,.64,1), background .25s;
+  position: relative;
+  transition: color .25s, transform .35s cubic-bezier(.34,1.56,.64,1), background .25s;
   background: transparent;
   box-sizing: border-box;
+  isolation: isolate;
+}
+
+.si::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 1px;
+  background: conic-gradient(
+    from 210deg,
+    rgba(0,116,255,0.82),
+    rgba(0,116,255,0.92),
+    rgba(94,0,245,0.82),
+    rgba(94,0,245,0.92),
+    rgba(0,116,255,0.82)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .72;
+  transition: opacity .25s ease;
+}
+
+.si:hover::before,
+.si:active::before {
+  opacity: 0;
 }
 
 /* ── SECTION TITLES ── */
@@ -569,7 +597,16 @@ nav {
   border-radius: 14px;
   font-size: 1.1rem;
   flex-shrink: 0;
-  color: var(--eb);
+  background: linear-gradient(135deg, rgba(0,116,255,0.18) 0%, rgba(94,0,245,0.12) 100%);
+  color: transparent;
+}
+
+.aico i {
+  background: linear-gradient(135deg, #1f8bff 0%, #7a2cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .acard h3 {
@@ -777,11 +814,19 @@ nav {
 }
 
 .pico {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  font-size: 1rem;
-  color: var(--ep);
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  color: transparent;
+}
+
+.pico i {
+  background: linear-gradient(135deg, #1f8bff 0%, #7a2cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .pl {
@@ -841,6 +886,10 @@ nav {
   padding: 4px 11px;
 }
 
+.scat .pills {
+  justify-content: center;
+}
+
 .scat h3 {
   font-family: 'Caveat', cursive;
   font-size: 1.15rem;
@@ -851,7 +900,9 @@ nav {
   margin-bottom: 14px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  text-align: center;
 }
 
 .pill {
@@ -871,18 +922,26 @@ nav {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .lcard {
   display: flex;
   align-items: center;
-  gap: 14px;
-  flex: 1;
-  min-width: 190px;
+  justify-content: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  min-width: 170px;
+  min-height: 54px;
+  padding: 13px 28px;
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+  box-shadow: none;
 }
 
 .lflag {
-  font-size: 1.9rem;
+  font-size: 1.65rem;
   line-height: 1;
   transition: transform .35s cubic-bezier(.34,1.56,.64,1);
   display: inline-block;
@@ -890,51 +949,61 @@ nav {
 
 .li h3 {
   font-family: 'Caveat', cursive;
-  font-size: 1.2rem;
+  font-size: 1.08rem;
   font-weight: 700;
 }
 
 .li p {
-  font-size: .79rem;
+  font-size: .76rem;
   color: var(--ts);
 }
 
 /* ── CONTACT ── */
 .cgrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px,1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 18px;
+  justify-content: center;
 }
 
 .ci {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 28px;
+  min-height: 54px;
+  min-width: 170px;
+  border-radius: 20px;
   text-decoration: none;
-  color: var(--tp);
-}
-
-.ciico {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.08);
-  font-size: 1.05rem;
   color: #fff;
-  flex-shrink: 0;
-  transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s;
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 1.15rem;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .25s;
+  flex: 0 0 auto;
 }
 
-.ci span {
-  font-size: .86rem;
-  color: var(--ts);
-  display: block;
+.ci i {
+  font-size: .98rem;
+  color: #fff;
 }
 
-.ci strong {
-  font-size: .92rem;
-  transition: color .2s;
+.ci-email i {
+  color: #2a2230;
+}
+
+.ci-email {
+  background: #d8c29a;
+  color: #2a2230;
+}
+
+.ci-github {
+  background: #1f2328;
+}
+
+.ci-linkedin {
+  background: #0a66c2;
 }
 
 /* ── FOOTER ── */
@@ -1056,7 +1125,7 @@ footer span {
   padding: 14px 22px 13px;
   text-decoration: none;
   color: var(--ts);
-  background: rgba(10,15,46,0.9);
+  background: transparent;
   font-size: .88rem;
   font-weight: 600;
   transition: transform .25s ease, color .25s ease, opacity .25s ease;
@@ -1065,22 +1134,7 @@ footer span {
 }
 
 .footer-top-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 2px;
-  background: linear-gradient(90deg, var(--eb), var(--ep));
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  z-index: -1;
-  pointer-events: none;
-  border-radius: 10px;
+  content: none;
 }
 
 /* ── DESKTOP / REAL HOVER ── */
@@ -1091,7 +1145,7 @@ footer span {
   }
 
   .nav-links a:hover {
-    color: var(--eb);
+    color: var(--ts);
   }
 
   .nav-links a:hover::after {
@@ -1130,6 +1184,8 @@ footer span {
   }
 
   .acard:hover .aico i {
+    background: none;
+    -webkit-text-fill-color: #fff;
     color: #fff;
   }
 
@@ -1155,11 +1211,17 @@ footer span {
   }
 
   .pc:hover .pico i {
+    background: none;
+    -webkit-text-fill-color: #fff;
     color: #fff;
   }
 
   .pl:hover {
-    color: var(--eb);
+    background: var(--gm);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
     transform: scale(1.25);
   }
 
@@ -1175,20 +1237,8 @@ footer span {
     transform: scale(1.25);
   }
 
-  .ci:hover .ciico {
-    transform: scale(1.15);
-    background: var(--gm);
-  }
-
-  .ci:hover .ciico i {
-    color: #fff;
-  }
-
-  .ci:hover strong {
-    background: var(--gm);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .ci:hover {
+    transform: translateY(-3px);
   }
 
   .footer-top-btn:hover {
@@ -1200,7 +1250,7 @@ footer span {
 /* ── TOUCH / MOBILE ── */
 @media (hover: none) and (pointer: coarse) {
   .nav-links a:active {
-    color: var(--eb);
+    color: var(--ts);
   }
 
   .nav-links a:active::after {
@@ -1224,24 +1274,16 @@ footer span {
   }
 
   .pl:active {
-    color: var(--eb);
-    transform: scale(1.18);
-  }
-
-  .ci:active .ciico {
-    transform: scale(1.15);
-    background: var(--gm);
-  }
-
-  .ci:active .ciico i {
-    color: #fff;
-  }
-
-  .ci:active strong {
     background: var(--gm);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: transparent;
+    transform: scale(1.18);
+  }
+
+  .ci:active {
+    transform: translateY(-3px);
   }
 
   .footer-top-btn:active {
@@ -1412,6 +1454,34 @@ footer span {
 
   .lgrid {
     flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+    padding-left: 10px;
+  }
+
+  .lcard {
+    width: 200px;
+    min-width: 200px;
+    min-height: 46px;
+    padding: 6px 0;
+    justify-content: flex-start;
+  }
+
+  .cgrid {
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .ci {
+    min-width: 156px;
+    min-height: 50px;
+    padding: 11px 18px;
+    font-size: 1.08rem;
+    gap: 6px;
+  }
+
+  .ci i {
+    font-size: .92rem;
   }
 }
 
@@ -1431,7 +1501,7 @@ footer span {
   }
 
   .hero-sub {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     max-width: 100%;
   }
 
@@ -1453,6 +1523,32 @@ footer span {
 
   .pgrid {
     grid-template-columns: 1fr;
+  }
+
+  .cgrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    width: 100%;
+  }
+
+  .ci {
+    width: 100%;
+    min-width: 0;
+    min-height: 54px;
+    padding: 12px 18px;
+    font-size: 1.2rem;
+    gap: 6px;
+  }
+
+  .ci i {
+    font-size: .96rem;
+  }
+
+  .cgrid > .ci:nth-child(odd):last-child {
+    grid-column: 1 / -1;
+    width: calc(50% - 7px);
+    justify-self: center;
   }
 
   nav {
@@ -1526,12 +1622,6 @@ footer span {
       <a href="#projects" class="btn-project"><i class="fas fa-folder-open"></i> View Projects</a>
       <a href="#contact" class="btn-o"><i class="fas fa-paper-plane"></i> Contact Me</a>
       <a href="George_David_Tsitlauri_CV.pdf" target="_blank" rel="noopener noreferrer" class="btn-cv-hero"><i class="fas fa-file-alt"></i> View CV</a>
-    </div>
-
-    <div class="hero-socials">
-      <a href="mailto:gdtsitlauri@gmail.com" class="si" title="Email" aria-label="Send email to George David Tsitlauri"><i class="fas fa-envelope"></i></a>
-      <a href="https://github.com/gdtsitlauri" target="_blank" rel="noopener noreferrer" class="si" title="GitHub" aria-label="Open George David Tsitlauri GitHub profile"><i class="fab fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/gdtsitlauri/" target="_blank" rel="noopener noreferrer" class="si" title="LinkedIn" aria-label="Open George David Tsitlauri LinkedIn profile"><i class="fab fa-linkedin-in"></i></a>
     </div>
   </div>
 
@@ -2084,19 +2174,19 @@ footer span {
   <h2 class="stitle">Get In <span>Touch</span></h2>
 
   <div class="cgrid">
-    <a href="mailto:gdtsitlauri@gmail.com" class="card ci reveal">
-      <div class="ciico"><i class="fas fa-envelope"></i></div>
-      <div><span>Email</span><strong>gdtsitlauri@gmail.com</strong></div>
+    <a href="mailto:gdtsitlauri@gmail.com" class="ci ci-email reveal" aria-label="Send email to George David Tsitlauri">
+      <i class="fas fa-envelope"></i>
+      <span>Email Me</span>
     </a>
 
-    <a href="https://github.com/gdtsitlauri" target="_blank" rel="noopener noreferrer" class="card ci reveal">
-      <div class="ciico"><i class="fab fa-github"></i></div>
-      <div><span>GitHub</span><strong>github.com/gdtsitlauri</strong></div>
+    <a href="https://github.com/gdtsitlauri" target="_blank" rel="noopener noreferrer" class="ci ci-github reveal" aria-label="Open George David Tsitlauri GitHub profile">
+      <i class="fab fa-github"></i>
+      <span>GitHub</span>
     </a>
 
-    <a href="https://www.linkedin.com/in/gdtsitlauri/" target="_blank" rel="noopener noreferrer" class="card ci reveal">
-      <div class="ciico"><i class="fab fa-linkedin-in"></i></div>
-      <div><span>LinkedIn</span><strong>gdtsitlauri</strong></div>
+    <a href="https://www.linkedin.com/in/gdtsitlauri/" target="_blank" rel="noopener noreferrer" class="ci ci-linkedin reveal" aria-label="Open George David Tsitlauri LinkedIn profile">
+      <i class="fab fa-linkedin-in"></i>
+      <span>LinkedIn</span>
     </a>
   </div>
 </section>
