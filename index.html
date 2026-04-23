@@ -2365,6 +2365,100 @@ window.addEventListener('load', function() {
 });
 </script>
 
+<script>
+(function () {
+  const isDesktopSmooth = window.matchMedia(
+    '(hover: hover) and (pointer: fine) and (min-width: 821px)'
+  ).matches;
+
+  if (!isDesktopSmooth) return;
+
+  let current = window.scrollY;
+  let target = window.scrollY;
+  let maxScroll = 0;
+  let rafId = null;
+
+  const ease = 0.055;
+  const wheelStrength = 0.9;
+
+  function updateMaxScroll() {
+    maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(value, max));
+  }
+
+  function animateScroll() {
+    const diff = target - current;
+    current += diff * ease;
+
+    if (Math.abs(diff) < 0.3) {
+      current = target;
+    }
+
+    window.scrollTo(0, current);
+
+    if (Math.abs(target - current) > 0.3) {
+      rafId = requestAnimationFrame(animateScroll);
+    } else {
+      rafId = null;
+    }
+  }
+
+  function startAnimation() {
+    if (!rafId) rafId = requestAnimationFrame(animateScroll);
+  }
+
+  updateMaxScroll();
+
+  window.addEventListener('resize', () => {
+    updateMaxScroll();
+    target = clamp(target, 0, maxScroll);
+    current = clamp(current, 0, maxScroll);
+  });
+
+  window.addEventListener('wheel', (e) => {
+    if (e.ctrlKey) return;
+
+    e.preventDefault();
+
+    updateMaxScroll();
+    target += e.deltaY * wheelStrength;
+    target = clamp(target, 0, maxScroll);
+
+    startAnimation();
+  }, { passive: false });
+
+  window.addEventListener('keydown', (e) => {
+    updateMaxScroll();
+    const step = window.innerHeight * 0.85;
+
+    if (e.key === 'ArrowDown') target += 120;
+    else if (e.key === 'ArrowUp') target -= 120;
+    else if (e.key === 'PageDown') target += step;
+    else if (e.key === 'PageUp') target -= step;
+    else if (e.key === 'Home') target = 0;
+    else if (e.key === 'End') target = maxScroll;
+    else return;
+
+    target = clamp(target, 0, maxScroll);
+    e.preventDefault();
+    startAnimation();
+  });
+
+  let syncTimeout;
+  window.addEventListener('scroll', () => {
+    clearTimeout(syncTimeout);
+    syncTimeout = setTimeout(() => {
+      if (!rafId) {
+        current = window.scrollY;
+        target = window.scrollY;
+      }
+    }, 50);
+  }, { passive: true });
+})();
+</script>
 <script type="importmap">
 {"imports":{"three":"https://unpkg.com/three@0.170.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.170.0/examples/jsm/"}}
 </script>
