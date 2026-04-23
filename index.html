@@ -2345,11 +2345,11 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     revealTargetSection(target);
 
     if (isMobile) {
-      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      smoothScrollTo(targetPosition, 1400);
 
       requestAnimationFrame(() => revealTargetSection(target));
-      setTimeout(() => revealTargetSection(target), 120);
-      setTimeout(() => revealTargetSection(target), 260);
+      setTimeout(() => revealTargetSection(target), 180);
+      setTimeout(() => revealTargetSection(target), 340);
     } else {
       smoothScrollTo(targetPosition, 900);
     }
