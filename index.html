@@ -34,6 +34,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 html, body {
@@ -89,6 +91,7 @@ section {
   padding: 100px 6% 60px;
   max-width: 1100px;
   margin: 0 auto;
+  scroll-margin-top: 90px;
 }
 
 /* ── LOADER ── */
@@ -2236,7 +2239,8 @@ const sectionObserver = new IntersectionObserver((entries) => {
     }
   });
 }, {
-  threshold: 0.08
+  threshold: 0,
+  rootMargin: '0px 0px -10% 0px'
 });
 
 animatedSections.forEach((section) => {
@@ -2255,7 +2259,7 @@ const revealObserver = new IntersectionObserver((entries) => {
       }, index * 70);
     }
   });
-}, { threshold: 0.08 });
+}, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
 
 document.querySelectorAll('.reveal').forEach((el) => {
   revealObserver.observe(el);
@@ -2286,49 +2290,6 @@ function updateNavBackground() {
 
 window.addEventListener('scroll', updateNavBackground);
 updateNavBackground();
-
-function smoothScrollTo(targetY, duration = 850) {
-  const startY = window.pageYOffset;
-  const distance = targetY - startY;
-  const startTime = performance.now();
-
-  function easeInOutCubic(t) {
-    return t < 0.5
-      ? 4 * t * t * t
-      : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-
-  function step(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = easeInOutCubic(progress);
-
-    window.scrollTo(0, startY + distance * eased);
-
-    if (progress < 1) {
-      requestAnimationFrame(step);
-    }
-  }
-
-  requestAnimationFrame(step);
-}
-
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener('click', function(e) {
-    const targetId = this.getAttribute('href');
-    const target = document.querySelector(targetId);
-
-    if (!target) return;
-
-    e.preventDefault();
-
-    const navHeight = nav ? nav.offsetHeight : 0;
-    const targetPosition =
-      target.getBoundingClientRect().top + window.pageYOffset - navHeight - 10;
-
-    smoothScrollTo(targetPosition, 900);
-  });
-});
 
 window.addEventListener('DOMContentLoaded', function() {
   hideLoader(350);
