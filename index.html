@@ -2337,7 +2337,8 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     const navHeight = nav ? nav.offsetHeight : 0;
     const targetPosition = Math.max(
       target.getBoundingClientRect().top + window.pageYOffset - navHeight - 10,
-      0 );
+      0 
+    );
 
     const isMobile = window.matchMedia('(max-width: 820px), (pointer: coarse)').matches;
 
