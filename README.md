@@ -1,5 +1,10 @@
 # George David Tsitlauri | Portfolio Website
 
+**Author:** George David Tsitlauri  
+**Affiliation:** Dept. of Informatics & Telecommunications, University of Thessaly, Greece  
+**Contact:** gdtsitlauri@gmail.com  
+**Year:** 2026
+
 Personal portfolio website for **George David Tsitlauri**, focused on AI, systems, security, infrastructure, research, and selected software projects.
 
 Live site: **[gdtsitlauri.dev](https://gdtsitlauri.dev)**
