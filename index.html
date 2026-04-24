@@ -2470,656 +2470,1009 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-(function() {
+(function () {
   const canvas = document.getElementById('chip3d');
   if (!canvas) return;
 
-  const deviceDpr = window.devicePixelRatio || 1;
-  const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
-  const isSmallViewport = window.matchMedia('(max-width: 820px)').matches;
-  const QUALITY_MODE = 'auto'; // 'auto' | 'balanced' | 'mobile' | 'ultra'
+  const isMobile = window.matchMedia('(max-width: 820px), (pointer: coarse)').matches;
 
-  function getQualityProfile() {
-    if (QUALITY_MODE === 'ultra') {
-      return {
-        name: 'ultra',
-        powerPreference: 'high-performance',
-        packageTextureSize: 4096,
-        layerTextureSize: 2048,
-        maxPixelRatio: 3,
-        oversample: 1.35,
-        minRenderEdge: 480,
-        maxRenderEdge: 3072,
-        shadowMapSize: 4096,
-        targetFps: 60
-      };
-    }
-
-    if (QUALITY_MODE === 'balanced') {
-      return {
-        name: 'balanced',
-        powerPreference: 'default',
-        packageTextureSize: 2048,
-        layerTextureSize: 1024,
-        maxPixelRatio: 1.8,
-        oversample: 1.2,
-        minRenderEdge: 256,
-        maxRenderEdge: 1280,
-        shadowMapSize: 2048,
-        targetFps: 60
-      };
-    }
-
-    if (QUALITY_MODE === 'mobile') {
-      return {
-        name: 'mobile',
+  const quality = isMobile
+    ? {
         powerPreference: 'low-power',
-        packageTextureSize: 1536,
-        layerTextureSize: 768,
-        maxPixelRatio: 1.35,
-        oversample: 1.05,
-        minRenderEdge: 224,
-        maxRenderEdge: 768,
-        shadowMapSize: 1024,
+        tex: 1024,
+        maxPixelRatio: 1.5,
+        renderBoost: 1.25,
+        minRenderEdge: 260,
+        maxRenderEdge: 1000,
+        shadowMap: 1024,
+        targetFps: 60
+      }
+    : {
+        powerPreference: 'high-performance',
+        tex: 2048,
+        maxPixelRatio: 2.0,
+        renderBoost: 1.45,
+        minRenderEdge: 420,
+        maxRenderEdge: 1800,
+        shadowMap: 2048,
         targetFps: 60
       };
-    }
 
-    return (isCoarsePointer || isSmallViewport)
-      ? {
-          name: 'mobile',
-          powerPreference: 'low-power',
-          packageTextureSize: 1536,
-          layerTextureSize: 768,
-          maxPixelRatio: 1.35,
-          oversample: 1.05,
-          minRenderEdge: 224,
-          maxRenderEdge: 768,
-          shadowMapSize: 1024,
-          targetFps: 60
-        }
-      : {
-          name: 'balanced',
-          powerPreference: 'default',
-          packageTextureSize: 2048,
-          layerTextureSize: 1024,
-          maxPixelRatio: 1.8,
-          oversample: 1.2,
-          minRenderEdge: 256,
-          maxRenderEdge: 1280,
-          shadowMapSize: 2048,
-          targetFps: 60
-        };
-  }
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true,
+    precision: 'highp',
+    powerPreference: quality.powerPreference
+  });
 
-  const quality = getQualityProfile();
-  const PACKAGE_TEXTURE_SIZE = quality.packageTextureSize;
-  const LAYER_TEXTURE_SIZE = quality.layerTextureSize;
-  const FRAME_INTERVAL = 1000 / quality.targetFps;
-
-  // ── Renderer ──
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: quality.powerPreference, precision: 'highp' });
   renderer.setPixelRatio(1);
-  renderer.setSize(canvas.clientWidth || 160, canvas.clientHeight || 160, false);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.98;
+  renderer.toneMappingExposure = 1.08;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.physicallyCorrectLights = true;
 
-  // ── Scene ──
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(22, 1, 0.1, 200);
-  camera.position.set(18, 10, 19);
 
-  // ── Lighting — realistic product render setup ──
-  // Soft ambient — lights everything from all directions
-  scene.add(new THREE.AmbientLight(0xffffff, 0.62));
+  const camera = new THREE.PerspectiveCamera(20, 1, 0.1, 200);
+  camera.position.set(17, 12, 18);
 
-  // Hemisphere: cool sky, warm ground
-  const hemi = new THREE.HemisphereLight(0xd0dcff, 0x786342, 0.72);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const envRT = pmrem.fromScene(new RoomEnvironment(), 0.02);
+  scene.environment = envRT.texture;
+  scene.environmentIntensity = 0.86;
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.50));
+
+  const hemi = new THREE.HemisphereLight(0xdce8ff, 0x1a1630, 0.82);
   scene.add(hemi);
 
-  // Key light — warm, from top-right-front
-  const keyLight = new THREE.DirectionalLight(0xfff4e0, 1.8);
-  keyLight.position.set(6, 9, 7);
-  keyLight.castShadow = true;
-  keyLight.shadow.mapSize.set(quality.shadowMapSize, quality.shadowMapSize);
-  keyLight.shadow.camera.near = 1;
-  keyLight.shadow.camera.far = 24;
-  keyLight.shadow.camera.left = -5.5;
-  keyLight.shadow.camera.right = 5.5;
-  keyLight.shadow.camera.top = 5.5;
-  keyLight.shadow.camera.bottom = -5.5;
-  keyLight.shadow.bias = -0.0004;
-  keyLight.shadow.normalBias = 0.015;
-  scene.add(keyLight);
+  const key = new THREE.DirectionalLight(0xffffff, 2.25);
+  key.position.set(7, 11, 8);
+  key.castShadow = true;
+  key.shadow.mapSize.set(quality.shadowMap, quality.shadowMap);
+  key.shadow.camera.near = 1;
+  key.shadow.camera.far = 30;
+  key.shadow.camera.left = -7;
+  key.shadow.camera.right = 7;
+  key.shadow.camera.top = 7;
+  key.shadow.camera.bottom = -7;
+  key.shadow.bias = -0.00035;
+  key.shadow.normalBias = 0.018;
+  scene.add(key);
 
-  // Fill — left side
-  const fillLight = new THREE.DirectionalLight(0xaac4ff, 0.92);
-  fillLight.position.set(-7, 3, -5);
-  scene.add(fillLight);
+  const fill = new THREE.DirectionalLight(0x9fc7ff, 0.95);
+  fill.position.set(-8, 5, -6);
+  scene.add(fill);
 
-  // Fill — front-low (lights package under stacked layers)
-  const frontFill = new THREE.DirectionalLight(0xd8e4ff, 0.82);
-  frontFill.position.set(3, 1, 8);
-  scene.add(frontFill);
+  const rim = new THREE.DirectionalLight(0x69d8ff, 0.78);
+  rim.position.set(-5, 8, -10);
+  scene.add(rim);
 
-  // Fill — right side
-  const rightFill = new THREE.DirectionalLight(0xffeedd, 0.62);
-  rightFill.position.set(8, 2, -4);
-  scene.add(rightFill);
-
-  // Rim / back
-  const rimLight = new THREE.DirectionalLight(0xc8e0ff, 0.72);
-  rimLight.position.set(-4, 6, -9);
-  scene.add(rimLight);
-
-  // Warm bounce from below — strong, lights the bottom face
-  const bounceLight = new THREE.DirectionalLight(0xffd580, 0.46);
-  bounceLight.position.set(0, -6, 1);
-  scene.add(bounceLight);
-
-  // Extra bottom fill — cool tint from below-back
-  const bottomFill = new THREE.DirectionalLight(0xc0d0ff, 0.34);
-  bottomFill.position.set(-3, -5, -4);
+  const bottomFill = new THREE.DirectionalLight(0x8b74ff, 0.36);
+  bottomFill.position.set(0, -7, 4);
   scene.add(bottomFill);
 
-  // Gold accent on core
-  const accent = new THREE.PointLight(0xffc060, 0.22, 10, 2.0);
-  accent.position.set(0, 3, 2);
-  scene.add(accent);
+  const cyanGlow = new THREE.PointLight(0x00d8ff, 0.75, 8, 2.0);
+  cyanGlow.position.set(-1.3, 2.1, 1.7);
+  scene.add(cyanGlow);
 
-  // ── Environment ──
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  pmrem.compileEquirectangularShader();
-  const envRT = pmrem.fromScene(new RoomEnvironment(), 0.0);
-  scene.environment = envRT.texture;
-  scene.environmentIntensity = 0.72;
+  const purpleGlow = new THREE.PointLight(0x8b52ff, 0.56, 8, 2.0);
+  purpleGlow.position.set(1.6, 2.4, -1.2);
+  scene.add(purpleGlow);
 
-  // ── Helpers ──
-  function makeCanvasTex(size, draw) {
+  function makeCanvasTexture(draw, size = quality.tex) {
     const c = document.createElement('canvas');
-    c.width = size; c.height = size;
+    c.width = size;
+    c.height = size;
+
     const ctx = c.getContext('2d');
     draw(ctx, size);
+
     const tex = new THREE.CanvasTexture(c);
     tex.colorSpace = THREE.SRGBColorSpace;
-    tex.anisotropy = renderer.capabilities.getMaxAnisotropy?.() || 16;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy?.() || 8;
     tex.minFilter = THREE.LinearMipmapLinearFilter;
     tex.magFilter = THREE.LinearFilter;
     tex.wrapS = THREE.ClampToEdgeWrapping;
     tex.wrapT = THREE.ClampToEdgeWrapping;
+    tex.needsUpdate = true;
     return tex;
   }
 
-  function noise(ctx, size, count, alpha) {
-    for (let i = 0; i < count; i++) {
-      ctx.fillStyle = `rgba(255,255,255,${alpha * Math.random()})`;
-      ctx.beginPath();
-      ctx.arc(Math.random()*size, Math.random()*size, 0.6+Math.random()*1.6, 0, Math.PI*2);
-      ctx.fill();
+  function rr(ctx, x, y, w, h, r) {
+    const radius = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + w - radius, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+    ctx.lineTo(x + w, y + h - radius);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+    ctx.lineTo(x + radius, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  }
+
+  function noise(ctx, S, n, a) {
+    for (let i = 0; i < n; i++) {
+      ctx.fillStyle = `rgba(255,255,255,${Math.random() * a})`;
+      ctx.fillRect(Math.random() * S, Math.random() * S, 1 + Math.random() * 2, 1 + Math.random() * 2);
     }
   }
 
-  function polyline(ctx, pts, w, style, glow) {
-    if (glow) {
-      ctx.save();
-      ctx.strokeStyle = glow.c; ctx.lineWidth = w + glow.w;
-      ctx.shadowBlur = glow.b; ctx.shadowColor = glow.c;
-      ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
-      for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0], pts[i][1]);
-      ctx.stroke(); ctx.restore();
-    }
+  function line(ctx, pts, width, color, glow) {
     ctx.save();
-    ctx.strokeStyle = style; ctx.lineWidth = w;
-    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
-    for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0], pts[i][1]);
-    ctx.stroke(); ctx.restore();
+
+    if (glow) {
+      ctx.strokeStyle = glow;
+      ctx.lineWidth = width + 7;
+      ctx.shadowBlur = 14;
+      ctx.shadowColor = glow;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+      ctx.stroke();
+    }
+
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.stroke();
+
+    ctx.restore();
   }
 
-  function scalePts(pts, scale) {
-    return pts.map(([x, y]) => [x * scale, y * scale]);
+  function block(ctx, x, y, w, h, label, fill, stroke, u) {
+    ctx.save();
+    rr(ctx, x, y, w, h, 12 * u);
+    ctx.fillStyle = fill;
+    ctx.fill();
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = 2 * u;
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(235,247,255,0.92)';
+    ctx.font = `800 ${15 * u}px Inter, Arial, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, x + w / 2, y + h / 2);
+    ctx.restore();
   }
 
-  function fillPad(ctx, x, y, w, h, base, hi) {
-    ctx.fillStyle = base;
-    ctx.fillRect(x - w * 0.5, y - h * 0.5, w, h);
-    ctx.fillStyle = hi;
-    ctx.fillRect(x - w * 0.25, y - h * 0.2, w * 0.5, h * 0.4);
-  }
+  function via2d(ctx, x, y, r, u, cyan = false) {
+    const g = ctx.createRadialGradient(x - r * 0.25, y - r * 0.25, r * 0.1, x, y, r);
 
-  function fillVia(ctx, x, y, r, ring, core, hi) {
-    ctx.fillStyle = ring;
+    if (cyan) {
+      g.addColorStop(0, '#eaffff');
+      g.addColorStop(0.38, '#6feaff');
+      g.addColorStop(1, '#0d4c68');
+    } else {
+      g.addColorStop(0, '#fff2c0');
+      g.addColorStop(0.42, '#d4a96a');
+      g.addColorStop(1, '#6d421f');
+    }
+
+    ctx.fillStyle = g;
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = core;
-    ctx.beginPath();
-    ctx.arc(x, y, r * 0.58, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = hi;
-    ctx.beginPath();
-    ctx.arc(x - r * 0.18, y - r * 0.16, r * 0.22, 0, Math.PI * 2);
-    ctx.fill();
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+    ctx.lineWidth = 1.1 * u;
+    ctx.stroke();
   }
 
-  function drawViaField(ctx, xs, ys, r, ring, core, hi) {
-    for (const x of xs) {
-      for (const y of ys) fillVia(ctx, x, y, r, ring, core, hi);
-    }
-  }
-
-  function perimeterCoords(half, edgeXs, edgeZs) {
-    const pos = [];
-    for (const x of edgeXs) {
-      pos.push([x, -half], [x, half]);
-    }
-    for (const z of edgeZs) {
-      pos.push([-half, z], [half, z]);
-    }
-    return pos;
-  }
-
-  // ── Textures ──
-  function pkgTopTex() {
-    return makeCanvasTex(PACKAGE_TEXTURE_SIZE, (ctx, S) => {
+  function substrateTexture() {
+    return makeCanvasTexture((ctx, S) => {
       const u = S / 1024;
-      const g = ctx.createLinearGradient(0,0,S,S);
-      g.addColorStop(0,'#393d42'); g.addColorStop(0.4,'#2a2e33'); g.addColorStop(1,'#171a1f');
-      ctx.fillStyle = g; ctx.fillRect(0,0,S,S);
 
-      const v = ctx.createRadialGradient(S*.5,S*.48,S*.12,S*.5,S*.5,S*.72);
-      v.addColorStop(0,'rgba(255,255,255,0)'); v.addColorStop(1,'rgba(0,0,0,0.32)');
-      ctx.fillStyle = v; ctx.fillRect(0,0,S,S);
+      const g = ctx.createLinearGradient(0, 0, S, S);
+      g.addColorStop(0, '#313844');
+      g.addColorStop(0.48, '#1f2631');
+      g.addColorStop(1, '#101621');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, S, S);
 
-      ctx.strokeStyle = 'rgba(190,195,200,0.05)'; ctx.lineWidth = 2 * u;
-      for (let i=0;i<16;i++) { const x=S*(0.12+(i/15)*0.76); ctx.beginPath(); ctx.moveTo(x,S*0.16); ctx.lineTo(x,S*0.84); ctx.stroke(); }
-      for (let i=0;i<10;i++) { const y=S*(0.18+(i/9)*0.64); ctx.beginPath(); ctx.moveTo(S*0.16,y); ctx.lineTo(S*0.84,y); ctx.stroke(); }
+      const vignette = ctx.createRadialGradient(S * 0.5, S * 0.45, S * 0.05, S * 0.5, S * 0.5, S * 0.72);
+      vignette.addColorStop(0, 'rgba(255,255,255,0.05)');
+      vignette.addColorStop(1, 'rgba(0,0,0,0.42)');
+      ctx.fillStyle = vignette;
+      ctx.fillRect(0, 0, S, S);
+
+      ctx.strokeStyle = 'rgba(120,165,255,0.08)';
+      ctx.lineWidth = 2 * u;
+
+      for (let i = 0; i < 15; i++) {
+        const x = S * (0.12 + i * 0.055);
+        ctx.beginPath();
+        ctx.moveTo(x, S * 0.16);
+        ctx.lineTo(x, S * 0.84);
+        ctx.stroke();
+      }
+
+      for (let i = 0; i < 10; i++) {
+        const y = S * (0.18 + i * 0.07);
+        ctx.beginPath();
+        ctx.moveTo(S * 0.14, y);
+        ctx.lineTo(S * 0.86, y);
+        ctx.stroke();
+      }
 
       const traces = [
-        [[140,310],[270,310],[390,420],[620,420],[760,255],[890,255]],
-        [[140,715],[305,715],[430,590],[605,590],[750,810],[890,810]],
-        [[250,160],[250,285],[470,500],[760,500],[860,650]],
-        [[775,165],[775,335],[555,500],[280,500],[160,655]]
+        [[115, 250], [260, 250], [370, 365], [530, 365], [660, 245], [900, 245]],
+        [[115, 780], [260, 780], [400, 630], [550, 630], [715, 820], [900, 820]],
+        [[185, 150], [260, 265], [430, 500], [705, 500], [850, 650]],
+        [[850, 165], [760, 330], [585, 510], [310, 510], [160, 665]]
       ];
-      for (const t of traces) {
-        const path = scalePts(t, u);
-        polyline(ctx,path,12 * u,'rgba(172,122,72,0.80)',{c:'rgba(218,180,102,0.14)',w:8 * u,b:10 * u});
-        polyline(ctx,path,3.2 * u,'rgba(255,245,220,0.25)');
-      }
 
-      const pads=[[118,175],[200,175],[824,175],[906,175],[118,850],[200,850],[824,850],[906,850],[160,300],[864,300],[160,725],[864,725]];
-      for (const [x,y] of pads) {
-        fillPad(ctx, x * u, y * u, 40 * u, 24 * u, 'rgba(160,103,58,0.88)', 'rgba(255,220,170,0.22)');
-      }
+      traces.forEach((t) => {
+        const pts = t.map(([x, y]) => [x * u, y * u]);
+        line(ctx, pts, 8 * u, 'rgba(197,132,62,0.76)', 'rgba(0,220,255,0.08)');
+        line(ctx, pts, 2.1 * u, 'rgba(255,236,185,0.30)');
+      });
 
-      ctx.strokeStyle='rgba(210,216,220,0.08)'; ctx.lineWidth=2 * u;
-      ctx.strokeRect(S*0.09,S*0.11,S*0.82,S*0.78);
-      ctx.strokeRect(S*0.15,S*0.17,S*0.70,S*0.66);
+      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
+      ctx.lineWidth = 2 * u;
+      ctx.strokeRect(S * 0.08, S * 0.10, S * 0.84, S * 0.80);
+      ctx.strokeStyle = 'rgba(0,210,255,0.12)';
+      ctx.strokeRect(S * 0.145, S * 0.165, S * 0.71, S * 0.67);
 
-      ctx.fillStyle='rgba(235,239,244,0.11)'; ctx.font=`600 ${18 * u}px Inter,Arial,sans-serif`; ctx.textAlign='left';
-      ctx.fillText('GDT-C3S / SECURE STACK PROCESSOR', S * 0.19, S * 0.77);
-      ctx.fillStyle='rgba(235,239,244,0.07)'; ctx.font=`500 ${12 * u}px Inter,Arial,sans-serif`;
-      ctx.fillText('REV A1  •  ENCAPSULATED PACKAGE', S * 0.19, S * 0.805);
-      fillVia(ctx, S * 0.138, S * 0.19, 8 * u, 'rgba(232,208,150,0.88)', 'rgba(193,148,92,0.94)', 'rgba(255,245,220,0.28)');
+      const pads = [
+        [120, 165], [205, 165], [820, 165], [905, 165],
+        [120, 860], [205, 860], [820, 860], [905, 860],
+        [145, 320], [145, 700], [880, 320], [880, 700]
+      ];
 
-      noise(ctx,S,220,0.022);
+      pads.forEach(([x, y]) => {
+        rr(ctx, x * u - 18 * u, y * u - 10 * u, 36 * u, 20 * u, 4 * u);
+        ctx.fillStyle = 'rgba(205,142,72,0.78)';
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255,235,180,0.18)';
+        ctx.fillRect(x * u - 8 * u, y * u - 4 * u, 16 * u, 8 * u);
+      });
+
+      ctx.fillStyle = 'rgba(230,242,255,0.20)';
+      ctx.font = `900 ${24 * u}px Inter, Arial, sans-serif`;
+      ctx.textAlign = 'left';
+      ctx.fillText('Crypto3DStackCPU', S * 0.18, S * 0.765);
+
+      ctx.fillStyle = 'rgba(175,205,255,0.14)';
+      ctx.font = `700 ${13 * u}px Inter, Arial, sans-serif`;
+      ctx.fillText('secure 3D-stacked memory research prototype', S * 0.18, S * 0.803);
+
+      via2d(ctx, S * 0.14, S * 0.18, 9 * u, u);
+      noise(ctx, S, 260, 0.024);
     });
   }
 
-  function memTex(tA, tB, label) {
-    return makeCanvasTex(LAYER_TEXTURE_SIZE, (ctx, S) => {
+  function logicTexture() {
+    return makeCanvasTexture((ctx, S) => {
       const u = S / 1024;
-      const g=ctx.createLinearGradient(0,0,S,S);
-      g.addColorStop(0,tA); g.addColorStop(1,tB);
-      ctx.fillStyle=g; ctx.fillRect(0,0,S,S);
 
-      ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=3 * u;
-      ctx.strokeRect(S*0.08,S*0.10,S*0.84,S*0.80);
-      ctx.strokeRect(S*0.16,S*0.18,S*0.68,S*0.64);
+      const bg = ctx.createLinearGradient(0, 0, S, S);
+      bg.addColorStop(0, '#172a48');
+      bg.addColorStop(0.5, '#0c1830');
+      bg.addColorStop(1, '#07101f');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, S, S);
 
-      ctx.strokeStyle='rgba(255,255,255,0.045)'; ctx.lineWidth=2 * u;
-      for(let i=0;i<18;i++){const y=S*(0.14+(i/17)*0.72);ctx.beginPath();ctx.moveTo(S*0.14,y);ctx.lineTo(S*0.86,y);ctx.stroke();}
-      ctx.strokeStyle='rgba(18,20,18,0.10)';
-      for(let i=0;i<6;i++){const x=S*(0.20+(i/5)*0.60);ctx.beginPath();ctx.moveTo(x,S*0.18);ctx.lineTo(x,S*0.82);ctx.stroke();}
+      ctx.strokeStyle = 'rgba(0,221,255,0.12)';
+      ctx.lineWidth = 2 * u;
+      ctx.strokeRect(S * 0.07, S * 0.08, S * 0.86, S * 0.84);
+      ctx.strokeRect(S * 0.13, S * 0.14, S * 0.74, S * 0.72);
 
-      drawViaField(
-        ctx,
-        [S * 0.18, S * 0.28, S * 0.72, S * 0.82],
-        [S * 0.22, S * 0.38, S * 0.62, S * 0.78],
-        6.5 * u,
-        'rgba(201,176,126,0.72)',
-        'rgba(121,89,56,0.92)',
-        'rgba(255,246,220,0.18)'
-      );
+      const startX = S * 0.16;
+      const y = S * 0.25;
+      const w = S * 0.115;
+      const h = S * 0.105;
+      const gap = S * 0.027;
 
-      if(label){
-        ctx.fillStyle='rgba(255,255,255,0.035)'; ctx.font=`500 ${14 * u}px Inter,Arial,sans-serif`; ctx.textAlign='right';
-        ctx.fillText(label, S * 0.80, S * 0.74);
+      ['IF', 'ID', 'EX', 'MEM', 'WB'].forEach((s, i) => {
+        block(ctx, startX + i * (w + gap), y, w, h, s, 'rgba(0,116,255,0.24)', 'rgba(82,190,255,0.42)', u);
+      });
+
+      line(ctx, [
+        [S * 0.19, S * 0.47],
+        [S * 0.32, S * 0.47],
+        [S * 0.42, S * 0.55],
+        [S * 0.59, S * 0.55],
+        [S * 0.73, S * 0.45],
+        [S * 0.84, S * 0.45]
+      ], 6 * u, 'rgba(0,220,255,0.50)', 'rgba(0,220,255,0.14)');
+
+      block(ctx, S * 0.16, S * 0.60, S * 0.18, S * 0.105, 'CPU', 'rgba(0,116,255,0.22)', 'rgba(82,190,255,0.38)', u);
+      block(ctx, S * 0.39, S * 0.60, S * 0.18, S * 0.105, 'AES', 'rgba(94,0,245,0.24)', 'rgba(175,120,255,0.44)', u);
+      block(ctx, S * 0.62, S * 0.60, S * 0.22, S * 0.105, 'HMAC', 'rgba(94,0,245,0.21)', 'rgba(175,120,255,0.40)', u);
+
+      block(ctx, S * 0.26, S * 0.76, S * 0.20, S * 0.082, 'HKDF', 'rgba(0,210,255,0.12)', 'rgba(90,230,255,0.30)', u);
+      block(ctx, S * 0.55, S * 0.76, S * 0.22, S * 0.082, 'RESEAL', 'rgba(0,210,255,0.12)', 'rgba(90,230,255,0.30)', u);
+
+      for (let i = 0; i < 5; i++) {
+        via2d(ctx, S * (0.21 + i * 0.145), S * 0.405, 5.4 * u, u, true);
       }
 
-      noise(ctx,S,150,0.02);
+      ctx.fillStyle = 'rgba(230,246,255,0.16)';
+      ctx.font = `800 ${15 * u}px Inter, Arial, sans-serif`;
+      ctx.textAlign = 'left';
+      ctx.fillText('PIPELINE + CRYPTOGRAPHIC ISA', S * 0.17, S * 0.155);
+
+      ctx.fillStyle = 'rgba(230,246,255,0.10)';
+      ctx.font = `600 ${11 * u}px Inter, Arial, sans-serif`;
+      ctx.fillText('hazards  •  forwarding  •  branch recovery  •  authenticated execution', S * 0.17, S * 0.885);
+
+      noise(ctx, S, 170, 0.018);
     });
   }
 
-  function activeTex() {
-    return makeCanvasTex(LAYER_TEXTURE_SIZE, (ctx, S) => {
+  function bridgeTexture() {
+    return makeCanvasTexture((ctx, S) => {
       const u = S / 1024;
-      const g=ctx.createLinearGradient(0,0,S,S);
-      g.addColorStop(0,'#9fa39d'); g.addColorStop(0.45,'#7c817b'); g.addColorStop(1,'#50554f');
-      ctx.fillStyle=g; ctx.fillRect(0,0,S,S);
 
-      ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=2 * u;
-      ctx.strokeRect(S*0.06,S*0.08,S*0.88,S*0.84);
-      ctx.strokeRect(S*0.12,S*0.14,S*0.76,S*0.72);
+      const bg = ctx.createLinearGradient(0, 0, S, S);
+      bg.addColorStop(0, '#31435f');
+      bg.addColorStop(0.5, '#1d2b43');
+      bg.addColorStop(1, '#111b2c');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, S, S);
 
-      const traces=[
-        [[210,218],[334,218],[428,298],[656,298]],
-        [[814,218],[690,218],[596,298],[368,298]],
-        [[222,806],[350,806],[444,726],[640,726]],
-        [[802,806],[674,806],[580,726],[384,726]],
-        [[256,160],[256,322],[418,468],[418,644]],
-        [[768,160],[768,322],[606,468],[606,644]],
-        [[178,388],[320,388],[388,468],[388,640]],
-        [[846,388],[704,388],[636,468],[636,640]]
+      ctx.strokeStyle = 'rgba(110,220,255,0.16)';
+      ctx.lineWidth = 2.5 * u;
+      ctx.strokeRect(S * 0.08, S * 0.10, S * 0.84, S * 0.80);
+
+      const buses = [
+        [[145, 250], [310, 250], [420, 380], [604, 380], [730, 250], [880, 250]],
+        [[145, 500], [310, 500], [420, 500], [604, 500], [730, 500], [880, 500]],
+        [[145, 750], [310, 750], [420, 620], [604, 620], [730, 750], [880, 750]]
       ];
-      for(const t of traces){
-        const path = scalePts(t, u);
-        polyline(ctx, path, 5.4 * u, 'rgba(167,120,74,0.32)', {c:'rgba(234,198,132,0.05)', w:3.5 * u, b:5 * u});
-        polyline(ctx, path, 1.2 * u, 'rgba(255,242,212,0.09)');
+
+      buses.forEach((b, i) => {
+        line(
+          ctx,
+          b.map(([x, y]) => [x * u, y * u]),
+          i === 1 ? 8 * u : 5 * u,
+          i === 1 ? 'rgba(0,220,255,0.52)' : 'rgba(185,130,72,0.55)',
+          i === 1 ? 'rgba(0,220,255,0.14)' : 'rgba(255,210,120,0.06)'
+        );
+      });
+
+      for (const x of [S * 0.17, S * 0.30, S * 0.70, S * 0.83]) {
+        for (const y of [S * 0.24, S * 0.38, S * 0.62, S * 0.76]) {
+          via2d(ctx, x, y, 6.5 * u, u, true);
+        }
       }
 
-      ctx.strokeStyle='rgba(255,255,255,0.020)'; ctx.lineWidth=1.3 * u;
-      for(let i=0;i<6;i++){const x=S*(0.26+(i/5)*0.48);ctx.beginPath();ctx.moveTo(x,S*0.20);ctx.lineTo(x,S*0.80);ctx.stroke();}
+      ctx.fillStyle = 'rgba(220,245,255,0.16)';
+      ctx.font = `800 ${15 * u}px Inter, Arial, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText('SECURE TSV MEMORY BRIDGE', S * 0.5, S * 0.875);
 
-      ctx.fillStyle='rgba(33,36,39,0.16)'; ctx.fillRect(S*0.20,S*0.20,S*0.60,S*0.60);
-      ctx.strokeStyle='rgba(217,178,120,0.10)'; ctx.lineWidth=2.4 * u;
-      ctx.strokeRect(S*0.24,S*0.24,S*0.52,S*0.52);
-      ctx.strokeRect(S*0.30,S*0.30,S*0.40,S*0.40);
-      drawViaField(
-        ctx,
-        [S * 0.24, S * 0.36, S * 0.64, S * 0.76],
-        [S * 0.24, S * 0.36, S * 0.64, S * 0.76],
-        4.4 * u,
-        'rgba(196,170,120,0.34)',
-        'rgba(122,90,58,0.70)',
-        'rgba(255,245,220,0.10)'
-      );
-
-      ctx.fillStyle='rgba(255,255,255,0.022)'; ctx.font=`500 ${11 * u}px Inter,Arial,sans-serif`; ctx.textAlign='right';
-      ctx.fillText('RDL / ACTIVE INTERPOSER', S * 0.79, S * 0.80);
-      noise(ctx,S,180,0.018);
+      noise(ctx, S, 130, 0.017);
     });
   }
 
-  function coreTex() {
-    return makeCanvasTex(LAYER_TEXTURE_SIZE, (ctx, S) => {
+  function memoryTexture(layer, title, subtitle, colorA, colorB, blocks) {
+    return makeCanvasTexture((ctx, S) => {
       const u = S / 1024;
-      const g=ctx.createLinearGradient(0,0,S,S);
-      g.addColorStop(0,'#d0c6a7'); g.addColorStop(0.34,'#b59663'); g.addColorStop(1,'#75572f');
-      ctx.fillStyle=g; ctx.fillRect(0,0,S,S);
 
-      ctx.fillStyle='rgba(42,45,49,0.86)'; ctx.fillRect(S*0.205,S*0.205,S*0.59,S*0.59);
+      const bg = ctx.createLinearGradient(0, 0, S, S);
+      bg.addColorStop(0, colorA);
+      bg.addColorStop(1, colorB);
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, S, S);
 
-      ctx.strokeStyle='rgba(255,248,225,0.07)'; ctx.lineWidth=1.6 * u;
-      ctx.strokeRect(S*0.12,S*0.12,S*0.76,S*0.76);
-      ctx.strokeRect(S*0.18,S*0.18,S*0.64,S*0.64);
-      ctx.strokeStyle='rgba(255,225,176,0.055)'; ctx.lineWidth=1.0 * u;
-      ctx.strokeRect(S*0.205,S*0.205,S*0.59,S*0.59);
+      const v = ctx.createRadialGradient(S * 0.5, S * 0.42, S * 0.08, S * 0.5, S * 0.5, S * 0.72);
+      v.addColorStop(0, 'rgba(255,255,255,0.05)');
+      v.addColorStop(1, 'rgba(0,0,0,0.35)');
+      ctx.fillStyle = v;
+      ctx.fillRect(0, 0, S, S);
 
-      const seams=[
-        [[210,210],[814,210]],[[210,814],[814,814]],[[210,210],[210,814]],[[814,210],[814,814]],
-        [[332,512],[692,512]],[[512,332],[512,692]]
-      ];
-      for(const s of seams) polyline(ctx, scalePts(s, u), 1.0 * u, 'rgba(230,232,235,0.024)');
+      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
+      ctx.lineWidth = 2.5 * u;
+      ctx.strokeRect(S * 0.08, S * 0.10, S * 0.84, S * 0.80);
 
-      const traces = [
-        [[264,302],[360,302],[426,374],[426,472]],
-        [[760,302],[664,302],[598,374],[598,472]],
-        [[296,722],[392,722],[458,650],[458,552]],
-        [[728,722],[632,722],[566,650],[566,552]],
-        [[332,248],[332,332]],
-        [[692,248],[692,332]],
-        [[332,776],[332,692]],
-        [[692,776],[692,692]]
-      ];
-      for (const t of traces) {
-        const path = scalePts(t, u);
-        polyline(ctx, path, 4.0 * u, 'rgba(154,103,58,0.22)', {c:'rgba(239,209,138,0.04)', w:2.4 * u, b:3 * u});
-        polyline(ctx, path, 0.85 * u, 'rgba(255,242,214,0.06)');
+      ctx.strokeStyle = 'rgba(255,255,255,0.055)';
+      ctx.lineWidth = 1.25 * u;
+
+      for (let i = 0; i <= 8; i++) {
+        const x = S * (0.16 + i * 0.085);
+        ctx.beginPath();
+        ctx.moveTo(x, S * 0.20);
+        ctx.lineTo(x, S * 0.76);
+        ctx.stroke();
       }
 
-      const pads=[[236,168],[348,168],[460,168],[564,168],[676,168],[788,168],[236,856],[348,856],[460,856],[564,856],[676,856],[788,856]];
-      for(const[x,y] of pads) fillPad(ctx, x * u, y * u, 18 * u, 10 * u, 'rgba(151,103,60,0.42)', 'rgba(255,231,184,0.08)');
-      const sidePads=[[168,304],[168,414],[168,610],[168,720],[856,304],[856,414],[856,610],[856,720]];
-      for(const[x,y] of sidePads) fillPad(ctx, x * u, y * u, 10 * u, 18 * u, 'rgba(151,103,60,0.36)', 'rgba(255,231,184,0.07)');
+      for (let i = 0; i <= 6; i++) {
+        const y = S * (0.22 + i * 0.085);
+        ctx.beginPath();
+        ctx.moveTo(S * 0.16, y);
+        ctx.lineTo(S * 0.84, y);
+        ctx.stroke();
+      }
 
-      drawViaField(
-        ctx,
-        [S * 0.36, S * 0.44, S * 0.56, S * 0.64],
-        [S * 0.36, S * 0.64],
-        3.2 * u,
-        'rgba(228,205,154,0.32)',
-        'rgba(137,98,60,0.58)',
-        'rgba(255,244,220,0.07)'
-      );
+      blocks.forEach((b) => {
+        block(ctx, b.x * S, b.y * S, b.w * S, b.h * S, b.label, b.fill, b.stroke, u);
+      });
 
-      ctx.fillStyle='rgba(255,240,200,0.014)'; ctx.font=`500 ${11 * u}px Inter,Arial,sans-serif`; ctx.textAlign='left';
-      ctx.fillText('DIE 0 / C3S-A1', S * 0.23, S * 0.80);
+      for (const x of [S * 0.17, S * 0.28, S * 0.72, S * 0.83]) {
+        for (const y of [S * 0.20, S * 0.37, S * 0.63, S * 0.80]) {
+          via2d(ctx, x, y, 5.5 * u, u);
+        }
+      }
 
-      noise(ctx,S,90,0.012);
+      ctx.fillStyle = 'rgba(255,255,255,0.21)';
+      ctx.font = `900 ${24 * u}px Inter, Arial, sans-serif`;
+      ctx.textAlign = 'left';
+      ctx.fillText(`L${layer}`, S * 0.12, S * 0.155);
+
+      ctx.font = `800 ${14 * u}px Inter, Arial, sans-serif`;
+      ctx.fillText(title, S * 0.225, S * 0.153);
+
+      ctx.fillStyle = 'rgba(255,255,255,0.11)';
+      ctx.font = `600 ${11 * u}px Inter, Arial, sans-serif`;
+      ctx.fillText(subtitle, S * 0.22, S * 0.845);
+
+      noise(ctx, S, 130, 0.017);
     });
   }
 
-  // ── Layer builder ──
-  function makeLayer(w,h,d,y,topMap,topC,sideC,botC,met,rough,cc,ccR,edgeRadius=0.03) {
-    const radius = Math.min(edgeRadius, h * 0.42, w * 0.06, d * 0.06);
-    const geo = new RoundedBoxGeometry(w, h, d, 4, radius);
-    const side = new THREE.MeshPhysicalMaterial({color:sideC,metalness:met,roughness:rough,clearcoat:cc,clearcoatRoughness:ccR,envMapIntensity:0.95});
-    const bot  = new THREE.MeshPhysicalMaterial({color:botC,metalness:Math.max(0,met-0.01),roughness:Math.min(1,rough+0.05),clearcoat:cc*0.45,clearcoatRoughness:Math.min(1,ccR+0.22),envMapIntensity:0.82});
-    const top  = new THREE.MeshPhysicalMaterial({color:topC,map:topMap,metalness:met+0.01,roughness:Math.max(0.28,rough-0.04),clearcoat:cc,clearcoatRoughness:ccR,reflectivity:0.5,envMapIntensity:1.02});
-    const mesh = new THREE.Mesh(geo,[side,side,top,bot,side,side]);
+  const texSubstrate = substrateTexture();
+  const texLogic = logicTexture();
+  const texBridge = bridgeTexture();
+
+  const texL0 = memoryTexture(0, 'TEXT REGION', 'encrypted instruction image', '#16477f', '#082140', [
+    { x: 0.24, y: 0.29, w: 0.23, h: 0.11, label: 'TEXT', fill: 'rgba(0,116,255,0.28)', stroke: 'rgba(82,185,255,0.45)' },
+    { x: 0.54, y: 0.29, w: 0.23, h: 0.11, label: 'IFETCH', fill: 'rgba(0,210,255,0.16)', stroke: 'rgba(95,230,255,0.34)' },
+    { x: 0.34, y: 0.57, w: 0.32, h: 0.11, label: 'AUTH', fill: 'rgba(94,0,245,0.16)', stroke: 'rgba(170,125,255,0.34)' }
+  ]);
+
+  const texL1 = memoryTexture(1, 'DATA REGION', 'encrypted data + reseal output', '#28466f', '#14233f', [
+    { x: 0.24, y: 0.29, w: 0.23, h: 0.11, label: 'DATA', fill: 'rgba(0,116,255,0.23)', stroke: 'rgba(82,185,255,0.40)' },
+    { x: 0.54, y: 0.29, w: 0.23, h: 0.11, label: 'STORE', fill: 'rgba(0,210,255,0.14)', stroke: 'rgba(95,230,255,0.32)' },
+    { x: 0.34, y: 0.57, w: 0.32, h: 0.11, label: 'RESEAL', fill: 'rgba(94,0,245,0.16)', stroke: 'rgba(170,125,255,0.34)' }
+  ]);
+
+  const texL2 = memoryTexture(2, 'TAGS + WRAP', 'key tag + image tag + wrapped key', '#423071', '#18123a', [
+    { x: 0.22, y: 0.29, w: 0.22, h: 0.11, label: 'KEYT', fill: 'rgba(94,0,245,0.25)', stroke: 'rgba(185,130,255,0.46)' },
+    { x: 0.56, y: 0.29, w: 0.22, h: 0.11, label: 'IMGT', fill: 'rgba(94,0,245,0.22)', stroke: 'rgba(185,130,255,0.40)' },
+    { x: 0.34, y: 0.57, w: 0.32, h: 0.11, label: 'WRAP', fill: 'rgba(0,210,255,0.13)', stroke: 'rgba(90,230,255,0.32)' }
+  ]);
+
+  const texL3 = memoryTexture(3, 'SCRATCH + CTRL', 'scratch/cache abstraction + control', '#2e6670', '#0f2d36', [
+    { x: 0.23, y: 0.29, w: 0.23, h: 0.11, label: 'SCR', fill: 'rgba(0,210,255,0.18)', stroke: 'rgba(110,240,255,0.38)' },
+    { x: 0.55, y: 0.29, w: 0.23, h: 0.11, label: 'CTRL', fill: 'rgba(0,116,255,0.18)', stroke: 'rgba(100,190,255,0.36)' },
+    { x: 0.34, y: 0.57, w: 0.32, h: 0.11, label: 'PROC', fill: 'rgba(94,0,245,0.13)', stroke: 'rgba(170,125,255,0.30)' }
+  ]);
+
+  function makeLayer({
+    name,
+    width,
+    height,
+    depth,
+    y,
+    texture,
+    topColor,
+    sideColor,
+    bottomColor,
+    metalness = 0.04,
+    roughness = 0.52,
+    clearcoat = 0.08,
+    radius = 0.03
+  }) {
+    const geo = new RoundedBoxGeometry(width, height, depth, 5, Math.min(radius, height * 0.42));
+
+    const side = new THREE.MeshPhysicalMaterial({
+      color: sideColor,
+      metalness,
+      roughness,
+      clearcoat,
+      clearcoatRoughness: 0.36,
+      envMapIntensity: 0.95
+    });
+
+    const bottom = new THREE.MeshPhysicalMaterial({
+      color: bottomColor,
+      metalness: Math.max(0, metalness - 0.01),
+      roughness: Math.min(1, roughness + 0.09),
+      clearcoat: clearcoat * 0.42,
+      clearcoatRoughness: 0.55,
+      envMapIntensity: 0.78
+    });
+
+    const top = new THREE.MeshPhysicalMaterial({
+      color: topColor,
+      map: texture,
+      metalness,
+      roughness: Math.max(0.28, roughness - 0.05),
+      clearcoat: clearcoat + 0.02,
+      clearcoatRoughness: 0.25,
+      reflectivity: 0.55,
+      envMapIntensity: 1.05
+    });
+
+    const mesh = new THREE.Mesh(geo, [side, side, top, bottom, side, side]);
+    mesh.name = name;
     mesh.position.y = y;
     mesh.castShadow = true;
     mesh.receiveShadow = true;
-
     return mesh;
   }
 
-  // ── Inter-Die Micro-Bumps ──
-  function makeTSVs(yBot, yTop) {
-    const group = new THREE.Group();
-    const pillarMat = new THREE.MeshPhysicalMaterial({color:0xc18d4e,metalness:1.0,roughness:0.30,clearcoat:0.18,clearcoatRoughness:0.24});
-    const padMat = new THREE.MeshPhysicalMaterial({color:0xae7841,metalness:0.98,roughness:0.38,clearcoat:0.14,clearcoatRoughness:0.28});
-    const capMat = new THREE.MeshPhysicalMaterial({color:0xe6c58c,metalness:0.92,roughness:0.24,clearcoat:0.22,clearcoatRoughness:0.16});
-    const topPillarMat = new THREE.MeshPhysicalMaterial({color:0xac7840,metalness:0.96,roughness:0.42,clearcoat:0.10,clearcoatRoughness:0.34});
-    const topPadMat = new THREE.MeshPhysicalMaterial({color:0x9b6b37,metalness:0.92,roughness:0.48,clearcoat:0.08,clearcoatRoughness:0.38});
-    const topCapMat = new THREE.MeshPhysicalMaterial({color:0xcba56a,metalness:0.84,roughness:0.34,clearcoat:0.12,clearcoatRoughness:0.26});
+  function perimeterPositions(half, xs, zs) {
+    const out = [];
 
-    const interfaces = [
-      { y0: 0.43, y1: 0.50, pos: perimeterCoords(1.94, [-1.30,-0.44,0.44,1.30], [-0.90,0.90]), padR: 0.105, pillarR: 0.038 },
-      { y0: 0.66, y1: 0.72, pos: perimeterCoords(1.72, [-1.16,-0.38,0.38,1.16], [-0.76,0.76]), padR: 0.096, pillarR: 0.036 },
-      { y0: 0.88, y1: 0.94, pos: perimeterCoords(1.51, [-1.00,-0.34,0.34,1.00], [-0.64,0.64]), padR: 0.090, pillarR: 0.034 },
-      { y0: 1.12, y1: 1.22, pos: perimeterCoords(1.28, [-0.86,-0.28,0.28,0.86], [-0.52,0.52]), padR: 0.086, pillarR: 0.032 },
-      { y0: 1.46, y1: 1.52, pos: perimeterCoords(0.86, [-0.46,0.46], [-0.22,0.22]), padR: 0.076, pillarR: 0.026, muted: true }
+    for (const x of xs) {
+      out.push([x, -half]);
+      out.push([x, half]);
+    }
+
+    for (const z of zs) {
+      out.push([-half, z]);
+      out.push([half, z]);
+    }
+
+    return out;
+  }
+
+  function makeMicroBumps(y0, y1, half, muted = false) {
+    const group = new THREE.Group();
+
+    const padMat = new THREE.MeshPhysicalMaterial({
+      color: muted ? 0x8f6f42 : 0xc99450,
+      metalness: 0.96,
+      roughness: muted ? 0.48 : 0.30,
+      clearcoat: 0.12,
+      clearcoatRoughness: 0.28
+    });
+
+    const capMat = new THREE.MeshPhysicalMaterial({
+      color: muted ? 0xb9935c : 0xe7c783,
+      metalness: 0.86,
+      roughness: 0.25,
+      clearcoat: 0.15,
+      clearcoatRoughness: 0.20
+    });
+
+    const pillarMat = new THREE.MeshPhysicalMaterial({
+      color: muted ? 0x9e7542 : 0xd28c3d,
+      metalness: 1.0,
+      roughness: 0.28,
+      clearcoat: 0.12,
+      clearcoatRoughness: 0.22
+    });
+
+    const xs = [-half * 0.66, -half * 0.22, half * 0.22, half * 0.66];
+    const zs = [-half * 0.52, 0, half * 0.52];
+    const positions = perimeterPositions(half, xs, zs);
+
+    const gap = Math.max(0.04, y1 - y0);
+    const padH = Math.min(0.014, gap * 0.20);
+    const capH = Math.min(0.008, gap * 0.12);
+    const pillarH = Math.max(0.018, gap - padH * 2 - capH * 2);
+
+    const padGeo = new THREE.CylinderGeometry(0.072, 0.072, padH, 24);
+    const capGeo = new THREE.CylinderGeometry(0.050, 0.050, capH, 24);
+    const pillarGeo = new THREE.CylinderGeometry(0.025, 0.025, pillarH, 24);
+
+    positions.forEach(([x, z]) => {
+      const pillar = new THREE.Mesh(pillarGeo, pillarMat);
+      pillar.position.set(x, (y0 + y1) * 0.5, z);
+      pillar.castShadow = true;
+      pillar.receiveShadow = true;
+      group.add(pillar);
+
+      const p0 = new THREE.Mesh(padGeo, padMat);
+      p0.position.set(x, y0 + padH * 0.5, z);
+      p0.castShadow = true;
+      p0.receiveShadow = true;
+      group.add(p0);
+
+      const c0 = new THREE.Mesh(capGeo, capMat);
+      c0.position.set(x, y0 + padH + capH * 0.5, z);
+      c0.castShadow = true;
+      c0.receiveShadow = true;
+      group.add(c0);
+
+      const c1 = new THREE.Mesh(capGeo, capMat);
+      c1.position.set(x, y1 - padH - capH * 0.5, z);
+      c1.castShadow = true;
+      c1.receiveShadow = true;
+      group.add(c1);
+
+      const p1 = new THREE.Mesh(padGeo, padMat);
+      p1.position.set(x, y1 - padH * 0.5, z);
+      p1.castShadow = true;
+      p1.receiveShadow = true;
+      group.add(p1);
+    });
+
+    return group;
+  }
+
+  function makeVerticalTSVs(yBottom, yTop) {
+    const group = new THREE.Group();
+
+    const copper = new THREE.MeshPhysicalMaterial({
+      color: 0xd18b3e,
+      metalness: 1.0,
+      roughness: 0.23,
+      clearcoat: 0.10,
+      clearcoatRoughness: 0.20,
+      envMapIntensity: 1.10
+    });
+
+    const glowMat = new THREE.MeshBasicMaterial({
+      color: 0x00d8ff,
+      transparent: true,
+      opacity: 0.10,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+
+    const h = yTop - yBottom;
+    const coreGeo = new THREE.CylinderGeometry(0.030, 0.030, h, 28);
+    const glowGeo = new THREE.CylinderGeometry(0.063, 0.063, h, 28);
+
+    const coords = [
+      [-1.55, -1.55], [-0.78, -1.55], [0.78, -1.55], [1.55, -1.55],
+      [-1.55, 1.55], [-0.78, 1.55], [0.78, 1.55], [1.55, 1.55],
+      [-1.55, -0.78], [-1.55, 0.78], [1.55, -0.78], [1.55, 0.78]
     ];
 
-    for (const itf of interfaces) {
-      const gap = itf.y1 - itf.y0;
-      const padH = Math.min(0.012, gap * 0.22);
-      const capH = Math.min(0.007, gap * 0.12);
-      const pillarH = Math.max(0.016, gap - (padH * 2 + capH * 2));
-      const pillarMaterial = itf.muted ? topPillarMat : pillarMat;
-      const padMaterial = itf.muted ? topPadMat : padMat;
-      const capMaterial = itf.muted ? topCapMat : capMat;
-      const pillarGeo = new THREE.CylinderGeometry(itf.pillarR, itf.pillarR, pillarH, 22);
-      const padGeo = new THREE.CylinderGeometry(itf.padR, itf.padR, padH, 22);
-      const capGeo = new THREE.CylinderGeometry(itf.padR * 0.72, itf.padR * 0.72, capH, 22);
+    coords.forEach(([x, z], i) => {
+      const p = new THREE.Mesh(coreGeo, copper);
+      p.position.set(x, yBottom + h * 0.5, z);
+      p.castShadow = true;
+      p.receiveShadow = true;
+      group.add(p);
 
-      for (const [x, z] of itf.pos) {
-        const pillar = new THREE.Mesh(pillarGeo, pillarMaterial);
-        pillar.position.set(x, (itf.y0 + itf.y1) * 0.5, z);
-        pillar.castShadow = true; pillar.receiveShadow = true;
-        group.add(pillar);
+      const g = new THREE.Mesh(glowGeo, glowMat.clone());
+      g.position.copy(p.position);
+      g.userData.isTsvGlow = true;
+      g.userData.phase = i * 0.37;
+      group.add(g);
+    });
 
-        const bottomPad = new THREE.Mesh(padGeo, padMaterial);
-        bottomPad.position.set(x, itf.y0 + padH * 0.5, z);
-        bottomPad.castShadow = true; bottomPad.receiveShadow = true;
-        group.add(bottomPad);
+    return group;
+  }
 
-        const bottomCap = new THREE.Mesh(capGeo, capMaterial);
-        bottomCap.position.set(x, itf.y0 + padH + capH * 0.5, z);
-        bottomCap.castShadow = true; bottomCap.receiveShadow = true;
-        group.add(bottomCap);
+  function makeBgaBalls(pkgW, pkgD, y) {
+    const group = new THREE.Group();
 
-        const topCap = new THREE.Mesh(capGeo, capMaterial);
-        topCap.position.set(x, itf.y1 - padH - capH * 0.5, z);
-        topCap.castShadow = true; topCap.receiveShadow = true;
-        group.add(topCap);
+    const ballMat = new THREE.MeshPhysicalMaterial({
+      color: 0xc8b28a,
+      metalness: 1.0,
+      roughness: 0.24,
+      clearcoat: 0.14,
+      clearcoatRoughness: 0.20,
+      envMapIntensity: 1.1
+    });
 
-        const topPad = new THREE.Mesh(padGeo, padMaterial);
-        topPad.position.set(x, itf.y1 - padH * 0.5, z);
-        topPad.castShadow = true; topPad.receiveShadow = true;
-        group.add(topPad);
+    const ballGeo = new THREE.SphereGeometry(0.082, 24, 16);
+    const cols = 10;
+    const rows = 10;
+    const sx = pkgW * 0.38;
+    const sz = pkgD * 0.38;
+
+    for (let ix = 0; ix < cols; ix++) {
+      for (let iz = 0; iz < rows; iz++) {
+        const edge = ix === 0 || iz === 0 || ix === cols - 1 || iz === rows - 1;
+        const checker = (ix + iz) % 2 === 0;
+        if (!edge && !checker) continue;
+
+        const x = THREE.MathUtils.lerp(-sx, sx, ix / (cols - 1));
+        const z = THREE.MathUtils.lerp(-sz, sz, iz / (rows - 1));
+
+        const ball = new THREE.Mesh(ballGeo, ballMat);
+        ball.position.set(x, y, z);
+        ball.scale.y = 0.72;
+        ball.castShadow = true;
+        ball.receiveShadow = true;
+        group.add(ball);
       }
     }
+
     return group;
   }
 
-  // ── Gull-wing Pins ──
-  function makePins(pkgW, pkgD, pkgY, pkgH) {
+  function makeSecurityFrame() {
     const group = new THREE.Group();
-    const pinMat = new THREE.MeshPhysicalMaterial({color:0xc4904c,metalness:1.0,roughness:0.26,clearcoat:0.20,clearcoatRoughness:0.18});
-    const hw = pkgW*0.5, hd = pkgD*0.5;
-    const spanW = hw-0.56, spanD = hd-0.56;
-    const count = 12;
-    const baseY = pkgY - pkgH*0.08;
-    const leadW = 0.038;
-    const leadT = 0.011;
-    const leadShape = new THREE.Shape();
-    leadShape.moveTo(-leadW, -leadT);
-    leadShape.lineTo( leadW, -leadT);
-    leadShape.lineTo( leadW,  leadT);
-    leadShape.lineTo(-leadW,  leadT);
-    leadShape.lineTo(-leadW, -leadT);
 
-    function bentPin(start, dir) {
+    const matCyan = new THREE.LineBasicMaterial({
+      color: 0x00d8ff,
+      transparent: true,
+      opacity: 0.24,
+      blending: THREE.AdditiveBlending
+    });
+
+    const matPurple = new THREE.LineBasicMaterial({
+      color: 0x8b52ff,
+      transparent: true,
+      opacity: 0.22,
+      blending: THREE.AdditiveBlending
+    });
+
+    function ring(size, y, mat) {
       const pts = [
-        new THREE.Vector3(start.x, start.y, start.z),
-        new THREE.Vector3(start.x+dir.x*0.16, start.y-0.01, start.z+dir.z*0.16),
-        new THREE.Vector3(start.x+dir.x*0.28, start.y-0.06, start.z+dir.z*0.28),
-        new THREE.Vector3(start.x+dir.x*0.30, start.y-0.34, start.z+dir.z*0.30),
-        new THREE.Vector3(start.x+dir.x*0.22, start.y-0.42, start.z+dir.z*0.22)
+        new THREE.Vector3(-size, y, -size),
+        new THREE.Vector3(size, y, -size),
+        new THREE.Vector3(size, y, size),
+        new THREE.Vector3(-size, y, size),
+        new THREE.Vector3(-size, y, -size)
       ];
-      const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
-      const geo = new THREE.ExtrudeGeometry(leadShape, { steps: 18, bevelEnabled: false, extrudePath: curve, curveSegments: 4 });
-      const mesh = new THREE.Mesh(geo, pinMat);
-      mesh.castShadow = true; mesh.receiveShadow = true;
-      return mesh;
+      return new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat);
     }
 
-    for (let i=0; i<count; i++) {
-      const t = (i+1)/(count+1);
-      const xW = THREE.MathUtils.lerp(-spanW, spanW, t);
-      const zD = THREE.MathUtils.lerp(-spanD, spanD, t);
-      group.add(bentPin({x:xW,y:baseY,z:-hd}, {x:0,z:-1}));
-      group.add(bentPin({x:xW,y:baseY,z: hd}, {x:0,z: 1}));
-      group.add(bentPin({x:-hw,y:baseY,z:zD}, {x:-1,z:0}));
-      group.add(bentPin({x: hw,y:baseY,z:zD}, {x: 1,z:0}));
-    }
+    group.add(ring(2.22, 0.86, matCyan));
+    group.add(ring(2.04, 1.04, matPurple));
+    group.add(ring(1.88, 1.23, matCyan));
+    group.add(ring(1.72, 1.42, matPurple));
+    group.add(ring(1.58, 1.61, matCyan));
+
     return group;
   }
 
-  // ── Build Chip ──
   const chipRoot = new THREE.Group();
-  chipRoot.position.y = 0.02;
+  chipRoot.position.y = -0.05;
   scene.add(chipRoot);
 
-  //                      w     h     d     y    tex                                              topC      sideC     botC      met   rough cc    ccR
-  const pkg = makeLayer(5.9,  0.42, 5.9,  0.22, pkgTopTex(),                                    0x484b50, 0x333840, 0x3b4048, 0.02, 0.68, 0.08, 0.34, 0.11);
-  const mC  = makeLayer(4.65, 0.16, 4.65, 0.58, memTex('#878e82','#5c655b','MEM STACK L0'),     0x8e968b, 0x72796f, 0x7a8277, 0.02, 0.62, 0.03, 0.42, 0.030);
-  const mB  = makeLayer(4.15, 0.16, 4.15, 0.80, memTex('#97a094','#687166','MEM STACK L1'),     0x98a094, 0x798177, 0x7e877c, 0.02, 0.60, 0.03, 0.42, 0.028);
-  const mA  = makeLayer(3.72, 0.18, 3.72, 1.03, memTex('#a8b0a4','#757d73','MEM STACK L2'),     0xa8b0a4, 0x828a80, 0x899187, 0.02, 0.58, 0.03, 0.40, 0.026);
-  const act = makeLayer(3.18, 0.24, 3.18, 1.34, activeTex(),                                    0x9ea39d, 0x7f847e, 0x878d87, 0.03, 0.54, 0.03, 0.36, 0.022);
-  const core= makeLayer(2.30, 0.18, 2.30, 1.61, coreTex(),                                      0xb78449, 0x976836, 0xa7743f, 0.72, 0.24, 0.16, 0.18, 0.018);
+  const substrate = makeLayer({
+    name: 'organic package substrate with BGA',
+    width: 6.1,
+    height: 0.36,
+    depth: 6.1,
+    y: 0.14,
+    texture: texSubstrate,
+    topColor: 0x424a57,
+    sideColor: 0x2a3040,
+    bottomColor: 0x353b48,
+    metalness: 0.03,
+    roughness: 0.67,
+    clearcoat: 0.08,
+    radius: 0.13
+  });
 
-  [pkg, mC, mB, mA, act, core].forEach(m => chipRoot.add(m));
-  chipRoot.add(makeTSVs(0.44, 1.68));
-  chipRoot.add(makePins(5.9, 5.9, 0.22, 0.42));
+  const logic = makeLayer({
+    name: 'secure CPU and crypto logic die',
+    width: 4.72,
+    height: 0.23,
+    depth: 4.72,
+    y: 0.50,
+    texture: texLogic,
+    topColor: 0x173257,
+    sideColor: 0x10213d,
+    bottomColor: 0x0d1a31,
+    metalness: 0.10,
+    roughness: 0.45,
+    clearcoat: 0.14,
+    radius: 0.035
+  });
 
-  chipRoot.rotation.x = -0.22;
-  chipRoot.rotation.y = 0.72;
-  chipRoot.rotation.z = 0.02;
+  const bridge = makeLayer({
+    name: 'secure TSV bridge / silicon interposer',
+    width: 4.88,
+    height: 0.115,
+    depth: 4.88,
+    y: 0.76,
+    texture: texBridge,
+    topColor: 0x34445d,
+    sideColor: 0x202b40,
+    bottomColor: 0x1a2436,
+    metalness: 0.08,
+    roughness: 0.50,
+    clearcoat: 0.10,
+    radius: 0.025
+  });
 
-  // ── Controls ──
+  const l0 = makeLayer({
+    name: 'L0 encrypted text memory layer',
+    width: 4.24,
+    height: 0.14,
+    depth: 4.24,
+    y: 0.95,
+    texture: texL0,
+    topColor: 0x16477e,
+    sideColor: 0x12345d,
+    bottomColor: 0x0d294d,
+    metalness: 0.04,
+    roughness: 0.54,
+    clearcoat: 0.08,
+    radius: 0.021
+  });
+
+  const l1 = makeLayer({
+    name: 'L1 encrypted data memory layer',
+    width: 4.05,
+    height: 0.14,
+    depth: 4.05,
+    y: 1.14,
+    texture: texL1,
+    topColor: 0x2a4771,
+    sideColor: 0x20385c,
+    bottomColor: 0x1a2d4d,
+    metalness: 0.04,
+    roughness: 0.54,
+    clearcoat: 0.08,
+    radius: 0.021
+  });
+
+  const l2 = makeLayer({
+    name: 'L2 tag and wrapped-key memory layer',
+    width: 3.86,
+    height: 0.14,
+    depth: 3.86,
+    y: 1.33,
+    texture: texL2,
+    topColor: 0x443075,
+    sideColor: 0x34235c,
+    bottomColor: 0x281a49,
+    metalness: 0.04,
+    roughness: 0.53,
+    clearcoat: 0.08,
+    radius: 0.021
+  });
+
+  const l3 = makeLayer({
+    name: 'L3 scratch/control memory layer',
+    width: 3.67,
+    height: 0.14,
+    depth: 3.67,
+    y: 1.52,
+    texture: texL3,
+    topColor: 0x2e6b74,
+    sideColor: 0x22505a,
+    bottomColor: 0x183c44,
+    metalness: 0.04,
+    roughness: 0.53,
+    clearcoat: 0.08,
+    radius: 0.021
+  });
+
+  chipRoot.add(makeBgaBalls(6.1, 6.1, -0.13));
+  chipRoot.add(substrate);
+
+  chipRoot.add(makeMicroBumps(0.33, 0.39, 2.20));
+  chipRoot.add(logic);
+
+  chipRoot.add(makeMicroBumps(0.61, 0.69, 2.18));
+  chipRoot.add(bridge);
+
+  chipRoot.add(makeMicroBumps(0.83, 0.89, 1.96));
+  chipRoot.add(l0);
+
+  chipRoot.add(makeMicroBumps(1.02, 1.08, 1.86));
+  chipRoot.add(l1);
+
+  chipRoot.add(makeMicroBumps(1.21, 1.27, 1.76, true));
+  chipRoot.add(l2);
+
+  chipRoot.add(makeMicroBumps(1.40, 1.46, 1.66, true));
+  chipRoot.add(l3);
+
+  const tsvGroup = makeVerticalTSVs(0.72, 1.60);
+  chipRoot.add(tsvGroup);
+
+  const securityFrame = makeSecurityFrame();
+  chipRoot.add(securityFrame);
+
+  chipRoot.rotation.x = -0.25;
+  chipRoot.rotation.y = 0.78;
+  chipRoot.rotation.z = 0.015;
+
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
-  controls.dampingFactor = 0.06;
+  controls.dampingFactor = 0.065;
   controls.enablePan = false;
   controls.enableZoom = false;
   controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.55;
-  controls.target.set(0, 0.9, 0);
+  controls.autoRotateSpeed = 0.52;
+  controls.target.set(0, 0.82, 0);
   controls.minPolarAngle = 0;
   controls.maxPolarAngle = Math.PI;
   controls.update();
 
-  // ── Resize — adaptive internal resolution for crisp small-size rendering ──
   function resize() {
     const r = canvas.getBoundingClientRect();
     const cssW = Math.max(64, Math.round(r.width || 160));
     const cssH = Math.max(64, Math.round(r.height || 160));
-    const effectiveDpr = Math.min(deviceDpr, quality.maxPixelRatio);
+    const dpr = Math.min(window.devicePixelRatio || 1, quality.maxPixelRatio);
+
     const renderW = Math.min(
       quality.maxRenderEdge,
-      Math.max(quality.minRenderEdge, Math.round(cssW * effectiveDpr * quality.oversample))
+      Math.max(quality.minRenderEdge, Math.round(cssW * dpr * quality.renderBoost))
     );
+
     const renderH = Math.min(
       quality.maxRenderEdge,
-      Math.max(quality.minRenderEdge, Math.round(cssH * effectiveDpr * quality.oversample))
+      Math.max(quality.minRenderEdge, Math.round(cssH * dpr * quality.renderBoost))
     );
-    renderer.setSize(renderW, renderH, false); // false = don't update CSS style
+
+    renderer.setSize(renderW, renderH, false);
     camera.aspect = renderW / renderH;
     camera.updateProjectionMatrix();
   }
+
   resize();
+
   if (window.ResizeObserver) {
     new ResizeObserver(resize).observe(canvas);
   }
-  window.addEventListener('resize', resize, {passive:true});
 
-  // ── Animate ──
+  window.addEventListener('resize', resize, { passive: true });
+
   const clock = new THREE.Clock();
+  const frameInterval = 1000 / quality.targetFps;
+
   let running = true;
   let lastFrameTime = 0;
 
   function animate(now = 0) {
     if (!running) return;
+
     requestAnimationFrame(animate);
-    if (now - lastFrameTime < FRAME_INTERVAL) return;
+
+    if (now - lastFrameTime < frameInterval) return;
     lastFrameTime = now;
-    const dt = clock.getDelta();
-    chipRoot.rotation.x = -0.22 + Math.sin(performance.now() * 0.00035) * 0.015;
-    chipRoot.rotation.z = 0.02 + Math.sin(performance.now() * 0.00021) * 0.006;
-    controls.update(dt);
+
+    const t = clock.getElapsedTime();
+
+    chipRoot.rotation.x = -0.25 + Math.sin(t * 0.70) * 0.014;
+    chipRoot.rotation.z = 0.015 + Math.sin(t * 0.43) * 0.006;
+
+    cyanGlow.intensity = 0.58 + Math.sin(t * 2.2) * 0.14;
+    purpleGlow.intensity = 0.44 + Math.cos(t * 2.0) * 0.10;
+
+    tsvGroup.traverse((obj) => {
+      if (obj.userData?.isTsvGlow && obj.material) {
+        const phase = obj.userData.phase || 0;
+        obj.material.opacity = 0.065 + Math.max(0, Math.sin(t * 2.1 + phase)) * 0.085;
+      }
+    });
+
+    securityFrame.children.forEach((line, i) => {
+      if (line.material) {
+        line.material.opacity = 0.13 + Math.max(0, Math.sin(t * 1.6 + i * 0.5)) * 0.12;
+      }
+    });
+
+    controls.update();
     renderer.render(scene, camera);
   }
 
-  // Visibility
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { running = false; clock.stop(); }
-    else { running = true; lastFrameTime = 0; clock.start(); animate(); }
+    if (document.hidden) {
+      running = false;
+      clock.stop();
+    } else {
+      running = true;
+      lastFrameTime = 0;
+      clock.start();
+      animate();
+    }
   });
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((entries) => {
-      const vis = entries[0]?.isIntersecting;
-      if (vis && !running) { running = true; lastFrameTime = 0; clock.start(); animate(); }
-      else if (!vis) { running = false; clock.stop(); }
-    }, {threshold:0.02}).observe(canvas);
+      const visible = entries[0]?.isIntersecting;
+
+      if (visible && !running) {
+        running = true;
+        lastFrameTime = 0;
+        clock.start();
+        animate();
+      } else if (!visible) {
+        running = false;
+        clock.stop();
+      }
+    }, { threshold: 0.02 }).observe(canvas);
   }
 
   animate();
