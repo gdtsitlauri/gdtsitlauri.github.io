@@ -301,17 +301,18 @@ nav {
 }
 
 #chip3d {
-  width: 160px;
-  height: 160px;
+  width: 125px;
+  height: 125px;
   display: block;
   flex-shrink: 0;
   cursor: grab;
+  transform: translateY(6px);
 }
 
 @media (max-width: 820px) {
   #chip3d {
-    width: 140px;
-    height: 140px;
+    width: 100px;
+    height: 100px;
   }
 }
 
@@ -2509,26 +2510,26 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   renderer.setPixelRatio(1);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.08;
+  renderer.toneMappingExposure = 0.94;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
 
-  const camera = new THREE.PerspectiveCamera(20, 1, 0.1, 200);
-  camera.position.set(17, 12, 18);
+  const camera = new THREE.PerspectiveCamera(18, 1, 0.1, 200);
+  camera.position.set(13.5, 8.0, 14.0);
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envRT = pmrem.fromScene(new RoomEnvironment(), 0.02);
   scene.environment = envRT.texture;
   scene.environmentIntensity = 0.86;
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.50));
+  scene.add(new THREE.AmbientLight(0xffffff, 0.36));
 
   const hemi = new THREE.HemisphereLight(0xdce8ff, 0x1a1630, 0.82);
   scene.add(hemi);
 
-  const key = new THREE.DirectionalLight(0xffffff, 2.25);
+  const key = new THREE.DirectionalLight(0xffffff, 1.75);
   key.position.set(7, 11, 8);
   key.castShadow = true;
   key.shadow.mapSize.set(quality.shadowMap, quality.shadowMap);
@@ -2550,16 +2551,16 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   rim.position.set(-5, 8, -10);
   scene.add(rim);
 
-  const bottomFill = new THREE.DirectionalLight(0x8b74ff, 0.36);
+  const bottomFill = new THREE.DirectionalLight(0x8b74ff, 0.30);
   bottomFill.position.set(0, -7, 4);
   scene.add(bottomFill);
 
-  const cyanGlow = new THREE.PointLight(0x00d8ff, 0.75, 8, 2.0);
-  cyanGlow.position.set(-1.3, 2.1, 1.7);
+  const cyanGlow = new THREE.PointLight(0x00d8ff, 0.44, 5.2, 2.0);
+  cyanGlow.position.set(-1.25, 0.38, 1.25);
   scene.add(cyanGlow);
 
-  const purpleGlow = new THREE.PointLight(0x8b52ff, 0.56, 8, 2.0);
-  purpleGlow.position.set(1.6, 2.4, -1.2);
+  const purpleGlow = new THREE.PointLight(0x8b52ff, 0.34, 5.2, 2.0);
+  purpleGlow.position.set(1.35, 0.46, -1.10);
   scene.add(purpleGlow);
 
   function makeCanvasTexture(draw, size = quality.tex) {
@@ -2994,8 +2995,8 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
       roughness: Math.max(0.28, roughness - 0.05),
       clearcoat: clearcoat + 0.02,
       clearcoatRoughness: 0.25,
-      reflectivity: 0.55,
-      envMapIntensity: 1.05
+      reflectivity: 0.32,
+      envMapIntensity: 0.82
     });
 
     const mesh = new THREE.Mesh(geo, [side, side, top, bottom, side, side]);
@@ -3022,45 +3023,48 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     return out;
   }
 
-  function makeMicroBumps(y0, y1, half, muted = false) {
+  function makeFineMicroBumps(y0, y1, half, muted = false) {
     const group = new THREE.Group();
 
+    const gap = Math.max(0.004, y1 - y0);
+    const padH = Math.min(0.0048, gap * 0.24);
+    const capH = Math.min(0.0028, gap * 0.16);
+    const pillarH = Math.max(0.0025, gap - padH * 2 - capH * 2);
+
     const padMat = new THREE.MeshPhysicalMaterial({
-      color: muted ? 0x8f6f42 : 0xc99450,
-      metalness: 0.96,
-      roughness: muted ? 0.48 : 0.30,
-      clearcoat: 0.12,
-      clearcoatRoughness: 0.28
+      color: muted ? 0x8f754e : 0xc99755,
+      metalness: 0.92,
+      roughness: muted ? 0.42 : 0.30,
+      clearcoat: 0.10,
+      clearcoatRoughness: 0.25,
+      envMapIntensity: 1.0
     });
 
     const capMat = new THREE.MeshPhysicalMaterial({
-      color: muted ? 0xb9935c : 0xe7c783,
-      metalness: 0.86,
+      color: muted ? 0xb99762 : 0xe3c27d,
+      metalness: 0.88,
       roughness: 0.25,
-      clearcoat: 0.15,
-      clearcoatRoughness: 0.20
+      clearcoat: 0.12,
+      clearcoatRoughness: 0.20,
+      envMapIntensity: 1.05
     });
 
     const pillarMat = new THREE.MeshPhysicalMaterial({
-      color: muted ? 0x9e7542 : 0xd28c3d,
+      color: muted ? 0x9a7546 : 0xd78f3d,
       metalness: 1.0,
-      roughness: 0.28,
-      clearcoat: 0.12,
-      clearcoatRoughness: 0.22
+      roughness: 0.24,
+      clearcoat: 0.10,
+      clearcoatRoughness: 0.18,
+      envMapIntensity: 1.1
     });
 
-    const xs = [-half * 0.66, -half * 0.22, half * 0.22, half * 0.66];
-    const zs = [-half * 0.52, 0, half * 0.52];
+    const padGeo = new THREE.CylinderGeometry(0.040, 0.040, padH, 24);
+    const capGeo = new THREE.CylinderGeometry(0.029, 0.029, capH, 24);
+    const pillarGeo = new THREE.CylinderGeometry(0.013, 0.013, pillarH, 24);
+
+    const xs = [-half * 0.76, -half * 0.50, -half * 0.25, 0, half * 0.25, half * 0.50, half * 0.76];
+    const zs = [-half * 0.68, -half * 0.34, 0, half * 0.34, half * 0.68];
     const positions = perimeterPositions(half, xs, zs);
-
-    const gap = Math.max(0.04, y1 - y0);
-    const padH = Math.min(0.014, gap * 0.20);
-    const capH = Math.min(0.008, gap * 0.12);
-    const pillarH = Math.max(0.018, gap - padH * 2 - capH * 2);
-
-    const padGeo = new THREE.CylinderGeometry(0.072, 0.072, padH, 24);
-    const capGeo = new THREE.CylinderGeometry(0.050, 0.050, capH, 24);
-    const pillarGeo = new THREE.CylinderGeometry(0.025, 0.025, pillarH, 24);
 
     positions.forEach(([x, z]) => {
       const pillar = new THREE.Mesh(pillarGeo, pillarMat);
@@ -3097,34 +3101,35 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     return group;
   }
 
-  function makeVerticalTSVs(yBottom, yTop) {
+  function makeFineVerticalTSVs(yBottom, yTop) {
     const group = new THREE.Group();
 
     const copper = new THREE.MeshPhysicalMaterial({
-      color: 0xd18b3e,
+      color: 0xc9863d,
       metalness: 1.0,
-      roughness: 0.23,
-      clearcoat: 0.10,
-      clearcoatRoughness: 0.20,
-      envMapIntensity: 1.10
+      roughness: 0.22,
+      clearcoat: 0.08,
+      clearcoatRoughness: 0.18,
+      envMapIntensity: 1.05
     });
 
     const glowMat = new THREE.MeshBasicMaterial({
       color: 0x00d8ff,
       transparent: true,
-      opacity: 0.10,
+      opacity: 0.045,
       depthWrite: false,
       blending: THREE.AdditiveBlending
     });
 
     const h = yTop - yBottom;
-    const coreGeo = new THREE.CylinderGeometry(0.030, 0.030, h, 28);
-    const glowGeo = new THREE.CylinderGeometry(0.063, 0.063, h, 28);
+    const coreGeo = new THREE.CylinderGeometry(0.013, 0.013, h, 20);
+    const glowGeo = new THREE.CylinderGeometry(0.028, 0.028, h, 20);
 
     const coords = [
-      [-1.55, -1.55], [-0.78, -1.55], [0.78, -1.55], [1.55, -1.55],
-      [-1.55, 1.55], [-0.78, 1.55], [0.78, 1.55], [1.55, 1.55],
-      [-1.55, -0.78], [-1.55, 0.78], [1.55, -0.78], [1.55, 0.78]
+      [-1.55, -1.55], [-1.05, -1.55], [-0.52, -1.55], [0.52, -1.55], [1.05, -1.55], [1.55, -1.55],
+      [-1.55,  1.55], [-1.05,  1.55], [-0.52,  1.55], [0.52,  1.55], [1.05,  1.55], [1.55,  1.55],
+      [-1.55, -1.05], [-1.55, -0.52], [-1.55, 0.52], [-1.55, 1.05],
+      [ 1.55, -1.05], [ 1.55, -0.52], [ 1.55, 0.52], [ 1.55, 1.05]
     ];
 
     coords.forEach(([x, z], i) => {
@@ -3137,43 +3142,39 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
       const g = new THREE.Mesh(glowGeo, glowMat.clone());
       g.position.copy(p.position);
       g.userData.isTsvGlow = true;
-      g.userData.phase = i * 0.37;
+      g.userData.phase = i * 0.31;
       group.add(g);
     });
 
     return group;
   }
 
-  function makeBgaBalls(pkgW, pkgD, y) {
+  function makeFineBgaBalls(pkgW, pkgD, y) {
     const group = new THREE.Group();
 
     const ballMat = new THREE.MeshPhysicalMaterial({
-      color: 0xc8b28a,
+      color: 0xcab488,
       metalness: 1.0,
-      roughness: 0.24,
-      clearcoat: 0.14,
-      clearcoatRoughness: 0.20,
+      roughness: 0.23,
+      clearcoat: 0.12,
+      clearcoatRoughness: 0.18,
       envMapIntensity: 1.1
     });
 
-    const ballGeo = new THREE.SphereGeometry(0.082, 24, 16);
-    const cols = 10;
-    const rows = 10;
-    const sx = pkgW * 0.38;
-    const sz = pkgD * 0.38;
+    const ballGeo = new THREE.SphereGeometry(0.052, 22, 14);
+    const cols = 13;
+    const rows = 13;
+    const sx = pkgW * 0.39;
+    const sz = pkgD * 0.39;
 
     for (let ix = 0; ix < cols; ix++) {
       for (let iz = 0; iz < rows; iz++) {
-        const edge = ix === 0 || iz === 0 || ix === cols - 1 || iz === rows - 1;
-        const checker = (ix + iz) % 2 === 0;
-        if (!edge && !checker) continue;
-
         const x = THREE.MathUtils.lerp(-sx, sx, ix / (cols - 1));
         const z = THREE.MathUtils.lerp(-sz, sz, iz / (rows - 1));
 
         const ball = new THREE.Mesh(ballGeo, ballMat);
         ball.position.set(x, y, z);
-        ball.scale.y = 0.72;
+        ball.scale.y = 0.60;
         ball.castShadow = true;
         ball.receiveShadow = true;
         group.add(ball);
@@ -3183,85 +3184,52 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     return group;
   }
 
-  function makeSecurityFrame() {
-    const group = new THREE.Group();
-
-    const matCyan = new THREE.LineBasicMaterial({
-      color: 0x00d8ff,
-      transparent: true,
-      opacity: 0.24,
-      blending: THREE.AdditiveBlending
-    });
-
-    const matPurple = new THREE.LineBasicMaterial({
-      color: 0x8b52ff,
-      transparent: true,
-      opacity: 0.22,
-      blending: THREE.AdditiveBlending
-    });
-
-    function ring(size, y, mat) {
-      const pts = [
-        new THREE.Vector3(-size, y, -size),
-        new THREE.Vector3(size, y, -size),
-        new THREE.Vector3(size, y, size),
-        new THREE.Vector3(-size, y, size),
-        new THREE.Vector3(-size, y, -size)
-      ];
-      return new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat);
-    }
-
-    group.add(ring(2.22, 0.86, matCyan));
-    group.add(ring(2.04, 1.04, matPurple));
-    group.add(ring(1.88, 1.23, matCyan));
-    group.add(ring(1.72, 1.42, matPurple));
-    group.add(ring(1.58, 1.61, matCyan));
-
-    return group;
-  }
-
   const chipRoot = new THREE.Group();
-  chipRoot.position.y = -0.05;
+  chipRoot.position.y = -0.10;
+  chipRoot.scale.setScalar(0.78);
   scene.add(chipRoot);
 
+  const baseRotX = -0.17;
+  const baseRotZ = 0.010;
+
   const substrate = makeLayer({
-    name: 'organic package substrate with BGA',
+    name: 'thin organic package substrate with dense BGA array',
     width: 6.1,
-    height: 0.36,
+    height: 0.22,
     depth: 6.1,
-    y: 0.14,
+    y: 0.00,
     texture: texSubstrate,
-    topColor: 0x424a57,
-    sideColor: 0x2a3040,
-    bottomColor: 0x353b48,
+    topColor: 0x404852,
+    sideColor: 0x2a303b,
+    bottomColor: 0x343a44,
     metalness: 0.03,
-    roughness: 0.67,
-    clearcoat: 0.08,
-    radius: 0.13
+    roughness: 0.70,
+    clearcoat: 0.06,
+    radius: 0.10
   });
 
   const logic = makeLayer({
-    name: 'secure CPU and crypto logic die',
-    width: 4.72,
-    height: 0.23,
-    depth: 4.72,
-    y: 0.50,
+    name: 'thin secure CPU and cryptographic logic die',
+    width: 4.66,
+    height: 0.070,
+    depth: 4.66,
+    y: 0.160,
     texture: texLogic,
     topColor: 0x173257,
     sideColor: 0x10213d,
     bottomColor: 0x0d1a31,
-    metalness: 0.10,
-    roughness: 0.45,
+    metalness: 0.11,
+    roughness: 0.44,
     clearcoat: 0.14,
-    radius: 0.035
+    radius: 0.018
   });
 
   const bridge = makeLayer({
-    name: 'secure TSV bridge / silicon interposer',
+    name: 'thin silicon interposer / TSV redistribution bridge',
     width: 4.88,
-    height: 0.115,
+    height: 0.032,
     depth: 4.88,
-    y: 0.76,
+    y: 0.223,
     texture: texBridge,
     topColor: 0x34445d,
     sideColor: 0x202b40,
@@ -3269,103 +3237,103 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     metalness: 0.08,
     roughness: 0.50,
     clearcoat: 0.10,
-    radius: 0.025
+    radius: 0.012
   });
 
   const l0 = makeLayer({
-    name: 'L0 encrypted text memory layer',
-    width: 4.24,
-    height: 0.14,
-    depth: 4.24,
-    y: 0.95,
+    name: 'ultra-thin L0 encrypted text memory die',
+    width: 4.42,
+    height: 0.038,
+    depth: 4.42,
+    y: 0.264,
     texture: texL0,
     topColor: 0x16477e,
     sideColor: 0x12345d,
     bottomColor: 0x0d294d,
-    metalness: 0.04,
+    metalness: 0.045,
     roughness: 0.54,
     clearcoat: 0.08,
-    radius: 0.021
+    radius: 0.012
   });
 
   const l1 = makeLayer({
-    name: 'L1 encrypted data memory layer',
-    width: 4.05,
-    height: 0.14,
-    depth: 4.05,
-    y: 1.14,
+    name: 'ultra-thin L1 encrypted data memory die',
+    width: 4.36,
+    height: 0.038,
+    depth: 4.36,
+    y: 0.308,
     texture: texL1,
     topColor: 0x2a4771,
     sideColor: 0x20385c,
     bottomColor: 0x1a2d4d,
-    metalness: 0.04,
+    metalness: 0.045,
     roughness: 0.54,
     clearcoat: 0.08,
-    radius: 0.021
+    radius: 0.012
   });
 
   const l2 = makeLayer({
-    name: 'L2 tag and wrapped-key memory layer',
-    width: 3.86,
-    height: 0.14,
-    depth: 3.86,
-    y: 1.33,
+    name: 'ultra-thin L2 tag and wrapped-key memory die',
+    width: 4.30,
+    height: 0.038,
+    depth: 4.30,
+    y: 0.352,
     texture: texL2,
     topColor: 0x443075,
     sideColor: 0x34235c,
     bottomColor: 0x281a49,
-    metalness: 0.04,
+    metalness: 0.045,
     roughness: 0.53,
     clearcoat: 0.08,
-    radius: 0.021
+    radius: 0.012
   });
 
   const l3 = makeLayer({
-    name: 'L3 scratch/control memory layer',
-    width: 3.67,
-    height: 0.14,
-    depth: 3.67,
-    y: 1.52,
+    name: 'ultra-thin L3 scratch/control memory die',
+    width: 4.24,
+    height: 0.038,
+    depth: 4.24,
+    y: 0.396,
     texture: texL3,
     topColor: 0x2e6b74,
     sideColor: 0x22505a,
     bottomColor: 0x183c44,
-    metalness: 0.04,
+    metalness: 0.045,
     roughness: 0.53,
     clearcoat: 0.08,
-    radius: 0.021
+    radius: 0.012
   });
 
-  chipRoot.add(makeBgaBalls(6.1, 6.1, -0.13));
+  chipRoot.add(makeFineBgaBalls(6.1, 6.1, -0.155));
   chipRoot.add(substrate);
 
-  chipRoot.add(makeMicroBumps(0.33, 0.39, 2.20));
+  chipRoot.add(makeFineMicroBumps(0.113, 0.125, 2.18));
   chipRoot.add(logic);
 
-  chipRoot.add(makeMicroBumps(0.61, 0.69, 2.18));
+  chipRoot.add(makeFineMicroBumps(0.196, 0.207, 2.14));
   chipRoot.add(bridge);
 
-  chipRoot.add(makeMicroBumps(0.83, 0.89, 1.96));
+  chipRoot.add(makeFineMicroBumps(0.240, 0.245, 2.02));
   chipRoot.add(l0);
 
-  chipRoot.add(makeMicroBumps(1.02, 1.08, 1.86));
+  chipRoot.add(makeFineMicroBumps(0.284, 0.289, 1.98));
   chipRoot.add(l1);
 
-  chipRoot.add(makeMicroBumps(1.21, 1.27, 1.76, true));
+  chipRoot.add(makeFineMicroBumps(0.328, 0.333, 1.95, true));
   chipRoot.add(l2);
 
-  chipRoot.add(makeMicroBumps(1.40, 1.46, 1.66, true));
+  chipRoot.add(makeFineMicroBumps(0.372, 0.377, 1.92, true));
   chipRoot.add(l3);
 
-  const tsvGroup = makeVerticalTSVs(0.72, 1.60);
+  const tsvGroup = makeFineVerticalTSVs(0.206, 0.413);
   chipRoot.add(tsvGroup);
 
-  const securityFrame = makeSecurityFrame();
+  const securityFrame = new THREE.Group();
   chipRoot.add(securityFrame);
 
-  chipRoot.rotation.x = -0.25;
-  chipRoot.rotation.y = 0.78;
-  chipRoot.rotation.z = 0.015;
+  chipRoot.rotation.x = baseRotX;
+  chipRoot.rotation.y = 0.76;
+  chipRoot.rotation.z = baseRotZ;
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -3373,8 +3341,8 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   controls.enablePan = false;
   controls.enableZoom = false;
   controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.52;
-  controls.target.set(0, 0.82, 0);
+  controls.autoRotateSpeed = 0.48;
+  controls.target.set(0, 0.20, 0);
   controls.minPolarAngle = 0;
   controls.maxPolarAngle = Math.PI;
   controls.update();
@@ -3424,22 +3392,22 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
     const t = clock.getElapsedTime();
 
-    chipRoot.rotation.x = -0.25 + Math.sin(t * 0.70) * 0.014;
-    chipRoot.rotation.z = 0.015 + Math.sin(t * 0.43) * 0.006;
+    chipRoot.rotation.x = baseRotX + Math.sin(t * 0.70) * 0.006;
+    chipRoot.rotation.z = baseRotZ + Math.sin(t * 0.43) * 0.0035;
 
-    cyanGlow.intensity = 0.58 + Math.sin(t * 2.2) * 0.14;
-    purpleGlow.intensity = 0.44 + Math.cos(t * 2.0) * 0.10;
+    cyanGlow.intensity = 0.38 + Math.sin(t * 2.2) * 0.06;
+    purpleGlow.intensity = 0.30 + Math.cos(t * 2.0) * 0.05;
 
     tsvGroup.traverse((obj) => {
       if (obj.userData?.isTsvGlow && obj.material) {
         const phase = obj.userData.phase || 0;
-        obj.material.opacity = 0.065 + Math.max(0, Math.sin(t * 2.1 + phase)) * 0.085;
+        obj.material.opacity = 0.028 + Math.max(0, Math.sin(t * 2.1 + phase)) * 0.032;
       }
     });
 
     securityFrame.children.forEach((line, i) => {
       if (line.material) {
-        line.material.opacity = 0.13 + Math.max(0, Math.sin(t * 1.6 + i * 0.5)) * 0.12;
+        line.material.opacity = 0.04 + Math.max(0, Math.sin(t * 1.6 + i * 0.5)) * 0.04;
       }
     });
 
@@ -3477,7 +3445,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
   animate();
 })();
-
 </script>
 
 </body>
