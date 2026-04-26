@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#0a0f2e"/>
 <title>George David Tsitlauri | Portfolio</title>
 
 <meta property="og:title" content="George David Tsitlauri | Portfolio">
@@ -114,59 +115,43 @@ section {
 
 .loader-box {
   position: relative;
-  width: 140px;
-  height: 140px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: visible;
-  padding: 0 8px;
-}
-
-.loader-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: none;
-  background: conic-gradient(from 0deg, transparent 0%, #0074FF 10%, #5e00f5 70%, transparent 80%);
-  -webkit-mask: radial-gradient(circle, transparent 66px, black 67px);
-  mask: radial-gradient(circle, transparent 66px, black 67px);
-  animation: loaderSpin 1s linear infinite;
+  gap: 18px;
 }
 
 .loader-text {
-  position: relative;
-  z-index: 1;
   font-family: 'Caveat', cursive;
   font-size: 2.2rem;
   line-height: 1.15;
   font-weight: 400;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 18px 10px;
+  color: #ffffff;
   margin: 0;
-  color: var(--ts);
 }
 
-@keyframes loaderSpin {
-  to { transform: rotate(360deg); }
+.loader-bar-track {
+  width: 140px;
+  height: 3px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 999px;
+  overflow: hidden;
 }
 
-.loader-status {
-  position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(176,188,212,0.55);
-  white-space: nowrap;
-  transition: opacity .3s ease;
+.loader-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #0074ff, #5e00f5);
+  border-radius: 999px;
+  transform-origin: left;
+  animation: loaderBar 2s ease-in-out infinite;
 }
+
+@keyframes loaderBar {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
 
 /* ── NAV ── */
 nav {
@@ -178,7 +163,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 6%;
+  padding: calc(18px + env(safe-area-inset-top, 0px)) 6% 18px;
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -191,7 +176,7 @@ nav {
   font-family: 'Caveat', cursive;
   font-size: 1.55rem;
   font-weight: 400;
-  color: var(--ts);
+  color: #ffffff;
   display: inline-block;
   padding: 2px 6px 5px;
   margin: -2px -6px -5px;
@@ -287,11 +272,6 @@ nav {
   transition: transform .4s cubic-bezier(.4,0,.2,1);
 }
 
-@keyframes spinGlow {
-  0%   { filter: blur(0px) brightness(1); }
-  50%  { filter: blur(2px) brightness(1.2); }
-  100% { filter: blur(0px) brightness(1); }
-}
 
 .hero-tag-row {
   display: flex;
@@ -346,8 +326,8 @@ nav {
   font-weight: 400;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: #5e00f5;
-  background: transparent;
+  color: #ffffff;
+  background: var(--ep);
   border-radius: 10px;
   padding: 6px 16px;
   margin-bottom: 0;
@@ -380,7 +360,7 @@ nav {
 
 .hero h1 {
   font-family: 'Caveat', cursive;
-  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  font-size: clamp(2.8rem, 4.5vw, 4rem);
   font-weight: 400;
   line-height: 1.3;
   display: inline-block;
@@ -413,7 +393,7 @@ nav {
 .hero-btns {
   display: flex;
   gap: 16px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   animation: fadeUp .75s .3s ease both;
 }
 
@@ -431,7 +411,7 @@ nav {
   font-size: 1.15rem;
   border-radius: 20px;
   text-decoration: none;
-  min-width: 170px;
+  min-width: 0;
   white-space: nowrap;
   color: #fff;
   position: relative;
@@ -445,7 +425,7 @@ nav {
 }
 
 .btn-research {
-  background: var(--ep);
+  background: #d97706;
 }
 
 .btn-o {
@@ -575,6 +555,7 @@ nav {
   font-family: 'Caveat', cursive;
   font-size: 1.4rem;
   font-weight: 400;
+  color: var(--tp);
   margin-bottom: 5px;
 }
 
@@ -658,6 +639,7 @@ nav {
   justify-content: center;
   width: 100%;
   padding: 0 12px;
+  overflow: visible;
 }
 .cat-header:first-of-type {
   margin-top: 0;
@@ -676,11 +658,13 @@ nav {
   font-weight: 400;
   letter-spacing: .012em;
   text-align: center;
-  line-height: 1.25;
+  line-height: 1.35;
 
-  color: #fff;
-  background: var(--gm);
-  border: none;
+  color: var(--tp);
+  background: var(--cardg);
+  border: 1px solid var(--cardbrd);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
 
   padding: 16px 36px 14px;
   border-radius: 999px;
@@ -689,7 +673,7 @@ nav {
   transition: transform .3s cubic-bezier(.34,1.56,.64,1);
   cursor: default;
 
-  overflow: hidden;
+  overflow: visible;
 }
 .cat-grid {
   display: grid;
@@ -859,6 +843,8 @@ nav {
 .pc h3 {
   font-family: 'Caveat', cursive;
   font-size: 1.18rem;
+  font-weight: 400;
+  color: var(--tp);
 }
 
 .pc p {
@@ -928,6 +914,44 @@ nav {
   justify-content: center;
   gap: 8px;
   text-align: center;
+}
+
+.scat h3 i {
+  background: none !important;
+  -webkit-text-fill-color: var(--ts) !important;
+  color: var(--ts);
+  transition: opacity .25s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .scat:hover h3 i {
+    background: linear-gradient(135deg,#0074FF,#5e00f5) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+}
+
+.cat-label i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25em;
+  height: 1.25em;
+  line-height: 1;
+  overflow: visible;
+  flex-shrink: 0;
+  color: var(--ts);
+  transition: color .25s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cat-label:hover i {
+    background: linear-gradient(135deg,#0074FF,#5e00f5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }
 
 .pill {
@@ -1044,7 +1068,7 @@ nav {
 /* ── FOOTER ── */
 footer {
   text-align: center;
-  padding: 36px 6%;
+  padding: 36px 6% calc(36px + env(safe-area-inset-bottom, 0px));
   color: var(--ts);
   font-size: .82rem;
   border-top: none;
@@ -1328,7 +1352,7 @@ footer span {
 
 @media (max-width: 680px) {
   nav {
-    padding: 16px 4%;
+    padding: calc(16px + env(safe-area-inset-top, 0px)) 4% 16px;
     gap: 10px;
   }
 
@@ -1495,7 +1519,7 @@ footer span {
   }
 
   nav {
-    padding: 14px 4%;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) 4% 14px;
   }
 
   .nav-logo {
@@ -1536,9 +1560,10 @@ footer span {
 
 <div id="site-loader">
   <div class="loader-box">
-    <div class="loader-ring"></div>
     <div class="loader-text">GDT</div>
-    <div class="loader-status" id="loader-status">Loading...</div>
+    <div class="loader-bar-track">
+      <div class="loader-bar-fill"></div>
+    </div>
   </div>
 </div>
 
@@ -1651,7 +1676,7 @@ footer span {
 
 <section id="researches" class="section-anim anim-up">
   <div class="slabel"><i class="fas fa-microscope"></i> Researches</div>
-  <h2 class="stitle">Research <span>Portfolio</span></h2>
+  <h2 class="stitle">Research <span>Projects</span></h2>
 
   <!-- AI, Data & Intelligent Systems -->
   <div class="cat-header reveal">
@@ -1881,7 +1906,7 @@ footer span {
 
 <section id="projects" class="section-anim anim-up">
   <div class="slabel"><i class="fas fa-folder"></i> Projects</div>
-  <h2 class="stitle">My <span>Projects</span></h2>
+  <h2 class="stitle">Academic <span>Projects</span></h2>
 
   <div class="cat-header reveal">
     <span class="cat-label"><i class="fas fa-screwdriver-wrench"></i> Engineering</span>
@@ -2243,9 +2268,17 @@ function hideLoader(delay = 0) {
   if (!loader || loaderHidden) return;
 
   loaderHidden = true;
+  const bar = document.querySelector('.loader-bar-fill');
+  if (bar) {
+    bar.style.animation = 'none';
+    bar.style.transition = 'transform 0.3s ease-out';
+    requestAnimationFrame(() => {
+      bar.style.transform = 'scaleX(1)';
+    });
+  }
   window.setTimeout(() => {
     loader.classList.add('hide');
-  }, delay);
+  }, delay + 350);
 }
 
 
@@ -2985,15 +3018,15 @@ function dieTexture({
   });
 }
 
-const loaderStatus = document.getElementById('loader-status');
-const setStatus = (msg) => { if (loaderStatus) loaderStatus.textContent = msg; };
+
+
 const yieldUI = () => new Promise(r => setTimeout(r, 0));
 
-setStatus('Building substrate...');
+
 const texSubstrate = substrateTexture();
 await yieldUI();
 
-setStatus('Building CPU die...');
+
 const texLogic = dieTexture({
   layer: 'CPU',
   title: 'SECURE MIPS-LIKE LOGIC',
@@ -3015,7 +3048,7 @@ const texLogic = dieTexture({
 
 await yieldUI();
 
-setStatus('Building bridge layer...');
+
 const texBridge = dieTexture({
   layer: 'BRG',
   title: 'TSV REDISTRIBUTION BRIDGE',
@@ -3034,7 +3067,7 @@ const texBridge = dieTexture({
 
 await yieldUI();
 
-setStatus('Building memory layers...');
+
 const texL0 = dieTexture({
   layer: 'L0',
   title: 'TEXT / INSTRUCTION',
@@ -3104,11 +3137,11 @@ const texL3 = dieTexture({
 
 await yieldUI();
 
-setStatus('Building lid...');
+
 const texLid = topLidTexture();
 await yieldUI();
 
-setStatus('Starting render...');
+
 
 function makeLayer({
   name,
@@ -3676,10 +3709,10 @@ startRenderLoop();
   window.addEventListener('resize', resize);
 
   const lights = [
-    { x: 0.75, y: 0.15, r: 0.65, ox: 0.22, oy: 0.18, sx: 0.00017, sy: 0.00013, color: [0, 116, 255] },
-    { x: 0.10, y: 0.70, r: 0.60, ox: 0.31, oy: 0.27, sx: 0.00011, sy: 0.00019, color: [94, 0, 245] },
-    { x: 0.50, y: 0.45, r: 0.50, ox: 0.44, oy: 0.38, sx: 0.00014, sy: 0.00010, color: [40, 0, 200] },
-    { x: 0.85, y: 0.80, r: 0.45, ox: 0.55, oy: 0.62, sx: 0.00009, sy: 0.00016, color: [0, 60, 200] },
+    { x: 0.75, y: 0.15, r: 0.65, ox: 0.22, oy: 0.18, sx: 0.0020, sy: 0.0016, color: [0, 116, 255] },
+    { x: 0.10, y: 0.70, r: 0.60, ox: 0.31, oy: 0.27, sx: 0.0015, sy: 0.0022, color: [94, 0, 245] },
+    { x: 0.50, y: 0.45, r: 0.50, ox: 0.44, oy: 0.38, sx: 0.0018, sy: 0.0013, color: [40, 0, 200] },
+    { x: 0.85, y: 0.80, r: 0.45, ox: 0.55, oy: 0.62, sx: 0.0012, sy: 0.0019, color: [0, 60, 200] },
   ];
 
   let t = 0;

@@ -37,11 +37,16 @@ The site includes:
 - Interactive / auto-rotating 3D chip render with realistic material colors
 - Animated canvas background with flowing blue/purple aurora-style gradient
 - Adaptive rendering quality profiles to reduce unnecessary GPU load on smaller screens and mobile devices
-- Smooth scrolling navigation
-- Nav bar with scroll-triggered glass effect (transparent at top, frosted glass on scroll)
-- Section reveal animations
-- Custom loader
-- SEO and social meta tags
+- Smooth scrolling navigation (desktop only, RAF-based)
+- Nav bar transparent at top, frosted glass effect on scroll
+- Section reveal animations (fade, zoom) via IntersectionObserver
+- Custom loader with animated progress bar
+- GDT favicon set — 11 files covering all platforms (browser, iOS, Android/PWA)
+- `viewport-fit=cover` + `env(safe-area-inset-*)` support for iPhone notch / Dynamic Island
+- `theme-color` meta tag for mobile browser chrome color matching
+- Glass morphism cards with backdrop-filter blur
+- Icon hover color transitions (desktop only, pointer: fine)
+- SEO and Open Graph / Twitter Card meta tags
 - Static hosting friendly deployment
 
 ## 3D Hero Render
