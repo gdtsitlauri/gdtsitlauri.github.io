@@ -37,9 +37,14 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: 90px;
-  min-height: 100%;
+}
+
+html::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
   background: linear-gradient(180deg, #0a0f2e 0%, #2d0550 100%);
-  background-attachment: fixed;
 }
 
 html, body {
@@ -74,9 +79,7 @@ button {
 
 body {
   font-family: 'Inter', sans-serif;
-  background: transparent;
   color: var(--tp);
-  min-height: 100%;
 }
 
 body::before {
