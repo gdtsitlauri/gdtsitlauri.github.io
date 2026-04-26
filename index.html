@@ -37,6 +37,9 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: 90px;
+  min-height: 100%;
+  background: linear-gradient(180deg, #0a0f2e 0%, #2d0550 100%);
+  background-attachment: fixed;
 }
 
 html, body {
@@ -71,8 +74,9 @@ button {
 
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #0a0f2e 0%, #2d0550 100%) fixed;
+  background: transparent;
   color: var(--tp);
+  min-height: 100%;
 }
 
 body::before {
@@ -1038,7 +1042,7 @@ footer span {
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #0a0f2e; }
+::-webkit-scrollbar-track { background: var(--db); }
 ::-webkit-scrollbar-thumb {
   background: var(--ts);
   border-radius: 3px;
