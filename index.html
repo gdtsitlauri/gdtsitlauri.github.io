@@ -15,7 +15,7 @@
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://gdtsitlauri.dev">
-<meta name="description" content="AI & Systems Research Engineer. Explore theses, researches, and projects by George David Tsitlauri.">
+<meta name="description" content="AI & Systems Research Engineer. Explore researches and projects by George David Tsitlauri.">
 <meta name="twitter:title" content="George David Tsitlauri | Portfolio">
 <meta name="twitter:description" content="AI & Systems Research Engineer.">
 <meta name="twitter:image" content="https://gdtsitlauri.dev/favicon-512x512.png">
@@ -28,6 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=block" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
 <style>
@@ -119,15 +120,17 @@ section {
   align-items: center;
   justify-content: center;
   overflow: visible;
+  padding: 0 8px;
 }
 
 .loader-ring {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 3px solid rgba(255,255,255,0.08);
-  border-top: 3px solid #0074FF;
-  border-right: 3px solid #5e00f5;
+  border: none;
+  background: conic-gradient(from 0deg, transparent 0%, #0074FF 10%, #5e00f5 70%, transparent 80%);
+  -webkit-mask: radial-gradient(circle, transparent 66px, black 67px);
+  mask: radial-gradient(circle, transparent 66px, black 67px);
   animation: loaderSpin 1s linear infinite;
 }
 
@@ -137,20 +140,32 @@ section {
   font-family: 'Caveat', cursive;
   font-size: 2.2rem;
   line-height: 1.15;
-  font-weight: 700;
+  font-weight: 400;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 8px 10px;
+  padding: 6px 18px 10px;
   margin: 0;
-  background: linear-gradient(135deg,#0074FF,#5e00f5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--ts);
 }
 
 @keyframes loaderSpin {
   to { transform: rotate(360deg); }
+}
+
+.loader-status {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(176,188,212,0.55);
+  white-space: nowrap;
+  transition: opacity .3s ease;
 }
 
 /* ── NAV ── */
@@ -166,21 +181,20 @@ nav {
   padding: 18px 6%;
   background: transparent;
   backdrop-filter: none;
-  border-radius: 0 0 12px 12px;
-  transition: background .35s ease, backdrop-filter .35s ease;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  border-radius: 0 0 14px 14px;
+  transition: background .3s ease, border-color .3s ease;
 }
 
 .nav-logo {
   font-family: 'Caveat', cursive;
   font-size: 1.55rem;
-  font-weight: 700;
+  font-weight: 400;
+  color: var(--ts);
   display: inline-block;
   padding: 2px 6px 5px;
   margin: -2px -6px -5px;
-  background: var(--gm);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   transition: transform .3s, opacity .2s;
   transform-origin: center;
   flex-shrink: 0;
@@ -204,7 +218,7 @@ nav {
   color: var(--ts);
   text-decoration: none;
   font-size: .88rem;
-  font-weight: 500;
+  font-weight: 400;
   position: relative;
   transition: color .25s;
   white-space: nowrap;
@@ -253,24 +267,9 @@ nav {
   height: 260px;
 }
 
-.photo-wrap::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  background: var(--gm);
-  z-index: 0;
-  animation: spinGlow 6s linear infinite;
-}
-
+.photo-wrap::before,
 .photo-wrap::after {
-  content: '';
-  position: absolute;
-  inset: -18px;
-  border-radius: 50%;
-  z-index: 0;
-  background: radial-gradient(circle, rgba(0,207,255,0.18) 0%, rgba(168,85,247,0.12) 60%, transparent 75%);
-  filter: blur(8px);
+  display: none;
 }
 
 .photo-wrap img {
@@ -281,7 +280,9 @@ nav {
   border-radius: 50%;
   object-fit: cover;
   object-position: center 100%;
-  border: 4px solid var(--db);
+  border: none;
+  outline: none;
+  box-shadow: none;
   display: block;
   transition: transform .4s cubic-bezier(.4,0,.2,1);
 }
@@ -296,23 +297,35 @@ nav {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
   animation: fadeUp .7s ease both;
 }
 
 #chip3d {
-  width: 125px;
-  height: 125px;
+  width: 260px;
+  height: 260px;
   display: block;
   flex-shrink: 0;
   cursor: grab;
-  transform: translateY(6px);
+  transform: translateX(-30px);
+  margin-top: 0;
+  margin-bottom: 0;
+  image-rendering: auto;
+  touch-action: none;
+  opacity: 0;
+  transition: opacity .28s ease;
+  will-change: opacity;
+}
+#chip3d.ready {
+  opacity: 1;
 }
 
 @media (max-width: 820px) {
   #chip3d {
-    width: 100px;
-    height: 100px;
+    width: 190px;
+    height: 190px;
+    transform: translateY(8px) translateX(0);
+    align-self: center;
   }
 }
 
@@ -330,7 +343,7 @@ nav {
   position: relative;
   display: block;
   font-size: .78rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: #5e00f5;
@@ -368,7 +381,7 @@ nav {
 .hero h1 {
   font-family: 'Caveat', cursive;
   font-size: clamp(2.2rem, 4.5vw, 4rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.3;
   display: inline-block;
   padding: 4px 8px 12px;
@@ -392,7 +405,8 @@ nav {
   color: #fff;
   max-width: 560px;
   line-height: 1.7;
-  margin-bottom: 38px;
+  margin-top: 12px;
+  margin-bottom: 28px;
   animation: fadeUp .75s .2s ease both;
 }
 
@@ -413,7 +427,7 @@ nav {
   gap: 8px;
   padding: 13px 28px;
   font-family: 'Caveat', cursive;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 1.15rem;
   border-radius: 20px;
   text-decoration: none;
@@ -445,7 +459,7 @@ nav {
 /* ── SECTION TITLES ── */
 .slabel {
   font-size: .75rem;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--ep);
@@ -467,7 +481,7 @@ nav {
 .stitle {
   font-family: 'Caveat', cursive;
   font-size: clamp(2.2rem,4vw,3.2rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.2;
   display: inline-block;
   padding-bottom: 6px;
@@ -535,12 +549,11 @@ nav {
 }
 
 .aico,
-.ciico,
 .pico {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--gg);
+  background: transparent;
   border: none;
   transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s;
 }
@@ -551,22 +564,17 @@ nav {
   border-radius: 14px;
   font-size: 1.1rem;
   flex-shrink: 0;
-  background: linear-gradient(135deg, rgba(0,116,255,0.18) 0%, rgba(94,0,245,0.12) 100%);
-  color: transparent;
+  background: transparent;
 }
 
 .aico i {
-  background: linear-gradient(135deg, #1f8bff 0%, #7a2cff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+  color: var(--ts);
 }
 
 .acard h3 {
   font-family: 'Caveat', cursive;
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 5px;
 }
 
@@ -584,23 +592,6 @@ nav {
   position: relative;
 }
 
-.thesis-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 8px;
-}
-
-.thesis-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.thesis-list {
-  display: grid;
-  gap: 22px;
-}
 
 .thesis-meta {
   display: inline-flex;
@@ -609,7 +600,7 @@ nav {
   padding: 5px 12px;
   border-radius: 999px;
   font-size: .77rem;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
   color: #fff;
@@ -642,7 +633,7 @@ nav {
 .thesis-card h3 {
   font-family: 'Caveat', cursive;
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 10px;
   line-height: 1.4;
   color: var(--tp);
@@ -665,6 +656,8 @@ nav {
   margin: 40px 0 24px;
   display: flex;
   justify-content: center;
+  width: 100%;
+  padding: 0 12px;
 }
 .cat-header:first-of-type {
   margin-top: 0;
@@ -674,21 +667,29 @@ nav {
   align-items: center;
   justify-content: center;
   gap: 9px;
+
+  max-width: 100%;
+  width: fit-content;
+
   font-family: 'Caveat', cursive;
   font-size: 1.22rem;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: .012em;
   text-align: center;
-  color: var(--tp);
-  background: var(--cardg);
-  border: 1px solid var(--cardbrd);
-  padding: 16px 36px 14px 36px;
-  border-radius: 18px;
-  backdrop-filter: blur(14px) saturate(130%);
-  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  line-height: 1.25;
+
+  color: #fff;
+  background: var(--gm);
+  border: none;
+
+  padding: 16px 36px 14px;
+  border-radius: 999px;
+
   box-shadow: 0 4px 18px rgba(0,0,0,0.10);
-  transition: background .25s, border-color .25s, color .25s, transform .3s cubic-bezier(.34,1.56,.64,1);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
   cursor: default;
+
+  overflow: hidden;
 }
 .cat-grid {
   display: grid;
@@ -790,7 +791,7 @@ nav {
   padding: 4px 10px;
   border-radius: 999px;
   font-size: .72rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--ts);
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
@@ -823,11 +824,7 @@ nav {
 }
 
 .pico i {
-  background: linear-gradient(135deg, #1f8bff 0%, #7a2cff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+  color: var(--ts);
 }
 
 .pl {
@@ -921,7 +918,7 @@ nav {
 .scat h3 {
   font-family: 'Caveat', cursive;
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: .04em;
   text-transform: uppercase;
   color: var(--tp);
@@ -935,7 +932,7 @@ nav {
 
 .pill {
   font-size: .77rem;
-  font-weight: 500;
+  font-weight: 400;
   padding: 5px 12px;
   border-radius: 100px;
   background: rgba(255,255,255,0.05);
@@ -988,7 +985,7 @@ nav {
 .li h3 {
   font-family: 'Caveat', cursive;
   font-size: 1.16rem;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .li p {
@@ -1016,7 +1013,7 @@ nav {
   text-decoration: none;
   color: #fff;
   font-family: 'Caveat', cursive;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 1.15rem;
   transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .25s;
   flex: 0 0 auto;
@@ -1058,10 +1055,10 @@ footer {
 footer span {
   font-family: 'Caveat', cursive;
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 400;
   display: inline-block;
-  padding: 6px 6px 5px;
-  margin: -6px -6px -5px;
+  padding: 16px 8px 5px;
+  margin: -16px -8px -5px;
   background: var(--gm);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1074,55 +1071,14 @@ footer span {
   to { opacity: 1; transform: none; }
 }
 
-@keyframes floatB1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  12%  { transform: translate(-30vw, 20vh) scale(1.15); }
-  25%  { transform: translate(20vw, 50vh) scale(0.9); }
-  37%  { transform: translate(35vw, -10vh) scale(1.2); }
-  50%  { transform: translate(-10vw, -40vh) scale(0.88); }
-  63%  { transform: translate(-40vw, 35vh) scale(1.1); }
-  75%  { transform: translate(15vw, -50vh) scale(0.95); }
-  88%  { transform: translate(40vw, 40vh) scale(1.12); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-@keyframes floatB2 {
-  0%   { transform: translate(0, 0) scale(1); }
-  18%  { transform: translate(40vw, -30vh) scale(1.18); }
-  33%  { transform: translate(-25vw, -50vh) scale(0.85); }
-  48%  { transform: translate(30vw, 45vh) scale(1.22); }
-  62%  { transform: translate(-40vw, 20vh) scale(0.9); }
-  77%  { transform: translate(10vw, -35vh) scale(1.1); }
-  90%  { transform: translate(-35vw, -20vh) scale(1.15); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-/* ── BLOBS ── */
-.blob {
+/* ── BG CANVAS ── */
+#bg-canvas {
   position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: .16;
-  pointer-events: none;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
-}
-
-.b1 {
-  width: 320px;
-  height: 320px;
-  background: var(--eb);
-  top: 8%;
-  right: 4%;
-  animation: floatB1 35s cubic-bezier(.45,0,.55,1) infinite;
-}
-
-.b2 {
-  width: 250px;
-  height: 250px;
-  background: var(--ep);
-  top: 58%;
-  left: 2%;
-  animation: floatB2 47s cubic-bezier(.45,0,.55,1) infinite;
+  pointer-events: none;
 }
 
 /* ── SCROLLBAR ── */
@@ -1165,7 +1121,7 @@ footer span {
   color: var(--ts);
   background: transparent;
   font-size: .88rem;
-  font-weight: 600;
+  font-weight: 400;
   transition: transform .25s ease, color .25s ease, opacity .25s ease;
   isolation: isolate;
   border-radius: 10px;
@@ -1250,10 +1206,6 @@ footer span {
   }
 
   .cat-label:hover {
-    background: var(--gm);
-    color: #fff;
-    border: 1px solid transparent;
-    background-clip: padding-box;
     transform: translateY(-3px);
   }
 
@@ -1311,21 +1263,18 @@ footer span {
 /* ── RESPONSIVE ── */
 @media (max-width: 820px) {
   .hero {
-    flex-direction: column-reverse;
+    flex-direction: column;
     text-align: center;
   }
 
   .hero-photo {
-    margin-top: 20px;
+    order: -1;
+    margin-bottom: 24px;
   }
 
   .photo-wrap {
     width: 180px;
     height: 180px;
-  }
-
-  .hero-btns {
-    justify-content: center;
   }
 
   .hero-text {
@@ -1335,18 +1284,11 @@ footer span {
   }
 
   .hero h1 {
-    display: block;
-    order: 1;
     text-align: center;
   }
 
   .hero-tag-row {
-    order: 2;
     justify-content: center;
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 18px;
   }
 
   .hero-tag {
@@ -1356,12 +1298,11 @@ footer span {
   }
 
   .hero-sub {
-    order: 3;
     text-align: center;
   }
 
   .hero-btns {
-    order: 4;
+    justify-content: center;
   }
 
   #researches .research-grid,
@@ -1397,14 +1338,6 @@ footer span {
     gap: 14px;
   }
 
-  .thesis-body {
-    width: 100%;
-  }
-
-  .thesis-top {
-    align-items: center;
-    margin-bottom: 12px;
-  }
 
   .tico {
     width: 50px;
@@ -1581,6 +1514,21 @@ footer span {
   .nav-links a {
     font-size: .74rem;
   }
+
+  .cat-label {
+    width: 100%;
+    max-width: 100%;
+    padding: 13px 18px 12px;
+    border-radius: 22px;
+    font-size: 1.12rem;
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+
+  .cat-label i {
+    flex-shrink: 0;
+  }
+
 }
 </style>
 </head>
@@ -1590,11 +1538,11 @@ footer span {
   <div class="loader-box">
     <div class="loader-ring"></div>
     <div class="loader-text">GDT</div>
+    <div class="loader-status" id="loader-status">Loading...</div>
   </div>
 </div>
 
-<div class="blob b1"></div>
-<div class="blob b2"></div>
+<canvas id="bg-canvas"></canvas>
 
 <nav>
   <div class="nav-logo">GDT</div>
@@ -1608,17 +1556,38 @@ footer span {
     </ul>
   </div>
 </nav>
+<script>
+(function(){
+  var n=document.querySelector('nav');
+  function upd(){
+    if(window.scrollY>40){
+      n.style.background='rgba(10,15,46,0.45)';
+      n.style.backdropFilter='blur(16px)';
+      n.style.webkitBackdropFilter='blur(16px)';
+      n.style.borderColor='rgba(180,197,255,0.12)';
+    }else{
+      n.style.background='transparent';
+      n.style.backdropFilter='none';
+      n.style.webkitBackdropFilter='none';
+      n.style.borderColor='transparent';
+    }
+  }
+  window.addEventListener('scroll',upd,{passive:true});
+  upd();
+})();
+</script>
 
 <section class="hero" id="home">
   <div class="hero-text">
+    <h1>George David <span>Tsitlauri</span></h1>
+
     <div class="hero-tag-row">
-      <canvas id="chip3d"></canvas>
       <div class="hero-tag">
         AI &amp; SYSTEMS RESEARCH ENGINEER
       </div>
     </div>
 
-    <h1>George David<br/><span>Tsitlauri</span></h1>
+    <canvas id="chip3d"></canvas>
 
     <p class="hero-sub">
       From hardware to AI.
@@ -2279,18 +2248,6 @@ function hideLoader(delay = 0) {
   }, delay);
 }
 
-function updateNavBackground() {
-  if (window.scrollY > 40) {
-    nav.style.background = 'rgba(10,15,46,0.95)';
-    nav.style.backdropFilter = 'blur(18px)';
-  } else {
-    nav.style.background = 'transparent';
-    nav.style.backdropFilter = 'none';
-  }
-}
-
-window.addEventListener('scroll', updateNavBackground);
-updateNavBackground();
 
 function smoothScrollTo(targetY, duration = 900) {
   const startY = window.pageYOffset;
@@ -2358,12 +2315,12 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
-window.addEventListener('DOMContentLoaded', function() {
-  hideLoader(350);
+window.addEventListener('chip3d-ready', function() {
+  hideLoader(220);
 });
 
 window.addEventListener('load', function() {
-  hideLoader();
+  setTimeout(() => hideLoader(), 4000);
 });
 </script>
 
@@ -2422,6 +2379,7 @@ window.addEventListener('load', function() {
 
   window.addEventListener('wheel', (e) => {
     if (e.ctrlKey) return;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
 
     e.preventDefault();
 
@@ -2461,8 +2419,15 @@ window.addEventListener('load', function() {
   }, { passive: true });
 })();
 </script>
+
+
 <script type="importmap">
-{"imports":{"three":"https://unpkg.com/three@0.170.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.170.0/examples/jsm/"}}
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+  }
+}
 </script>
 
 <script type="module">
@@ -2471,979 +2436,1276 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-(function () {
-  const canvas = document.getElementById('chip3d');
-  if (!canvas) return;
+(async function () {
+const canvas = document.getElementById('chip3d');
+if (!canvas) return;
 
-  const isMobile = window.matchMedia('(max-width: 820px), (pointer: coarse)').matches;
+canvas.title = '';
+canvas.setAttribute('aria-label', 'Crypto3DStackCPU 3D secure-memory stack visualization');
 
-  const quality = isMobile
-    ? {
-        powerPreference: 'low-power',
-        tex: 1024,
-        maxPixelRatio: 1.5,
-        renderBoost: 1.25,
-        minRenderEdge: 260,
-        maxRenderEdge: 1000,
-        shadowMap: 1024,
-        targetFps: 60
-      }
-    : {
-        powerPreference: 'high-performance',
-        tex: 2048,
-        maxPixelRatio: 2.0,
-        renderBoost: 1.45,
-        minRenderEdge: 420,
-        maxRenderEdge: 1800,
-        shadowMap: 2048,
-        targetFps: 60
-      };
+if (document.fonts) {
+  try {
+    await Promise.all([
+      document.fonts.load('800 56px "IBM Plex Sans Condensed"'),
+      document.fonts.ready
+    ]);
+  } catch (_) {}
+}
 
-  const renderer = new THREE.WebGLRenderer({
-    canvas,
-    alpha: true,
-    antialias: true,
-    precision: 'highp',
-    powerPreference: quality.powerPreference
-  });
+const isMobile = window.matchMedia('(max-width: 820px), (pointer: coarse)').matches;
+const deviceDPR = Math.max(1, window.devicePixelRatio || 1);
 
-  renderer.setPixelRatio(1);
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.94;
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const quality = isMobile ? {
+  tex: 2048,
+  minDPR: 0.75,
+  startDPR: Math.min(Math.max(deviceDPR * 0.9, 1.0), 1.8),
+  maxDPR: 2.2,
+  maxRenderEdge: 1080,
+  targetFpsCap: 60
+} : {
+  tex: 4096,
+  minDPR: 1.0,
+  startDPR: Math.min(Math.max(deviceDPR, 1.5), 2.5),
+  maxDPR: 3.5,
+  maxRenderEdge: 1920,
+  targetFpsCap: 144
+};
 
-  const scene = new THREE.Scene();
+const renderer = new THREE.WebGLRenderer({
+  canvas,
+  alpha: true,
+  antialias: true,
+  precision: 'highp',
+  powerPreference: 'high-performance'
+});
 
-  const camera = new THREE.PerspectiveCamera(18, 1, 0.1, 200);
-  camera.position.set(13.5, 8.0, 14.0);
+renderer.setPixelRatio(quality.startDPR);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.30;
+renderer.shadowMap.enabled = false;
+renderer.setClearAlpha(0);
 
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const envRT = pmrem.fromScene(new RoomEnvironment(), 0.02);
-  scene.environment = envRT.texture;
-  scene.environmentIntensity = 0.86;
+const scene = new THREE.Scene();
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.36));
+const camera = new THREE.PerspectiveCamera(20, 1, 0.1, 200);
+camera.position.set(15.2, 9.2, 15.8);
 
-  const hemi = new THREE.HemisphereLight(0xdce8ff, 0x1a1630, 0.82);
-  scene.add(hemi);
+const pmrem = new THREE.PMREMGenerator(renderer);
+const envRT = pmrem.fromScene(new RoomEnvironment(), 0.02);
+scene.environment = envRT.texture;
+scene.environmentIntensity = 0.60;
+pmrem.dispose();
 
-  const key = new THREE.DirectionalLight(0xffffff, 1.75);
-  key.position.set(7, 11, 8);
-  key.castShadow = true;
-  key.shadow.mapSize.set(quality.shadowMap, quality.shadowMap);
-  key.shadow.camera.near = 1;
-  key.shadow.camera.far = 30;
-  key.shadow.camera.left = -7;
-  key.shadow.camera.right = 7;
-  key.shadow.camera.top = 7;
-  key.shadow.camera.bottom = -7;
-  key.shadow.bias = -0.00035;
-  key.shadow.normalBias = 0.018;
-  scene.add(key);
+scene.add(new THREE.AmbientLight(0xffffff, 1.20));
 
-  const fill = new THREE.DirectionalLight(0x9fc7ff, 0.95);
-  fill.position.set(-8, 5, -6);
-  scene.add(fill);
+const hemi = new THREE.HemisphereLight(0xf2f7ff, 0x2d3946, 0.55);
+scene.add(hemi);
 
-  const rim = new THREE.DirectionalLight(0x69d8ff, 0.78);
-  rim.position.set(-5, 8, -10);
-  scene.add(rim);
+const key = new THREE.DirectionalLight(0xffffff, 0.40);
+key.position.set(7, 11, 8);
+scene.add(key);
 
-  const bottomFill = new THREE.DirectionalLight(0x8b74ff, 0.30);
-  bottomFill.position.set(0, -7, 4);
-  scene.add(bottomFill);
+const fill = new THREE.DirectionalLight(0xe4efff, 0.30);
+fill.position.set(-8, 5, -6);
+scene.add(fill);
 
-  const cyanGlow = new THREE.PointLight(0x00d8ff, 0.44, 5.2, 2.0);
-  cyanGlow.position.set(-1.25, 0.38, 1.25);
-  scene.add(cyanGlow);
+const rim = new THREE.DirectionalLight(0xbfdcff, 0.15);
+rim.position.set(-5, 8, -10);
+scene.add(rim);
 
-  const purpleGlow = new THREE.PointLight(0x8b52ff, 0.34, 5.2, 2.0);
-  purpleGlow.position.set(1.35, 0.46, -1.10);
-  scene.add(purpleGlow);
+const bottomFill = new THREE.DirectionalLight(0xffffff, 0.20);
+bottomFill.position.set(0, -7, 4);
+scene.add(bottomFill);
 
-  function makeCanvasTexture(draw, size = quality.tex) {
-    const c = document.createElement('canvas');
-    c.width = size;
-    c.height = size;
+const adaptive = {
+  currentDPR: quality.startDPR,
+  minDPR: quality.minDPR,
+  maxDPR: quality.maxDPR,
+  targetFrameMs: 1000 / 60,
+  samples: [],
+  maxSamples: 60,
+  frameCounter: 0,
+  resizePending: false,
+  resizeForce: false
+};
 
-    const ctx = c.getContext('2d');
-    draw(ctx, size);
-
-    const tex = new THREE.CanvasTexture(c);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    tex.anisotropy = renderer.capabilities.getMaxAnisotropy?.() || 8;
-    tex.minFilter = THREE.LinearMipmapLinearFilter;
-    tex.magFilter = THREE.LinearFilter;
-    tex.wrapS = THREE.ClampToEdgeWrapping;
-    tex.wrapT = THREE.ClampToEdgeWrapping;
-    tex.needsUpdate = true;
-    return tex;
-  }
-
-  function rr(ctx, x, y, w, h, r) {
-    const radius = Math.min(r, w / 2, h / 2);
-    ctx.beginPath();
-    ctx.moveTo(x + radius, y);
-    ctx.lineTo(x + w - radius, y);
-    ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
-    ctx.lineTo(x + w, y + h - radius);
-    ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
-    ctx.lineTo(x + radius, y + h);
-    ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
-    ctx.lineTo(x, y + radius);
-    ctx.quadraticCurveTo(x, y, x + radius, y);
-    ctx.closePath();
-  }
-
-  function noise(ctx, S, n, a) {
-    for (let i = 0; i < n; i++) {
-      ctx.fillStyle = `rgba(255,255,255,${Math.random() * a})`;
-      ctx.fillRect(Math.random() * S, Math.random() * S, 1 + Math.random() * 2, 1 + Math.random() * 2);
+function estimateRefreshHz(samples = 36) {
+  return new Promise((resolve) => {
+    if (document.hidden) {
+      resolve(60);
+      return;
     }
+
+    const deltas = [];
+    let last = performance.now();
+
+    function step(now) {
+      const delta = now - last;
+      last = now;
+
+      if (delta > 0 && delta < 80) deltas.push(delta);
+
+      if (deltas.length >= samples) {
+        deltas.sort((a, b) => a - b);
+        const mid = deltas.slice(Math.floor(samples * 0.2), Math.ceil(samples * 0.8));
+        const avg = mid.reduce((s, v) => s + v, 0) / mid.length;
+        resolve(Math.round(1000 / avg));
+      } else {
+        requestAnimationFrame(step);
+      }
+    }
+
+    requestAnimationFrame(step);
+  });
+}
+
+estimateRefreshHz().then((hz) => {
+  const safeTargetFps = Math.min(quality.targetFpsCap, Math.max(52, hz * 0.88));
+  adaptive.targetFrameMs = 1000 / safeTargetFps;
+}).catch(() => {
+  adaptive.targetFrameMs = 1000 / (isMobile ? 60 : 90);
+});
+
+const maxSupportedTex = renderer.capabilities.maxTextureSize || quality.tex;
+const textureSize = Math.min(quality.tex, maxSupportedTex);
+
+function makeCanvasTexture(draw, size = textureSize) {
+  const c = document.createElement('canvas');
+  c.width = size;
+  c.height = size;
+
+  const ctx = c.getContext('2d', { alpha: true });
+  draw(ctx, size);
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy?.() || 16, 16);
+  tex.minFilter = THREE.LinearMipmapLinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  tex.wrapS = THREE.ClampToEdgeWrapping;
+  tex.wrapT = THREE.ClampToEdgeWrapping;
+  tex.generateMipmaps = true;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+function rr(ctx, x, y, w, h, r) {
+  const radius = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + w - radius, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+  ctx.lineTo(x + w, y + h - radius);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+  ctx.lineTo(x + radius, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+}
+
+function drawTrackingText(ctx, text, x, y, tracking = 0) {
+  const chars = Array.from(text);
+  const total =
+    chars.reduce((sum, ch) => sum + ctx.measureText(ch).width, 0) +
+    tracking * Math.max(0, chars.length - 1);
+
+  let cursor = x - total / 2;
+
+  for (const ch of chars) {
+    const w = ctx.measureText(ch).width;
+    ctx.fillText(ch, cursor + w / 2, y);
+    cursor += w + tracking;
+  }
+}
+
+function noise(ctx, S, n, a, dark = false) {
+  for (let i = 0; i < n; i++) {
+    const alpha = Math.random() * a;
+    ctx.fillStyle = dark
+      ? `rgba(0,0,0,${alpha})`
+      : `rgba(255,255,255,${alpha})`;
+
+    ctx.fillRect(
+      Math.random() * S,
+      Math.random() * S,
+      1 + Math.random() * 2.2,
+      1 + Math.random() * 2.2
+    );
+  }
+}
+
+function line(ctx, pts, width, color) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(pts[0][0], pts[0][1]);
+  for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function via2d(ctx, x, y, r, u, type = 'gold') {
+  const g = ctx.createRadialGradient(
+    x - r * 0.28,
+    y - r * 0.28,
+    r * 0.08,
+    x,
+    y,
+    r
+  );
+
+  if (type === 'cool') {
+    g.addColorStop(0, '#eafcff');
+    g.addColorStop(0.42, '#8ed9ea');
+    g.addColorStop(1, '#355a68');
+  } else if (type === 'pale') {
+    g.addColorStop(0, '#ffffff');
+    g.addColorStop(0.45, '#c7d7e0');
+    g.addColorStop(1, '#607888');
+  } else {
+    g.addColorStop(0, '#fff3c9');
+    g.addColorStop(0.43, '#c99b55');
+    g.addColorStop(1, '#65401e');
   }
 
-  function line(ctx, pts, width, color, glow) {
-    ctx.save();
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
 
-    if (glow) {
-      ctx.strokeStyle = glow;
-      ctx.lineWidth = width + 7;
-      ctx.shadowBlur = 14;
-      ctx.shadowColor = glow;
-      ctx.lineJoin = 'round';
-      ctx.lineCap = 'round';
+  ctx.strokeStyle = 'rgba(255,255,255,0.20)';
+  ctx.lineWidth = 0.9 * u;
+  ctx.stroke();
+}
+
+function block(ctx, x, y, w, h, label, fill, stroke, u, fontScale = 1) {
+  ctx.save();
+
+  rr(ctx, x, y, w, h, 8 * u);
+  ctx.fillStyle = fill;
+  ctx.fill();
+
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = 1.55 * u;
+  ctx.stroke();
+
+  ctx.fillStyle = 'rgba(238,248,255,0.82)';
+  ctx.font = `700 ${12.5 * u * fontScale}px "IBM Plex Sans Condensed", "Arial Narrow", Inter, sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(label, x + w / 2, y + h / 2);
+
+  ctx.restore();
+}
+
+function fineMachining(ctx, S, u, alpha = 0.035) {
+  ctx.save();
+  ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+  ctx.lineWidth = 0.55 * u;
+
+  for (let i = 0; i < 72; i++) {
+    const y = S * (0.08 + i * 0.012);
+    ctx.beginPath();
+    ctx.moveTo(S * 0.08, y);
+    ctx.lineTo(S * 0.92, y + Math.sin(i * 0.7) * 1.2 * u);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function topLidTexture() {
+  return makeCanvasTexture((ctx, S) => {
+    const u = S / 1024;
+
+    const base = ctx.createLinearGradient(0, 0, S, S);
+    base.addColorStop(0, '#e0deda');
+    base.addColorStop(0.45, '#c8c6c2');
+    base.addColorStop(1, '#a8a6a2');
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, S, S);
+
+    const soft = ctx.createRadialGradient(
+      S * 0.44,
+      S * 0.35,
+      S * 0.03,
+      S * 0.52,
+      S * 0.52,
+      S * 0.72
+    );
+    soft.addColorStop(0, 'rgba(255,255,255,0.32)');
+    soft.addColorStop(0.52, 'rgba(255,255,255,0.06)');
+    soft.addColorStop(1, 'rgba(0,0,0,0.13)');
+    ctx.fillStyle = soft;
+    ctx.fillRect(0, 0, S, S);
+
+    fineMachining(ctx, S, u, 0.042);
+    noise(ctx, S, 4200, 0.020, false);
+    noise(ctx, S, 3000, 0.016, true);
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+    ctx.lineWidth = 2.2 * u;
+    ctx.strokeRect(S * 0.135, S * 0.135, S * 0.73, S * 0.73);
+
+    ctx.strokeStyle = 'rgba(60,60,55,0.13)';
+    ctx.lineWidth = 1.5 * u;
+    ctx.strokeRect(S * 0.155, S * 0.155, S * 0.69, S * 0.69);
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.24)';
+    ctx.lineWidth = 1.1 * u;
+    ctx.strokeRect(S * 0.178, S * 0.178, S * 0.644, S * 0.644);
+    ctx.restore();
+
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = `400 ${44 * u}px "IBM Plex Sans Condensed", "Arial Narrow", Inter, sans-serif`;
+    ctx.fillStyle = 'rgba(12,14,14,0.75)';
+    drawTrackingText(ctx, 'Crypto3DStackCPU', S * 0.5, S * 0.505, 2.8 * u);
+    ctx.restore();
+  });
+}
+
+function substrateTexture() {
+  return makeCanvasTexture((ctx, S) => {
+    const u = S / 1024;
+
+    const g = ctx.createLinearGradient(0, 0, S, S);
+    g.addColorStop(0, '#2e7018');
+    g.addColorStop(0.48, '#245a12');
+    g.addColorStop(1, '#163a0a');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, S, S);
+
+    const v = ctx.createRadialGradient(
+      S * 0.47,
+      S * 0.38,
+      S * 0.04,
+      S * 0.5,
+      S * 0.52,
+      S * 0.74
+    );
+    v.addColorStop(0, 'rgba(255,255,255,0.16)');
+    v.addColorStop(1, 'rgba(0,0,0,0.20)');
+    ctx.fillStyle = v;
+    ctx.fillRect(0, 0, S, S);
+
+    ctx.strokeStyle = 'rgba(120,200,100,0.18)';
+    ctx.lineWidth = 1.25 * u;
+
+    for (let i = 0; i < 18; i++) {
+      const x = S * (0.11 + i * 0.047);
       ctx.beginPath();
-      ctx.moveTo(pts[0][0], pts[0][1]);
-      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+      ctx.moveTo(x, S * 0.16);
+      ctx.lineTo(x, S * 0.84);
       ctx.stroke();
     }
 
-    ctx.shadowBlur = 0;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(pts[0][0], pts[0][1]);
-    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
-    ctx.stroke();
+    for (let i = 0; i < 13; i++) {
+      const y = S * (0.17 + i * 0.052);
+      ctx.beginPath();
+      ctx.moveTo(S * 0.13, y);
+      ctx.lineTo(S * 0.87, y);
+      ctx.stroke();
+    }
 
-    ctx.restore();
-  }
-
-  function block(ctx, x, y, w, h, label, fill, stroke, u) {
-    ctx.save();
-    rr(ctx, x, y, w, h, 12 * u);
-    ctx.fillStyle = fill;
-    ctx.fill();
-    ctx.strokeStyle = stroke;
+    ctx.strokeStyle = 'rgba(140,220,120,0.22)';
     ctx.lineWidth = 2 * u;
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(235,247,255,0.92)';
-    ctx.font = `800 ${15 * u}px Inter, Arial, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(label, x + w / 2, y + h / 2);
-    ctx.restore();
-  }
-
-  function via2d(ctx, x, y, r, u, cyan = false) {
-    const g = ctx.createRadialGradient(x - r * 0.25, y - r * 0.25, r * 0.1, x, y, r);
-
-    if (cyan) {
-      g.addColorStop(0, '#eaffff');
-      g.addColorStop(0.38, '#6feaff');
-      g.addColorStop(1, '#0d4c68');
-    } else {
-      g.addColorStop(0, '#fff2c0');
-      g.addColorStop(0.42, '#d4a96a');
-      g.addColorStop(1, '#6d421f');
-    }
-
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.strokeStyle = 'rgba(255,255,255,0.22)';
-    ctx.lineWidth = 1.1 * u;
-    ctx.stroke();
-  }
-
-  function substrateTexture() {
-    return makeCanvasTexture((ctx, S) => {
-      const u = S / 1024;
-
-      const g = ctx.createLinearGradient(0, 0, S, S);
-      g.addColorStop(0, '#313844');
-      g.addColorStop(0.48, '#1f2631');
-      g.addColorStop(1, '#101621');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, S, S);
-
-      const vignette = ctx.createRadialGradient(S * 0.5, S * 0.45, S * 0.05, S * 0.5, S * 0.5, S * 0.72);
-      vignette.addColorStop(0, 'rgba(255,255,255,0.05)');
-      vignette.addColorStop(1, 'rgba(0,0,0,0.42)');
-      ctx.fillStyle = vignette;
-      ctx.fillRect(0, 0, S, S);
-
-      ctx.strokeStyle = 'rgba(120,165,255,0.08)';
-      ctx.lineWidth = 2 * u;
-
-      for (let i = 0; i < 15; i++) {
-        const x = S * (0.12 + i * 0.055);
-        ctx.beginPath();
-        ctx.moveTo(x, S * 0.16);
-        ctx.lineTo(x, S * 0.84);
-        ctx.stroke();
-      }
-
-      for (let i = 0; i < 10; i++) {
-        const y = S * (0.18 + i * 0.07);
-        ctx.beginPath();
-        ctx.moveTo(S * 0.14, y);
-        ctx.lineTo(S * 0.86, y);
-        ctx.stroke();
-      }
-
-      const traces = [
-        [[115, 250], [260, 250], [370, 365], [530, 365], [660, 245], [900, 245]],
-        [[115, 780], [260, 780], [400, 630], [550, 630], [715, 820], [900, 820]],
-        [[185, 150], [260, 265], [430, 500], [705, 500], [850, 650]],
-        [[850, 165], [760, 330], [585, 510], [310, 510], [160, 665]]
-      ];
-
-      traces.forEach((t) => {
-        const pts = t.map(([x, y]) => [x * u, y * u]);
-        line(ctx, pts, 8 * u, 'rgba(197,132,62,0.76)', 'rgba(0,220,255,0.08)');
-        line(ctx, pts, 2.1 * u, 'rgba(255,236,185,0.30)');
-      });
-
-      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
-      ctx.lineWidth = 2 * u;
-      ctx.strokeRect(S * 0.08, S * 0.10, S * 0.84, S * 0.80);
-      ctx.strokeStyle = 'rgba(0,210,255,0.12)';
-      ctx.strokeRect(S * 0.145, S * 0.165, S * 0.71, S * 0.67);
-
-      const pads = [
-        [120, 165], [205, 165], [820, 165], [905, 165],
-        [120, 860], [205, 860], [820, 860], [905, 860],
-        [145, 320], [145, 700], [880, 320], [880, 700]
-      ];
-
-      pads.forEach(([x, y]) => {
-        rr(ctx, x * u - 18 * u, y * u - 10 * u, 36 * u, 20 * u, 4 * u);
-        ctx.fillStyle = 'rgba(205,142,72,0.78)';
-        ctx.fill();
-        ctx.fillStyle = 'rgba(255,235,180,0.18)';
-        ctx.fillRect(x * u - 8 * u, y * u - 4 * u, 16 * u, 8 * u);
-      });
-
-      ctx.fillStyle = 'rgba(230,242,255,0.20)';
-      ctx.font = `900 ${24 * u}px Inter, Arial, sans-serif`;
-      ctx.textAlign = 'left';
-      ctx.fillText('Crypto3DStackCPU', S * 0.18, S * 0.765);
-
-      ctx.fillStyle = 'rgba(175,205,255,0.14)';
-      ctx.font = `700 ${13 * u}px Inter, Arial, sans-serif`;
-      ctx.fillText('secure 3D-stacked memory research prototype', S * 0.18, S * 0.803);
-
-      via2d(ctx, S * 0.14, S * 0.18, 9 * u, u);
-      noise(ctx, S, 260, 0.024);
-    });
-  }
-
-  function logicTexture() {
-    return makeCanvasTexture((ctx, S) => {
-      const u = S / 1024;
-
-      const bg = ctx.createLinearGradient(0, 0, S, S);
-      bg.addColorStop(0, '#172a48');
-      bg.addColorStop(0.5, '#0c1830');
-      bg.addColorStop(1, '#07101f');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, S, S);
-
-      ctx.strokeStyle = 'rgba(0,221,255,0.12)';
-      ctx.lineWidth = 2 * u;
-      ctx.strokeRect(S * 0.07, S * 0.08, S * 0.86, S * 0.84);
-      ctx.strokeRect(S * 0.13, S * 0.14, S * 0.74, S * 0.72);
-
-      const startX = S * 0.16;
-      const y = S * 0.25;
-      const w = S * 0.115;
-      const h = S * 0.105;
-      const gap = S * 0.027;
-
-      ['IF', 'ID', 'EX', 'MEM', 'WB'].forEach((s, i) => {
-        block(ctx, startX + i * (w + gap), y, w, h, s, 'rgba(0,116,255,0.24)', 'rgba(82,190,255,0.42)', u);
-      });
-
-      line(ctx, [
-        [S * 0.19, S * 0.47],
-        [S * 0.32, S * 0.47],
-        [S * 0.42, S * 0.55],
-        [S * 0.59, S * 0.55],
-        [S * 0.73, S * 0.45],
-        [S * 0.84, S * 0.45]
-      ], 6 * u, 'rgba(0,220,255,0.50)', 'rgba(0,220,255,0.14)');
-
-      block(ctx, S * 0.16, S * 0.60, S * 0.18, S * 0.105, 'CPU', 'rgba(0,116,255,0.22)', 'rgba(82,190,255,0.38)', u);
-      block(ctx, S * 0.39, S * 0.60, S * 0.18, S * 0.105, 'AES', 'rgba(94,0,245,0.24)', 'rgba(175,120,255,0.44)', u);
-      block(ctx, S * 0.62, S * 0.60, S * 0.22, S * 0.105, 'HMAC', 'rgba(94,0,245,0.21)', 'rgba(175,120,255,0.40)', u);
-
-      block(ctx, S * 0.26, S * 0.76, S * 0.20, S * 0.082, 'HKDF', 'rgba(0,210,255,0.12)', 'rgba(90,230,255,0.30)', u);
-      block(ctx, S * 0.55, S * 0.76, S * 0.22, S * 0.082, 'RESEAL', 'rgba(0,210,255,0.12)', 'rgba(90,230,255,0.30)', u);
-
-      for (let i = 0; i < 5; i++) {
-        via2d(ctx, S * (0.21 + i * 0.145), S * 0.405, 5.4 * u, u, true);
-      }
-
-      ctx.fillStyle = 'rgba(230,246,255,0.16)';
-      ctx.font = `800 ${15 * u}px Inter, Arial, sans-serif`;
-      ctx.textAlign = 'left';
-      ctx.fillText('PIPELINE + CRYPTOGRAPHIC ISA', S * 0.17, S * 0.155);
-
-      ctx.fillStyle = 'rgba(230,246,255,0.10)';
-      ctx.font = `600 ${11 * u}px Inter, Arial, sans-serif`;
-      ctx.fillText('hazards  •  forwarding  •  branch recovery  •  authenticated execution', S * 0.17, S * 0.885);
-
-      noise(ctx, S, 170, 0.018);
-    });
-  }
-
-  function bridgeTexture() {
-    return makeCanvasTexture((ctx, S) => {
-      const u = S / 1024;
-
-      const bg = ctx.createLinearGradient(0, 0, S, S);
-      bg.addColorStop(0, '#31435f');
-      bg.addColorStop(0.5, '#1d2b43');
-      bg.addColorStop(1, '#111b2c');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, S, S);
-
-      ctx.strokeStyle = 'rgba(110,220,255,0.16)';
-      ctx.lineWidth = 2.5 * u;
-      ctx.strokeRect(S * 0.08, S * 0.10, S * 0.84, S * 0.80);
-
-      const buses = [
-        [[145, 250], [310, 250], [420, 380], [604, 380], [730, 250], [880, 250]],
-        [[145, 500], [310, 500], [420, 500], [604, 500], [730, 500], [880, 500]],
-        [[145, 750], [310, 750], [420, 620], [604, 620], [730, 750], [880, 750]]
-      ];
-
-      buses.forEach((b, i) => {
-        line(
-          ctx,
-          b.map(([x, y]) => [x * u, y * u]),
-          i === 1 ? 8 * u : 5 * u,
-          i === 1 ? 'rgba(0,220,255,0.52)' : 'rgba(185,130,72,0.55)',
-          i === 1 ? 'rgba(0,220,255,0.14)' : 'rgba(255,210,120,0.06)'
-        );
-      });
-
-      for (const x of [S * 0.17, S * 0.30, S * 0.70, S * 0.83]) {
-        for (const y of [S * 0.24, S * 0.38, S * 0.62, S * 0.76]) {
-          via2d(ctx, x, y, 6.5 * u, u, true);
-        }
-      }
-
-      ctx.fillStyle = 'rgba(220,245,255,0.16)';
-      ctx.font = `800 ${15 * u}px Inter, Arial, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.fillText('SECURE TSV MEMORY BRIDGE', S * 0.5, S * 0.875);
-
-      noise(ctx, S, 130, 0.017);
-    });
-  }
-
-  function memoryTexture(layer, title, subtitle, colorA, colorB, blocks) {
-    return makeCanvasTexture((ctx, S) => {
-      const u = S / 1024;
-
-      const bg = ctx.createLinearGradient(0, 0, S, S);
-      bg.addColorStop(0, colorA);
-      bg.addColorStop(1, colorB);
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, S, S);
-
-      const v = ctx.createRadialGradient(S * 0.5, S * 0.42, S * 0.08, S * 0.5, S * 0.5, S * 0.72);
-      v.addColorStop(0, 'rgba(255,255,255,0.05)');
-      v.addColorStop(1, 'rgba(0,0,0,0.35)');
-      ctx.fillStyle = v;
-      ctx.fillRect(0, 0, S, S);
-
-      ctx.strokeStyle = 'rgba(255,255,255,0.10)';
-      ctx.lineWidth = 2.5 * u;
-      ctx.strokeRect(S * 0.08, S * 0.10, S * 0.84, S * 0.80);
-
-      ctx.strokeStyle = 'rgba(255,255,255,0.055)';
-      ctx.lineWidth = 1.25 * u;
-
-      for (let i = 0; i <= 8; i++) {
-        const x = S * (0.16 + i * 0.085);
-        ctx.beginPath();
-        ctx.moveTo(x, S * 0.20);
-        ctx.lineTo(x, S * 0.76);
-        ctx.stroke();
-      }
-
-      for (let i = 0; i <= 6; i++) {
-        const y = S * (0.22 + i * 0.085);
-        ctx.beginPath();
-        ctx.moveTo(S * 0.16, y);
-        ctx.lineTo(S * 0.84, y);
-        ctx.stroke();
-      }
-
-      blocks.forEach((b) => {
-        block(ctx, b.x * S, b.y * S, b.w * S, b.h * S, b.label, b.fill, b.stroke, u);
-      });
-
-      for (const x of [S * 0.17, S * 0.28, S * 0.72, S * 0.83]) {
-        for (const y of [S * 0.20, S * 0.37, S * 0.63, S * 0.80]) {
-          via2d(ctx, x, y, 5.5 * u, u);
-        }
-      }
-
-      ctx.fillStyle = 'rgba(255,255,255,0.21)';
-      ctx.font = `900 ${24 * u}px Inter, Arial, sans-serif`;
-      ctx.textAlign = 'left';
-      ctx.fillText(`L${layer}`, S * 0.12, S * 0.155);
-
-      ctx.font = `800 ${14 * u}px Inter, Arial, sans-serif`;
-      ctx.fillText(title, S * 0.225, S * 0.153);
-
-      ctx.fillStyle = 'rgba(255,255,255,0.11)';
-      ctx.font = `600 ${11 * u}px Inter, Arial, sans-serif`;
-      ctx.fillText(subtitle, S * 0.22, S * 0.845);
-
-      noise(ctx, S, 130, 0.017);
-    });
-  }
-
-  const texSubstrate = substrateTexture();
-  const texLogic = logicTexture();
-  const texBridge = bridgeTexture();
-
-  const texL0 = memoryTexture(0, 'TEXT REGION', 'encrypted instruction image', '#16477f', '#082140', [
-    { x: 0.24, y: 0.29, w: 0.23, h: 0.11, label: 'TEXT', fill: 'rgba(0,116,255,0.28)', stroke: 'rgba(82,185,255,0.45)' },
-    { x: 0.54, y: 0.29, w: 0.23, h: 0.11, label: 'IFETCH', fill: 'rgba(0,210,255,0.16)', stroke: 'rgba(95,230,255,0.34)' },
-    { x: 0.34, y: 0.57, w: 0.32, h: 0.11, label: 'AUTH', fill: 'rgba(94,0,245,0.16)', stroke: 'rgba(170,125,255,0.34)' }
-  ]);
-
-  const texL1 = memoryTexture(1, 'DATA REGION', 'encrypted data + reseal output', '#28466f', '#14233f', [
-    { x: 0.24, y: 0.29, w: 0.23, h: 0.11, label: 'DATA', fill: 'rgba(0,116,255,0.23)', stroke: 'rgba(82,185,255,0.40)' },
-    { x: 0.54, y: 0.29, w: 0.23, h: 0.11, label: 'STORE', fill: 'rgba(0,210,255,0.14)', stroke: 'rgba(95,230,255,0.32)' },
-    { x: 0.34, y: 0.57, w: 0.32, h: 0.11, label: 'RESEAL', fill: 'rgba(94,0,245,0.16)', stroke: 'rgba(170,125,255,0.34)' }
-  ]);
-
-  const texL2 = memoryTexture(2, 'TAGS + WRAP', 'key tag + image tag + wrapped key', '#423071', '#18123a', [
-    { x: 0.22, y: 0.29, w: 0.22, h: 0.11, label: 'KEYT', fill: 'rgba(94,0,245,0.25)', stroke: 'rgba(185,130,255,0.46)' },
-    { x: 0.56, y: 0.29, w: 0.22, h: 0.11, label: 'IMGT', fill: 'rgba(94,0,245,0.22)', stroke: 'rgba(185,130,255,0.40)' },
-    { x: 0.34, y: 0.57, w: 0.32, h: 0.11, label: 'WRAP', fill: 'rgba(0,210,255,0.13)', stroke: 'rgba(90,230,255,0.32)' }
-  ]);
-
-  const texL3 = memoryTexture(3, 'SCRATCH + CTRL', 'scratch/cache abstraction + control', '#2e6670', '#0f2d36', [
-    { x: 0.23, y: 0.29, w: 0.23, h: 0.11, label: 'SCR', fill: 'rgba(0,210,255,0.18)', stroke: 'rgba(110,240,255,0.38)' },
-    { x: 0.55, y: 0.29, w: 0.23, h: 0.11, label: 'CTRL', fill: 'rgba(0,116,255,0.18)', stroke: 'rgba(100,190,255,0.36)' },
-    { x: 0.34, y: 0.57, w: 0.32, h: 0.11, label: 'PROC', fill: 'rgba(94,0,245,0.13)', stroke: 'rgba(170,125,255,0.30)' }
-  ]);
-
-  function makeLayer({
-    name,
-    width,
-    height,
-    depth,
-    y,
-    texture,
-    topColor,
-    sideColor,
-    bottomColor,
-    metalness = 0.04,
-    roughness = 0.52,
-    clearcoat = 0.08,
-    radius = 0.03
-  }) {
-    const geo = new RoundedBoxGeometry(width, height, depth, 5, Math.min(radius, height * 0.42));
-
-    const side = new THREE.MeshPhysicalMaterial({
-      color: sideColor,
-      metalness,
-      roughness,
-      clearcoat,
-      clearcoatRoughness: 0.36,
-      envMapIntensity: 0.95
-    });
-
-    const bottom = new THREE.MeshPhysicalMaterial({
-      color: bottomColor,
-      metalness: Math.max(0, metalness - 0.01),
-      roughness: Math.min(1, roughness + 0.09),
-      clearcoat: clearcoat * 0.42,
-      clearcoatRoughness: 0.55,
-      envMapIntensity: 0.78
-    });
-
-    const top = new THREE.MeshPhysicalMaterial({
-      color: topColor,
-      map: texture,
-      metalness,
-      roughness: Math.max(0.28, roughness - 0.05),
-      clearcoat: clearcoat + 0.02,
-      clearcoatRoughness: 0.25,
-      reflectivity: 0.32,
-      envMapIntensity: 0.82
-    });
-
-    const mesh = new THREE.Mesh(geo, [side, side, top, bottom, side, side]);
-    mesh.name = name;
-    mesh.position.y = y;
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-    return mesh;
-  }
-
-  function perimeterPositions(half, xs, zs) {
-    const out = [];
-
-    for (const x of xs) {
-      out.push([x, -half]);
-      out.push([x, half]);
-    }
-
-    for (const z of zs) {
-      out.push([-half, z]);
-      out.push([half, z]);
-    }
-
-    return out;
-  }
-
-  function makeFineMicroBumps(y0, y1, half, muted = false) {
-    const group = new THREE.Group();
-
-    const gap = Math.max(0.004, y1 - y0);
-    const padH = Math.min(0.0048, gap * 0.24);
-    const capH = Math.min(0.0028, gap * 0.16);
-    const pillarH = Math.max(0.0025, gap - padH * 2 - capH * 2);
-
-    const padMat = new THREE.MeshPhysicalMaterial({
-      color: muted ? 0x8f754e : 0xc99755,
-      metalness: 0.92,
-      roughness: muted ? 0.42 : 0.30,
-      clearcoat: 0.10,
-      clearcoatRoughness: 0.25,
-      envMapIntensity: 1.0
-    });
-
-    const capMat = new THREE.MeshPhysicalMaterial({
-      color: muted ? 0xb99762 : 0xe3c27d,
-      metalness: 0.88,
-      roughness: 0.25,
-      clearcoat: 0.12,
-      clearcoatRoughness: 0.20,
-      envMapIntensity: 1.05
-    });
-
-    const pillarMat = new THREE.MeshPhysicalMaterial({
-      color: muted ? 0x9a7546 : 0xd78f3d,
-      metalness: 1.0,
-      roughness: 0.24,
-      clearcoat: 0.10,
-      clearcoatRoughness: 0.18,
-      envMapIntensity: 1.1
-    });
-
-    const padGeo = new THREE.CylinderGeometry(0.040, 0.040, padH, 24);
-    const capGeo = new THREE.CylinderGeometry(0.029, 0.029, capH, 24);
-    const pillarGeo = new THREE.CylinderGeometry(0.013, 0.013, pillarH, 24);
-
-    const xs = [-half * 0.76, -half * 0.50, -half * 0.25, 0, half * 0.25, half * 0.50, half * 0.76];
-    const zs = [-half * 0.68, -half * 0.34, 0, half * 0.34, half * 0.68];
-    const positions = perimeterPositions(half, xs, zs);
-
-    positions.forEach(([x, z]) => {
-      const pillar = new THREE.Mesh(pillarGeo, pillarMat);
-      pillar.position.set(x, (y0 + y1) * 0.5, z);
-      pillar.castShadow = true;
-      pillar.receiveShadow = true;
-      group.add(pillar);
-
-      const p0 = new THREE.Mesh(padGeo, padMat);
-      p0.position.set(x, y0 + padH * 0.5, z);
-      p0.castShadow = true;
-      p0.receiveShadow = true;
-      group.add(p0);
-
-      const c0 = new THREE.Mesh(capGeo, capMat);
-      c0.position.set(x, y0 + padH + capH * 0.5, z);
-      c0.castShadow = true;
-      c0.receiveShadow = true;
-      group.add(c0);
-
-      const c1 = new THREE.Mesh(capGeo, capMat);
-      c1.position.set(x, y1 - padH - capH * 0.5, z);
-      c1.castShadow = true;
-      c1.receiveShadow = true;
-      group.add(c1);
-
-      const p1 = new THREE.Mesh(padGeo, padMat);
-      p1.position.set(x, y1 - padH * 0.5, z);
-      p1.castShadow = true;
-      p1.receiveShadow = true;
-      group.add(p1);
-    });
-
-    return group;
-  }
-
-  function makeFineVerticalTSVs(yBottom, yTop) {
-    const group = new THREE.Group();
-
-    const copper = new THREE.MeshPhysicalMaterial({
-      color: 0xc9863d,
-      metalness: 1.0,
-      roughness: 0.22,
-      clearcoat: 0.08,
-      clearcoatRoughness: 0.18,
-      envMapIntensity: 1.05
-    });
-
-    const glowMat = new THREE.MeshBasicMaterial({
-      color: 0x00d8ff,
-      transparent: true,
-      opacity: 0.045,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
-    });
-
-    const h = yTop - yBottom;
-    const coreGeo = new THREE.CylinderGeometry(0.013, 0.013, h, 20);
-    const glowGeo = new THREE.CylinderGeometry(0.028, 0.028, h, 20);
-
-    const coords = [
-      [-1.55, -1.55], [-1.05, -1.55], [-0.52, -1.55], [0.52, -1.55], [1.05, -1.55], [1.55, -1.55],
-      [-1.55,  1.55], [-1.05,  1.55], [-0.52,  1.55], [0.52,  1.55], [1.05,  1.55], [1.55,  1.55],
-      [-1.55, -1.05], [-1.55, -0.52], [-1.55, 0.52], [-1.55, 1.05],
-      [ 1.55, -1.05], [ 1.55, -0.52], [ 1.55, 0.52], [ 1.55, 1.05]
+    ctx.strokeRect(S * 0.075, S * 0.095, S * 0.85, S * 0.81);
+
+    ctx.strokeStyle = 'rgba(140,220,120,0.15)';
+    ctx.lineWidth = 1.7 * u;
+    ctx.strokeRect(S * 0.145, S * 0.165, S * 0.71, S * 0.67);
+
+    const traces = [
+      [[120, 260], [270, 260], [360, 355], [525, 355], [650, 235], [905, 235]],
+      [[120, 780], [270, 780], [405, 630], [565, 630], [735, 820], [905, 820]],
+      [[180, 155], [260, 265], [430, 510], [700, 510], [850, 650]],
+      [[850, 170], [765, 335], [585, 510], [315, 510], [165, 670]],
+      [[175, 420], [315, 420], [390, 470], [560, 470], [700, 415], [835, 415]]
     ];
 
-    coords.forEach(([x, z], i) => {
-      const p = new THREE.Mesh(coreGeo, copper);
-      p.position.set(x, yBottom + h * 0.5, z);
-      p.castShadow = true;
-      p.receiveShadow = true;
-      group.add(p);
-
-      const g = new THREE.Mesh(glowGeo, glowMat.clone());
-      g.position.copy(p.position);
-      g.userData.isTsvGlow = true;
-      g.userData.phase = i * 0.31;
-      group.add(g);
+    traces.forEach((t) => {
+      const pts = t.map(([x, y]) => [x * u, y * u]);
+      line(ctx, pts, 5.2 * u, 'rgba(178,113,52,0.72)');
+      line(ctx, pts, 1.35 * u, 'rgba(255,230,170,0.30)');
     });
 
-    return group;
-  }
+    const pads = [
+      [118, 160], [208, 160], [816, 160], [906, 160],
+      [118, 862], [208, 862], [816, 862], [906, 862],
+      [144, 322], [144, 702], [884, 322], [884, 702],
+      [282, 244], [742, 784], [505, 356], [525, 640]
+    ];
 
-  function makeFineBgaBalls(pkgW, pkgD, y) {
-    const group = new THREE.Group();
+    pads.forEach(([x, y]) => {
+      rr(ctx, x * u - 16 * u, y * u - 8 * u, 32 * u, 16 * u, 3.5 * u);
+      ctx.fillStyle = 'rgba(188,119,56,0.78)';
+      ctx.fill();
 
-    const ballMat = new THREE.MeshPhysicalMaterial({
-      color: 0xcab488,
-      metalness: 1.0,
-      roughness: 0.23,
-      clearcoat: 0.12,
-      clearcoatRoughness: 0.18,
-      envMapIntensity: 1.1
+      ctx.fillStyle = 'rgba(255,238,185,0.16)';
+      ctx.fillRect(x * u - 6 * u, y * u - 3 * u, 12 * u, 6 * u);
     });
 
-    const ballGeo = new THREE.SphereGeometry(0.052, 22, 14);
-    const cols = 13;
-    const rows = 13;
-    const sx = pkgW * 0.39;
-    const sz = pkgD * 0.39;
+    ctx.fillStyle = 'rgba(160,230,140,0.18)';
+    ctx.font = `700 ${11 * u}px "IBM Plex Sans Condensed", "Arial Narrow", Inter, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('SECURE PACKAGE SUBSTRATE', S * 0.5, S * 0.872);
 
-    for (let ix = 0; ix < cols; ix++) {
-      for (let iz = 0; iz < rows; iz++) {
-        const x = THREE.MathUtils.lerp(-sx, sx, ix / (cols - 1));
-        const z = THREE.MathUtils.lerp(-sz, sz, iz / (rows - 1));
+    noise(ctx, S, 1200, 0.012);
+    noise(ctx, S, 800, 0.010, true);
+  });
+}
 
-        const ball = new THREE.Mesh(ballGeo, ballMat);
-        ball.position.set(x, y, z);
-        ball.scale.y = 0.60;
-        ball.castShadow = true;
-        ball.receiveShadow = true;
-        group.add(ball);
-      }
+function dieTexture({
+  layer,
+  title,
+  subtitle,
+  colorA,
+  colorB,
+  accent,
+  secondary,
+  blocks,
+  viaType = 'gold'
+}) {
+  return makeCanvasTexture((ctx, S) => {
+    const u = S / 1024;
+
+    const bg = ctx.createLinearGradient(0, 0, S, S);
+    bg.addColorStop(0, colorA);
+    bg.addColorStop(0.52, colorB);
+    bg.addColorStop(1, colorB);
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, S, S);
+
+    const v = ctx.createRadialGradient(
+      S * 0.45,
+      S * 0.35,
+      S * 0.04,
+      S * 0.52,
+      S * 0.52,
+      S * 0.72
+    );
+    v.addColorStop(0, 'rgba(255,255,255,0.13)');
+    v.addColorStop(0.55, 'rgba(255,255,255,0.03)');
+    v.addColorStop(1, 'rgba(0,0,0,0.22)');
+    ctx.fillStyle = v;
+    ctx.fillRect(0, 0, S, S);
+
+    ctx.strokeStyle = 'rgba(235,255,255,0.11)';
+    ctx.lineWidth = 1.1 * u;
+
+    for (let i = 0; i <= 8; i++) {
+      const x = S * (0.16 + i * 0.085);
+      ctx.beginPath();
+      ctx.moveTo(x, S * 0.20);
+      ctx.lineTo(x, S * 0.76);
+      ctx.stroke();
     }
 
-    return group;
+    for (let i = 0; i <= 6; i++) {
+      const y = S * (0.22 + i * 0.085);
+      ctx.beginPath();
+      ctx.moveTo(S * 0.16, y);
+      ctx.lineTo(S * 0.84, y);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = 'rgba(245,255,255,0.19)';
+    ctx.lineWidth = 2.1 * u;
+    ctx.strokeRect(S * 0.08, S * 0.10, S * 0.84, S * 0.80);
+
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 2.0 * u;
+    ctx.strokeRect(S * 0.135, S * 0.155, S * 0.73, S * 0.69);
+
+    const routes = [
+      [[170, 360], [310, 360], [410, 450], [620, 450], [765, 340]],
+      [[210, 700], [365, 650], [510, 650], [660, 720], [820, 720]],
+      [[180, 245], [260, 290], [350, 520], [615, 520], [835, 585]],
+      [[835, 245], [745, 330], [660, 490], [420, 490], [230, 585]]
+    ];
+
+    routes.forEach((r, i) => {
+      line(
+        ctx,
+        r.map(([x, y]) => [x * u, y * u]),
+        i % 2 === 0 ? 2.1 * u : 1.55 * u,
+        i % 2 === 0 ? accent : secondary
+      );
+    });
+
+    blocks.forEach((b) => {
+      block(
+        ctx,
+        b.x * S,
+        b.y * S,
+        b.w * S,
+        b.h * S,
+        b.label,
+        b.fill,
+        b.stroke,
+        u,
+        b.fontScale || 1
+      );
+    });
+
+    const vias = [
+      [0.18, 0.23], [0.30, 0.22], [0.42, 0.23], [0.58, 0.22], [0.70, 0.23], [0.82, 0.22],
+      [0.19, 0.40], [0.32, 0.40], [0.67, 0.40], [0.80, 0.40],
+      [0.20, 0.64], [0.34, 0.63], [0.65, 0.64], [0.79, 0.63],
+      [0.18, 0.80], [0.30, 0.81], [0.50, 0.80], [0.70, 0.81], [0.82, 0.80]
+    ];
+
+    vias.forEach(([x, y], i) => {
+      via2d(ctx, S * x, S * y, (i % 3 === 0 ? 3.2 : 2.5) * u, u, viaType);
+    });
+
+    ctx.fillStyle = 'rgba(255,255,255,0.26)';
+    ctx.font = `800 ${22 * u}px "IBM Plex Sans Condensed", "Arial Narrow", Inter, sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.fillText(layer, S * 0.12, S * 0.153);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.21)';
+    ctx.font = `700 ${12.5 * u}px "IBM Plex Sans Condensed", "Arial Narrow", Inter, sans-serif`;
+    ctx.fillText(title, S * 0.205, S * 0.153);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.13)';
+    ctx.font = `600 ${10.2 * u}px "IBM Plex Sans Condensed", "Arial Narrow", Inter, sans-serif`;
+    ctx.fillText(subtitle, S * 0.19, S * 0.845);
+
+    noise(ctx, S, 680, 0.012);
+    noise(ctx, S, 460, 0.010, true);
+  });
+}
+
+const loaderStatus = document.getElementById('loader-status');
+const setStatus = (msg) => { if (loaderStatus) loaderStatus.textContent = msg; };
+const yieldUI = () => new Promise(r => setTimeout(r, 0));
+
+setStatus('Building substrate...');
+const texSubstrate = substrateTexture();
+await yieldUI();
+
+setStatus('Building CPU die...');
+const texLogic = dieTexture({
+  layer: 'CPU',
+  title: 'SECURE MIPS-LIKE LOGIC',
+  subtitle: 'fetch / decrypt / decode / execute / memory / writeback',
+  colorA: '#5a6e96',
+  colorB: '#3d4e6e',
+  accent: 'rgba(200,145,55,0.55)',
+  secondary: 'rgba(165,185,205,0.30)',
+  viaType: 'gold',
+  blocks: [
+    { x: 0.17, y: 0.28, w: 0.13, h: 0.09, label: 'F', fill: 'rgba(50,65,90,0.55)', stroke: 'rgba(200,145,55,0.55)' },
+    { x: 0.34, y: 0.28, w: 0.15, h: 0.09, label: 'DEC', fill: 'rgba(45,55,85,0.52)', stroke: 'rgba(190,135,50,0.50)', fontScale: 0.84 },
+    { x: 0.54, y: 0.28, w: 0.13, h: 0.09, label: 'EX', fill: 'rgba(50,65,90,0.52)', stroke: 'rgba(200,145,55,0.50)' },
+    { x: 0.71, y: 0.28, w: 0.13, h: 0.09, label: 'WB', fill: 'rgba(50,65,90,0.50)', stroke: 'rgba(200,145,55,0.46)' },
+    { x: 0.22, y: 0.57, w: 0.20, h: 0.10, label: 'AES', fill: 'rgba(55,45,90,0.55)', stroke: 'rgba(185,155,220,0.42)' },
+    { x: 0.57, y: 0.57, w: 0.24, h: 0.10, label: 'HMAC', fill: 'rgba(40,60,85,0.50)', stroke: 'rgba(165,185,205,0.38)' }
+  ]
+});
+
+await yieldUI();
+
+setStatus('Building bridge layer...');
+const texBridge = dieTexture({
+  layer: 'BRG',
+  title: 'TSV REDISTRIBUTION BRIDGE',
+  subtitle: 'RTL bridge / redistribution / memory-readiness routing',
+  colorA: '#6e7a8e',
+  colorB: '#525c6e',
+  accent: 'rgba(195,140,52,0.52)',
+  secondary: 'rgba(160,175,190,0.28)',
+  viaType: 'pale',
+  blocks: [
+    { x: 0.18, y: 0.30, w: 0.22, h: 0.10, label: 'BUS A', fill: 'rgba(50,60,75,0.52)', stroke: 'rgba(195,140,52,0.46)', fontScale: 0.82 },
+    { x: 0.59, y: 0.30, w: 0.22, h: 0.10, label: 'BUS B', fill: 'rgba(50,60,75,0.52)', stroke: 'rgba(195,140,52,0.46)', fontScale: 0.82 },
+    { x: 0.34, y: 0.58, w: 0.32, h: 0.10, label: 'READY', fill: 'rgba(45,50,70,0.50)', stroke: 'rgba(160,175,190,0.36)', fontScale: 0.82 }
+  ]
+});
+
+await yieldUI();
+
+setStatus('Building memory layers...');
+const texL0 = dieTexture({
+  layer: 'L0',
+  title: 'TEXT / INSTRUCTION',
+  subtitle: 'encrypted .text + secure fetch/decrypt path',
+  colorA: '#4060a0',
+  colorB: '#2e4878',
+  accent: 'rgba(200,148,58,0.55)',
+  secondary: 'rgba(158,178,198,0.28)',
+  viaType: 'gold',
+  blocks: [
+    { x: 0.20, y: 0.30, w: 0.24, h: 0.11, label: 'TEXT', fill: 'rgba(48,62,88,0.54)', stroke: 'rgba(200,148,58,0.52)' },
+    { x: 0.56, y: 0.30, w: 0.24, h: 0.11, label: 'FETCH', fill: 'rgba(42,58,82,0.50)', stroke: 'rgba(185,138,52,0.46)', fontScale: 0.86 },
+    { x: 0.34, y: 0.58, w: 0.32, h: 0.11, label: 'DEC MAP', fill: 'rgba(48,42,78,0.50)', stroke: 'rgba(158,178,198,0.36)', fontScale: 0.82 }
+  ]
+});
+
+await yieldUI();
+const texL1 = dieTexture({
+  layer: 'L1',
+  title: 'DATA REGION',
+  subtitle: 'encrypted .data + secure lw/sw path',
+  colorA: '#607898',
+  colorB: '#485870',
+  accent: 'rgba(198,142,54,0.52)',
+  secondary: 'rgba(155,172,192,0.28)',
+  viaType: 'gold',
+  blocks: [
+    { x: 0.20, y: 0.30, w: 0.24, h: 0.11, label: 'DATA', fill: 'rgba(50,60,80,0.54)', stroke: 'rgba(198,142,54,0.50)' },
+    { x: 0.56, y: 0.30, w: 0.24, h: 0.11, label: 'LW/SW', fill: 'rgba(45,58,78,0.50)', stroke: 'rgba(182,132,48,0.44)', fontScale: 0.84 },
+    { x: 0.34, y: 0.58, w: 0.32, h: 0.11, label: 'RESEAL', fill: 'rgba(48,42,72,0.48)', stroke: 'rgba(155,172,192,0.34)', fontScale: 0.84 }
+  ]
+});
+
+await yieldUI();
+const texL2 = dieTexture({
+  layer: 'L2',
+  title: 'KEY / METADATA',
+  subtitle: 'wrapped key + key tag + image tag',
+  colorA: '#62528a',
+  colorB: '#4a3e6a',
+  accent: 'rgba(196,140,52,0.52)',
+  secondary: 'rgba(152,168,188,0.28)',
+  viaType: 'gold',
+  blocks: [
+    { x: 0.20, y: 0.30, w: 0.24, h: 0.11, label: 'WRAP', fill: 'rgba(52,44,82,0.55)', stroke: 'rgba(196,140,52,0.52)' },
+    { x: 0.56, y: 0.30, w: 0.24, h: 0.11, label: 'KEYT', fill: 'rgba(52,44,82,0.52)', stroke: 'rgba(182,130,48,0.46)' },
+    { x: 0.34, y: 0.58, w: 0.32, h: 0.11, label: 'IMGT', fill: 'rgba(45,55,75,0.50)', stroke: 'rgba(152,168,188,0.34)', fontScale: 0.86 }
+  ]
+});
+
+await yieldUI();
+const texL3 = dieTexture({
+  layer: 'L3',
+  title: 'TAMPER / SENTINEL',
+  subtitle: 'sentinels + redundancy/security markers',
+  colorA: '#7e2a2a',
+  colorB: '#5e1a1a',
+  accent: 'rgba(194,138,50,0.52)',
+  secondary: 'rgba(150,166,184,0.28)',
+  viaType: 'gold',
+  blocks: [
+    { x: 0.20, y: 0.30, w: 0.24, h: 0.11, label: 'SENT', fill: 'rgba(42,62,62,0.54)', stroke: 'rgba(194,138,50,0.50)' },
+    { x: 0.56, y: 0.30, w: 0.24, h: 0.11, label: 'TAMP', fill: 'rgba(44,58,72,0.50)', stroke: 'rgba(178,128,46,0.44)' },
+    { x: 0.34, y: 0.58, w: 0.32, h: 0.11, label: 'REDUND', fill: 'rgba(46,42,70,0.48)', stroke: 'rgba(150,166,184,0.34)', fontScale: 0.78 }
+  ]
+});
+
+await yieldUI();
+
+setStatus('Building lid...');
+const texLid = topLidTexture();
+await yieldUI();
+
+setStatus('Starting render...');
+
+function makeLayer({
+  name,
+  width,
+  height,
+  depth,
+  texture,
+  topColor,
+  sideColor,
+  bottomColor,
+  metalness = 0.05,
+  roughness = 0.62,
+  radius = 0.006,
+  env = 0.44
+}) {
+  const geo = new RoundedBoxGeometry(width, height, depth, 7, Math.min(radius, height * 0.22));
+
+  const side = new THREE.MeshPhysicalMaterial({
+    color: sideColor,
+    metalness,
+    roughness: Math.max(0.54, roughness),
+    clearcoat: 0.0,
+    reflectivity: 0.05,
+    envMapIntensity: env * 0.85
+  });
+
+  const bottom = new THREE.MeshPhysicalMaterial({
+    color: bottomColor,
+    metalness: Math.max(0, metalness - 0.01),
+    roughness: Math.min(0.92, roughness + 0.14),
+    clearcoat: 0.0,
+    reflectivity: 0.035,
+    envMapIntensity: env * 0.65
+  });
+
+  const top = new THREE.MeshPhysicalMaterial({
+    color: topColor,
+    map: texture,
+    metalness,
+    roughness,
+    clearcoat: 0.0,
+    reflectivity: 0.05,
+    envMapIntensity: env
+  });
+
+  const mesh = new THREE.Mesh(geo, [side, side, top, bottom, side, side]);
+  mesh.name = name;
+  mesh.castShadow = false;
+  mesh.receiveShadow = false;
+  return mesh;
+}
+
+function makePart({
+  name,
+  baseY,
+  height,
+  explodeOffset = 0,
+  mesh,
+  driftX = 0,
+  driftZ = 0,
+  unfolds = false,
+  isLid = false
+}) {
+  const group = new THREE.Group();
+  group.name = name;
+  group.position.y = baseY;
+  if (mesh) group.add(mesh);
+
+  return {
+    name,
+    group,
+    baseY,
+    height,
+    explodeOffset,
+    driftX,
+    driftZ,
+    unfolds,
+    isLid
+  };
+}
+
+const chipRoot = new THREE.Group();
+chipRoot.position.y = -0.10;
+chipRoot.scale.setScalar(0.70);
+scene.add(chipRoot);
+
+const baseRotX = -0.17;
+const baseRotZ = 0.010;
+
+const substratePart = makePart({
+  name: 'fixed package substrate',
+  baseY: 0.000,
+  height: 0.22,
+  mesh: makeLayer({
+    name: 'light ceramic organic package substrate',
+    width: 6.25,
+    height: 0.22,
+    depth: 6.25,
+    texture: texSubstrate,
+    topColor: 0x2e7018,
+    sideColor: 0x0e2a08,
+    bottomColor: 0x0a1e06,
+    metalness: 0.012,
+    roughness: 0.80,
+    radius: 0.085,
+    env: 0.48
+  })
+});
+
+const logicPart = makePart({
+  name: 'fixed secure CPU logic die',
+  baseY: 0.160,
+  height: 0.060,
+  mesh: makeLayer({
+    name: 'secure CPU and cryptographic logic die',
+    width: 4.78,
+    height: 0.060,
+    depth: 4.78,
+    texture: texLogic,
+    topColor: 0x5a6e96,
+    sideColor: 0x3d4e6e,
+    bottomColor: 0x28364e,
+    metalness: 0.008,
+    roughness: 0.88,
+    radius: 0.007,
+    env: 0.42
+  })
+});
+
+const bridgePart = makePart({
+  name: 'fixed RTL TSV memory bridge',
+  baseY: 0.207,
+  height: 0.042,
+  mesh: makeLayer({
+    name: 'silicon interposer redistribution bridge',
+    width: 4.70,
+    height: 0.042,
+    depth: 4.70,
+    texture: texBridge,
+    topColor: 0x6e7a8e,
+    sideColor: 0x525c6e,
+    bottomColor: 0x383e4e,
+    metalness: 0.008,
+    roughness: 0.88,
+    radius: 0.005,
+    env: 0.40
+  })
+});
+
+const l0Part = makePart({
+  name: 'unfolding L0 encrypted instruction text layer',
+  baseY: 0.249,
+  height: 0.040,
+  explodeOffset: 0.58,
+  driftX: -0.010,
+  driftZ: -0.018,
+  unfolds: true,
+  mesh: makeLayer({
+    name: 'L0 encrypted instruction text memory die',
+    width: 4.56,
+    height: 0.040,
+    depth: 4.56,
+    texture: texL0,
+    topColor: 0x4060a0,
+    sideColor: 0x2e4878,
+    bottomColor: 0x1e3058,
+    metalness: 0.008,
+    roughness: 0.88,
+    radius: 0.004,
+    env: 0.40
+  })
+});
+
+const l1Part = makePart({
+  name: 'unfolding L1 encrypted data layer',
+  baseY: 0.291,
+  height: 0.040,
+  explodeOffset: 1.02,
+  driftX: 0.015,
+  driftZ: 0.012,
+  unfolds: true,
+  mesh: makeLayer({
+    name: 'L1 encrypted data memory die',
+    width: 4.48,
+    height: 0.040,
+    depth: 4.48,
+    texture: texL1,
+    topColor: 0x607898,
+    sideColor: 0x485870,
+    bottomColor: 0x303e52,
+    metalness: 0.008,
+    roughness: 0.88,
+    radius: 0.004,
+    env: 0.39
+  })
+});
+
+const l2Part = makePart({
+  name: 'unfolding L2 key metadata layer',
+  baseY: 0.333,
+  height: 0.040,
+  explodeOffset: 1.46,
+  driftX: -0.012,
+  driftZ: 0.018,
+  unfolds: true,
+  mesh: makeLayer({
+    name: 'L2 key and metadata memory die',
+    width: 4.40,
+    height: 0.040,
+    depth: 4.40,
+    texture: texL2,
+    topColor: 0x62528a,
+    sideColor: 0x4a3e6a,
+    bottomColor: 0x322848,
+    metalness: 0.008,
+    roughness: 0.88,
+    radius: 0.004,
+    env: 0.38
+  })
+});
+
+const l3Part = makePart({
+  name: 'unfolding L3 tamper sentinel redundancy layer',
+  baseY: 0.375,
+  height: 0.040,
+  explodeOffset: 1.90,
+  driftX: 0.014,
+  driftZ: -0.012,
+  unfolds: true,
+  mesh: makeLayer({
+    name: 'L3 tamper sentinel memory die',
+    width: 4.32,
+    height: 0.040,
+    depth: 4.32,
+    texture: texL3,
+    topColor: 0x7e2a2a,
+    sideColor: 0x5e1a1a,
+    bottomColor: 0x3e1010,
+    metalness: 0.008,
+    roughness: 0.88,
+    radius: 0.004,
+    env: 0.38
+  })
+});
+
+const lidPart = makePart({
+  name: 'CPU-style engraved lid',
+  baseY: 0.443,
+  height: 0.080,
+  explodeOffset: 2.28,
+  isLid: true,
+  mesh: makeLayer({
+    name: 'engraved integrated heat spreader lid',
+    width: 4.50,
+    height: 0.080,
+    depth: 4.50,
+    texture: texLid,
+    topColor: 0xd8d6d0,
+    sideColor: 0xb4b2ac,
+    bottomColor: 0x989690,
+    metalness: 0.72,
+    roughness: 0.18,
+    radius: 0.018,
+    env: 0.62
+  })
+});
+
+const parts = [
+  substratePart,
+  logicPart,
+  bridgePart,
+  l0Part,
+  l1Part,
+  l2Part,
+  l3Part,
+  lidPart
+];
+
+parts.forEach((part) => chipRoot.add(part.group));
+
+chipRoot.rotation.x = baseRotX;
+chipRoot.rotation.y = 0.76;
+chipRoot.rotation.z = baseRotZ;
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.065;
+controls.enablePan = false;
+controls.enableZoom = false;
+controls.enableRotate = true;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.44;
+controls.target.set(0, 0.22, 0);
+controls.minPolarAngle = 0;
+controls.maxPolarAngle = Math.PI;
+controls.update();
+
+let explodeTarget = 0;
+let explodeValue = 0;
+let pointerStart = null;
+
+function toggleExplode() {
+  explodeTarget = explodeTarget > 0.5 ? 0 : 1;
+
+}
+
+canvas.addEventListener('pointerdown', (e) => {
+  pointerStart = {
+    x: e.clientX,
+    y: e.clientY,
+    time: performance.now()
+  };
+
+  canvas.style.cursor = 'grabbing';
+}, { passive: true });
+
+canvas.addEventListener('pointerup', (e) => {
+  canvas.style.cursor = 'grab';
+
+  if (!pointerStart) return;
+
+  const dx = e.clientX - pointerStart.x;
+  const dy = e.clientY - pointerStart.y;
+  const dist = Math.hypot(dx, dy);
+  const elapsed = performance.now() - pointerStart.time;
+
+  pointerStart = null;
+
+  if (dist < 7 && elapsed < 700) {
+    toggleExplode();
+  }
+}, { passive: true });
+
+canvas.addEventListener('pointercancel', () => {
+  pointerStart = null;
+  canvas.style.cursor = 'grab';
+}, { passive: true });
+
+function updateExplodedStack() {
+  explodeValue += (explodeTarget - explodeValue) * 0.072;
+  const e = THREE.MathUtils.smoothstep(explodeValue, 0, 1);
+
+  parts.forEach((part) => {
+    if (part.unfolds || part.isLid) {
+      part.group.position.y = part.baseY + part.explodeOffset * e;
+      part.group.position.x = part.driftX * e;
+      part.group.position.z = part.driftZ * e;
+    } else {
+      part.group.position.y = part.baseY;
+      part.group.position.x = 0;
+      part.group.position.z = 0;
+    }
+  });
+
+  const scale = THREE.MathUtils.lerp(0.70, 0.55, e);
+  chipRoot.scale.setScalar(scale);
+
+  chipRoot.position.y = THREE.MathUtils.lerp(-0.10, -0.58, e);
+
+  controls.target.y = THREE.MathUtils.lerp(0.22, 0.72, e);
+  controls.autoRotateSpeed = THREE.MathUtils.lerp(0.44, 0.26, e);
+}
+
+function applyRendererSize(force = false) {
+  const r = canvas.getBoundingClientRect();
+  const cssW = Math.max(64, Math.round(r.width || 160));
+  const cssH = Math.max(64, Math.round(r.height || 160));
+
+  adaptive.currentDPR = THREE.MathUtils.clamp(adaptive.currentDPR, adaptive.minDPR, adaptive.maxDPR);
+
+  const screenDPR = Math.max(1, window.devicePixelRatio || 1);
+  const visualZoom = (window.visualViewport && window.visualViewport.scale > 0)
+    ? window.visualViewport.scale : 1;
+  const liveDPR = Math.max(1, screenDPR * visualZoom);
+  const maxEdge = Math.max(cssW, cssH);
+  const effectiveDPR = Math.min(adaptive.currentDPR * liveDPR, quality.maxRenderEdge / maxEdge);
+
+  const expectedW = Math.max(1, Math.round(cssW * effectiveDPR));
+  const expectedH = Math.max(1, Math.round(cssH * effectiveDPR));
+
+  if (!force && canvas.width === expectedW && canvas.height === expectedH) return;
+
+  renderer.setPixelRatio(effectiveDPR);
+  renderer.setSize(cssW, cssH, false);
+
+  camera.aspect = cssW / cssH;
+  camera.updateProjectionMatrix();
+}
+
+function scheduleResize(force = false) {
+  // If render loop is active, delegate to animate() so resize+render happen in same frame
+  if (running) {
+    adaptive.resizePending = true;
+    if (force) adaptive.resizeForce = true;
+  } else {
+    applyRendererSize(force);
+  }
+}
+
+function updateAdaptiveQuality(frameMs) {
+  if (frameMs <= 0 || frameMs > 200) return;
+
+  adaptive.samples.push(frameMs);
+  if (adaptive.samples.length > adaptive.maxSamples) adaptive.samples.shift();
+
+  adaptive.frameCounter++;
+  if (adaptive.frameCounter % adaptive.maxSamples !== 0) return;
+  if (adaptive.samples.length < adaptive.maxSamples * 0.75) return;
+
+  const sorted = [...adaptive.samples].sort((a, b) => a - b);
+  const p50 = sorted[Math.floor(sorted.length * 0.5)];
+
+  const tooSlow = p50 > adaptive.targetFrameMs * 1.25;
+  const veryFast = p50 < adaptive.targetFrameMs * 0.72;
+
+  if (tooSlow && adaptive.currentDPR > adaptive.minDPR + 0.05) {
+    adaptive.currentDPR = Math.max(adaptive.minDPR, adaptive.currentDPR - 0.10);
+    adaptive.resizePending = true;
+  } else if (veryFast && adaptive.currentDPR < adaptive.maxDPR - 0.05) {
+    adaptive.currentDPR = Math.min(adaptive.maxDPR, adaptive.currentDPR + 0.06);
+    adaptive.resizePending = true;
+  }
+}
+
+applyRendererSize(true);
+
+if (window.ResizeObserver) {
+  let roDebounce;
+  new ResizeObserver(() => {
+    clearTimeout(roDebounce);
+    roDebounce = setTimeout(() => scheduleResize(false), 100);
+  }).observe(canvas);
+}
+
+let winResizeDebounce;
+window.addEventListener('resize', () => {
+  clearTimeout(winResizeDebounce);
+  winResizeDebounce = setTimeout(() => scheduleResize(true), 100);
+}, { passive: true });
+
+(function watchDPR() {
+  const mq = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+  mq.addEventListener('change', function handler() {
+    mq.removeEventListener('change', handler);
+    scheduleResize(true);
+    watchDPR();
+  });
+})();
+
+if (window.visualViewport) {
+  let vpDebounce;
+  window.visualViewport.addEventListener('scale', () => {
+    clearTimeout(vpDebounce);
+    vpDebounce = setTimeout(() => scheduleResize(true), 60);
+  });
+  window.visualViewport.addEventListener('resize', () => {
+    clearTimeout(vpDebounce);
+    vpDebounce = setTimeout(() => scheduleResize(true), 60);
+  });
+}
+
+const clock = new THREE.Clock();
+
+let running = true;
+let rafId = null;
+let lastFrameTime = performance.now();
+let firstRenderDone = false;
+let stableFrameCount = 0;
+
+function animate(now = performance.now()) {
+  if (!running) return;
+
+  rafId = requestAnimationFrame(animate);
+
+  const frameMs = now - lastFrameTime;
+  lastFrameTime = now;
+
+  updateAdaptiveQuality(frameMs);
+
+  // Resize and render in the SAME frame — browser paints only the final rendered result
+  if (adaptive.resizePending) {
+    const wasForce = adaptive.resizeForce;
+    adaptive.resizePending = false;
+    adaptive.resizeForce = false;
+    applyRendererSize(wasForce);
   }
 
-  const chipRoot = new THREE.Group();
-  chipRoot.position.y = -0.10;
-  chipRoot.scale.setScalar(0.78);
-  scene.add(chipRoot);
+  const t = clock.getElapsedTime();
 
-  const baseRotX = -0.17;
-  const baseRotZ = 0.010;
+  updateExplodedStack();
 
-  const substrate = makeLayer({
-    name: 'thin organic package substrate with dense BGA array',
-    width: 6.1,
-    height: 0.22,
-    depth: 6.1,
-    y: 0.00,
-    texture: texSubstrate,
-    topColor: 0x404852,
-    sideColor: 0x2a303b,
-    bottomColor: 0x343a44,
-    metalness: 0.03,
-    roughness: 0.70,
-    clearcoat: 0.06,
-    radius: 0.10
-  });
+  chipRoot.rotation.x = baseRotX + Math.sin(t * 0.70) * 0.004;
+  chipRoot.rotation.z = baseRotZ + Math.sin(t * 0.43) * 0.0023;
 
-  const logic = makeLayer({
-    name: 'thin secure CPU and cryptographic logic die',
-    width: 4.66,
-    height: 0.070,
-    depth: 4.66,
-    y: 0.160,
-    texture: texLogic,
-    topColor: 0x173257,
-    sideColor: 0x10213d,
-    bottomColor: 0x0d1a31,
-    metalness: 0.11,
-    roughness: 0.44,
-    clearcoat: 0.14,
-    radius: 0.018
-  });
-
-  const bridge = makeLayer({
-    name: 'thin silicon interposer / TSV redistribution bridge',
-    width: 4.88,
-    height: 0.032,
-    depth: 4.88,
-    y: 0.223,
-    texture: texBridge,
-    topColor: 0x34445d,
-    sideColor: 0x202b40,
-    bottomColor: 0x1a2436,
-    metalness: 0.08,
-    roughness: 0.50,
-    clearcoat: 0.10,
-    radius: 0.012
-  });
-
-  const l0 = makeLayer({
-    name: 'ultra-thin L0 encrypted text memory die',
-    width: 4.42,
-    height: 0.038,
-    depth: 4.42,
-    y: 0.264,
-    texture: texL0,
-    topColor: 0x16477e,
-    sideColor: 0x12345d,
-    bottomColor: 0x0d294d,
-    metalness: 0.045,
-    roughness: 0.54,
-    clearcoat: 0.08,
-    radius: 0.012
-  });
-
-  const l1 = makeLayer({
-    name: 'ultra-thin L1 encrypted data memory die',
-    width: 4.36,
-    height: 0.038,
-    depth: 4.36,
-    y: 0.308,
-    texture: texL1,
-    topColor: 0x2a4771,
-    sideColor: 0x20385c,
-    bottomColor: 0x1a2d4d,
-    metalness: 0.045,
-    roughness: 0.54,
-    clearcoat: 0.08,
-    radius: 0.012
-  });
-
-  const l2 = makeLayer({
-    name: 'ultra-thin L2 tag and wrapped-key memory die',
-    width: 4.30,
-    height: 0.038,
-    depth: 4.30,
-    y: 0.352,
-    texture: texL2,
-    topColor: 0x443075,
-    sideColor: 0x34235c,
-    bottomColor: 0x281a49,
-    metalness: 0.045,
-    roughness: 0.53,
-    clearcoat: 0.08,
-    radius: 0.012
-  });
-
-  const l3 = makeLayer({
-    name: 'ultra-thin L3 scratch/control memory die',
-    width: 4.24,
-    height: 0.038,
-    depth: 4.24,
-    y: 0.396,
-    texture: texL3,
-    topColor: 0x2e6b74,
-    sideColor: 0x22505a,
-    bottomColor: 0x183c44,
-    metalness: 0.045,
-    roughness: 0.53,
-    clearcoat: 0.08,
-    radius: 0.012
-  });
-
-  chipRoot.add(makeFineBgaBalls(6.1, 6.1, -0.155));
-  chipRoot.add(substrate);
-
-  chipRoot.add(makeFineMicroBumps(0.113, 0.125, 2.18));
-  chipRoot.add(logic);
-
-  chipRoot.add(makeFineMicroBumps(0.196, 0.207, 2.14));
-  chipRoot.add(bridge);
-
-  chipRoot.add(makeFineMicroBumps(0.240, 0.245, 2.02));
-  chipRoot.add(l0);
-
-  chipRoot.add(makeFineMicroBumps(0.284, 0.289, 1.98));
-  chipRoot.add(l1);
-
-  chipRoot.add(makeFineMicroBumps(0.328, 0.333, 1.95, true));
-  chipRoot.add(l2);
-
-  chipRoot.add(makeFineMicroBumps(0.372, 0.377, 1.92, true));
-  chipRoot.add(l3);
-
-  const tsvGroup = makeFineVerticalTSVs(0.206, 0.413);
-  chipRoot.add(tsvGroup);
-
-  const securityFrame = new THREE.Group();
-  chipRoot.add(securityFrame);
-
-  chipRoot.rotation.x = baseRotX;
-  chipRoot.rotation.y = 0.76;
-  chipRoot.rotation.z = baseRotZ;
-
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.065;
-  controls.enablePan = false;
-  controls.enableZoom = false;
-  controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.48;
-  controls.target.set(0, 0.20, 0);
-  controls.minPolarAngle = 0;
-  controls.maxPolarAngle = Math.PI;
   controls.update();
+  renderer.render(scene, camera);
+
+  if (!firstRenderDone) {
+    stableFrameCount++;
+    if (stableFrameCount >= 8) {
+      firstRenderDone = true;
+      requestAnimationFrame(() => {
+        canvas.classList.add('ready');
+        window.dispatchEvent(new CustomEvent('chip3d-ready'));
+      });
+    }
+  }
+}
+
+function startRenderLoop() {
+  if (running && rafId !== null) return;
+
+  running = true;
+  lastFrameTime = performance.now();
+  clock.start();
+  scheduleResize(true);
+  rafId = requestAnimationFrame(animate);
+}
+
+function stopRenderLoop() {
+  running = false;
+  clock.stop();
+
+  if (rafId !== null) {
+    cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    stopRenderLoop();
+  } else {
+    startRenderLoop();
+  }
+});
+
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver((entries) => {
+    const visible = entries[0]?.isIntersecting;
+
+    if (visible) {
+      startRenderLoop();
+    } else {
+      stopRenderLoop();
+    }
+  }, { threshold: 0.02 }).observe(canvas);
+}
+
+startRenderLoop();
+})();
+
+</script>
+
+<script>
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
 
   function resize() {
-    const r = canvas.getBoundingClientRect();
-    const cssW = Math.max(64, Math.round(r.width || 160));
-    const cssH = Math.max(64, Math.round(r.height || 160));
-    const dpr = Math.min(window.devicePixelRatio || 1, quality.maxPixelRatio);
-
-    const renderW = Math.min(
-      quality.maxRenderEdge,
-      Math.max(quality.minRenderEdge, Math.round(cssW * dpr * quality.renderBoost))
-    );
-
-    const renderH = Math.min(
-      quality.maxRenderEdge,
-      Math.max(quality.minRenderEdge, Math.round(cssH * dpr * quality.renderBoost))
-    );
-
-    renderer.setSize(renderW, renderH, false);
-    camera.aspect = renderW / renderH;
-    camera.updateProjectionMatrix();
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
   }
-
   resize();
+  window.addEventListener('resize', resize);
 
-  if (window.ResizeObserver) {
-    new ResizeObserver(resize).observe(canvas);
-  }
+  const lights = [
+    { x: 0.75, y: 0.15, r: 0.65, ox: 0.22, oy: 0.18, sx: 0.00017, sy: 0.00013, color: [0, 116, 255] },
+    { x: 0.10, y: 0.70, r: 0.60, ox: 0.31, oy: 0.27, sx: 0.00011, sy: 0.00019, color: [94, 0, 245] },
+    { x: 0.50, y: 0.45, r: 0.50, ox: 0.44, oy: 0.38, sx: 0.00014, sy: 0.00010, color: [40, 0, 200] },
+    { x: 0.85, y: 0.80, r: 0.45, ox: 0.55, oy: 0.62, sx: 0.00009, sy: 0.00016, color: [0, 60, 200] },
+  ];
 
-  window.addEventListener('resize', resize, { passive: true });
+  let t = 0;
+  function draw() {
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#0a0f2e';
+    ctx.fillRect(0, 0, W, H);
 
-  const clock = new THREE.Clock();
-  const frameInterval = 1000 / quality.targetFps;
-
-  let running = true;
-  let lastFrameTime = 0;
-
-  function animate(now = 0) {
-    if (!running) return;
-
-    requestAnimationFrame(animate);
-
-    if (now - lastFrameTime < frameInterval) return;
-    lastFrameTime = now;
-
-    const t = clock.getElapsedTime();
-
-    chipRoot.rotation.x = baseRotX + Math.sin(t * 0.70) * 0.006;
-    chipRoot.rotation.z = baseRotZ + Math.sin(t * 0.43) * 0.0035;
-
-    cyanGlow.intensity = 0.38 + Math.sin(t * 2.2) * 0.06;
-    purpleGlow.intensity = 0.30 + Math.cos(t * 2.0) * 0.05;
-
-    tsvGroup.traverse((obj) => {
-      if (obj.userData?.isTsvGlow && obj.material) {
-        const phase = obj.userData.phase || 0;
-        obj.material.opacity = 0.028 + Math.max(0, Math.sin(t * 2.1 + phase)) * 0.032;
-      }
-    });
-
-    securityFrame.children.forEach((line, i) => {
-      if (line.material) {
-        line.material.opacity = 0.04 + Math.max(0, Math.sin(t * 1.6 + i * 0.5)) * 0.04;
-      }
-    });
-
-    controls.update();
-    renderer.render(scene, camera);
-  }
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      running = false;
-      clock.stop();
-    } else {
-      running = true;
-      lastFrameTime = 0;
-      clock.start();
-      animate();
+    for (const l of lights) {
+      const px = (l.x + Math.sin(t * l.sx * Math.PI * 2 + l.ox) * 0.38) * W;
+      const py = (l.y + Math.cos(t * l.sy * Math.PI * 2 + l.oy) * 0.32) * H;
+      const radius = l.r * Math.max(W, H);
+      const g = ctx.createRadialGradient(px, py, 0, px, py, radius);
+      const [r, gb, b] = l.color;
+      g.addColorStop(0,   `rgba(${r},${gb},${b},0.22)`);
+      g.addColorStop(0.4, `rgba(${r},${gb},${b},0.10)`);
+      g.addColorStop(1,   `rgba(${r},${gb},${b},0)`);
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
     }
-  });
 
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => {
-      const visible = entries[0]?.isIntersecting;
-
-      if (visible && !running) {
-        running = true;
-        lastFrameTime = 0;
-        clock.start();
-        animate();
-      } else if (!visible) {
-        running = false;
-        clock.stop();
-      }
-    }, { threshold: 0.02 }).observe(canvas);
+    t++;
+    requestAnimationFrame(draw);
   }
-
-  animate();
+  draw();
 })();
 </script>
 

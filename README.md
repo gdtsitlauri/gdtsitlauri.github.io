@@ -33,10 +33,12 @@ The site includes:
 ## Main Features
 
 - Responsive desktop and mobile layout
-- Custom animated hero section
-- Interactive / auto-rotating 3D chip render
+- Custom animated hero section with structured vertical layout (name → title → 3D CPU → tagline)
+- Interactive / auto-rotating 3D chip render with realistic material colors
+- Animated canvas background with flowing blue/purple aurora-style gradient
 - Adaptive rendering quality profiles to reduce unnecessary GPU load on smaller screens and mobile devices
 - Smooth scrolling navigation
+- Nav bar with scroll-triggered glass effect (transparent at top, frosted glass on scroll)
 - Section reveal animations
 - Custom loader
 - SEO and social meta tags
@@ -46,10 +48,12 @@ The site includes:
 
 The hero canvas renders a stylized but realistic semiconductor-inspired package:
 
-- cryptographic processor core
-- 3D-stacked memory layers
-- package substrate and gull-wing pins
-- adaptive internal render resolution, texture sizes, shadow budget, and FPS cap
+- IHS lid (nickel-plated silver, laser-engraved label)
+- CPU logic die and TSV redistribution bridge
+- 3D-stacked memory layers (L0–L3) with distinct color-coded silicon dies
+- PCB substrate (forest green FR4)
+- Realistic materials: MeshPhysicalMaterial with tuned metalness, roughness, and environment lighting
+- Adaptive internal render resolution, texture sizes, shadow budget, and FPS cap
 
 Quality is controlled inside [`index.html`](./index.html) with:
 
