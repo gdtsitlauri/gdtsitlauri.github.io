@@ -33,19 +33,20 @@ The site includes:
 ## Main Features
 
 - Responsive desktop and mobile layout
+- Static `linear-gradient(180deg, #0a0f2e → #2d0550)` background matching the GDT favicon palette — no canvas animation
+- `theme-color` meta tag set to `#0a0f2e` for perfect Safari/Chrome status bar match
 - Custom animated hero section with structured vertical layout (name → title → 3D CPU → tagline)
 - Interactive / auto-rotating 3D chip render with realistic material colors
-- Animated canvas background with flowing blue/purple aurora-style gradient
-- Adaptive rendering quality profiles to reduce unnecessary GPU load on smaller screens and mobile devices
+- Glass morphism cards, buttons, hero tag, and contact links with `backdrop-filter` blur
 - Smooth scrolling navigation (desktop only, RAF-based)
-- Nav bar transparent at top, frosted glass effect on scroll
+- Nav bar transparent, no scroll-color change
 - Section reveal animations (fade, zoom) via IntersectionObserver
-- Custom loader with animated progress bar
-- GDT favicon set — 11 files covering all platforms (browser, iOS, Android/PWA)
+- Custom loader with animated progress bar (white bar on gradient background)
+- GDT favicon set — 11 files covering all platforms (browser, iOS, Android/PWA), dark navy→purple gradient matching site
 - `viewport-fit=cover` + `env(safe-area-inset-*)` support for iPhone notch / Dynamic Island
-- `theme-color` meta tag for mobile browser chrome color matching
-- Glass morphism cards with backdrop-filter blur
-- Icon hover color transitions (desktop only, pointer: fine)
+- Adaptive rendering quality profiles to reduce unnecessary GPU load on smaller screens
+- Hover effects (scale, translateY) desktop-only via `@media (hover: hover) and (pointer: fine)` — no color changes on icons
+- Icon colors: white by default, no hover color change on any device
 - SEO and Open Graph / Twitter Card meta tags
 - Static hosting friendly deployment
 
@@ -72,8 +73,6 @@ Current behavior:
 - `balanced`: good visual quality with lower render cost on desktop
 - `mobile`: lighter internal render settings for smaller/coarse-pointer devices
 - `ultra`: maximum sharpness / highest GPU usage
-
-At the moment, all profiles target `60 FPS`; the main differences between them are internal render size, texture resolution, shadow-map size, and power preference.
 
 ## Project Structure
 
@@ -130,4 +129,4 @@ The repository includes a [`CNAME`](./CNAME) file for:
 
 - The main site logic and styling live in [`index.html`](./index.html).
 - Some external assets are loaded from CDNs, so internet access is required unless they are bundled locally.
-- The current 3D hero render has been tuned for visual quality while avoiding unnecessary full-resolution GPU usage on smaller displays.
+- Background is a static CSS gradient — no canvas/animation — ensuring the Safari status bar color matches perfectly via `theme-color`.

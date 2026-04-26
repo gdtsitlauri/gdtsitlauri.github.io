@@ -71,7 +71,7 @@ button {
 
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--db);
+  background: linear-gradient(180deg, #0a0f2e 0%, #2d0550 100%) fixed;
   color: var(--tp);
 }
 
@@ -103,7 +103,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0a0f2e;
+  background: linear-gradient(180deg, #0a0f2e 0%, #2d0550 100%);
   transition: opacity .5s ease, visibility .5s ease;
 }
 
@@ -141,7 +141,7 @@ section {
 .loader-bar-fill {
   height: 100%;
   width: 100%;
-  background: linear-gradient(90deg, #0074ff, #5e00f5);
+  background: #ffffff;
   border-radius: 999px;
   transform-origin: left;
   animation: loaderBar 2s ease-in-out infinite;
@@ -216,7 +216,7 @@ nav {
   left: 0;
   right: 100%;
   height: 2px;
-  background: var(--gm);
+  background: var(--ts);
   border-radius: 2px;
   transition: right .35s cubic-bezier(.4,0,.2,1);
 }
@@ -327,7 +327,10 @@ nav {
   letter-spacing: .12em;
   text-transform: uppercase;
   color: #ffffff;
-  background: var(--ep);
+  background: var(--cardg);
+  border: 1px solid var(--cardbrd);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
   border-radius: 10px;
   padding: 6px 16px;
   margin-bottom: 0;
@@ -339,24 +342,6 @@ nav {
   text-align: left;
 }
 
-.hero-tag::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 10px;
-  padding: 2px;
-  background: #5e00f5;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  z-index: -1;
-  pointer-events: none;
-}
 
 .hero h1 {
   font-family: 'Caveat', cursive;
@@ -373,10 +358,8 @@ nav {
   display: inline-block;
   padding: 2px 8px 10px;
   margin: -2px -8px -10px;
-  background: var(--gm);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+  color: #ffffff;
 }
 
 .hero-sub {
@@ -416,24 +399,11 @@ nav {
   color: #fff;
   position: relative;
   overflow: hidden;
+  background: var(--cardg);
+  border: 1px solid var(--cardbrd);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
   transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .25s;
-}
-
-
-.btn-project {
-  background: var(--eb);
-}
-
-.btn-research {
-  background: #d97706;
-}
-
-.btn-o {
-  background: #a31645;
-}
-
-.btn-cv-hero {
-  background: #0F766E;
 }
 
 /* ── SECTION TITLES ── */
@@ -442,7 +412,7 @@ nav {
   font-weight: 400;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--ep);
+  color: var(--ts);
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -454,7 +424,7 @@ nav {
   display: block;
   width: 28px;
   height: 2px;
-  background: var(--gm);
+  background: var(--ts);
   border-radius: 2px;
 }
 
@@ -472,10 +442,8 @@ nav {
   display: inline-block;
   padding: 0 5px 6px;
   margin: 0 -5px;
-  background: var(--gm);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
 }
 
 /* ── CARDS ── */
@@ -923,15 +891,6 @@ nav {
   transition: opacity .25s;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .scat:hover h3 i {
-    background: linear-gradient(135deg,#0074FF,#5e00f5) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
-  }
-}
-
 .cat-label i {
   display: inline-flex;
   align-items: center;
@@ -943,15 +902,6 @@ nav {
   flex-shrink: 0;
   color: var(--ts);
   transition: color .25s;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .cat-label:hover i {
-    background: linear-gradient(135deg,#0074FF,#5e00f5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
 }
 
 .pill {
@@ -1048,21 +998,13 @@ nav {
   color: #fff;
 }
 
-.ci-email i {
-  color: #2a2230;
-}
-
-.ci-email {
-  background: #d8c29a;
-  color: #2a2230;
-}
-
-.ci-github {
-  background: #1f2328;
-}
-
+.ci-email,
+.ci-github,
 .ci-linkedin {
-  background: #0a66c2;
+  background: var(--cardg);
+  border: 1px solid var(--cardbrd);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
 }
 
 /* ── FOOTER ── */
@@ -1083,10 +1025,8 @@ footer span {
   display: inline-block;
   padding: 16px 8px 5px;
   margin: -16px -8px -5px;
-  background: var(--gm);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
 }
 
 /* ── ANIMATIONS ── */
@@ -1095,21 +1035,12 @@ footer span {
   to { opacity: 1; transform: none; }
 }
 
-/* ── BG CANVAS ── */
-#bg-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--db); }
+::-webkit-scrollbar-track { background: #0a0f2e; }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #0074FF 0%, #5e00f5 100%);
+  background: var(--ts);
   border-radius: 3px;
 }
 
@@ -1181,21 +1112,15 @@ footer span {
     transform: translateY(-3px);
   }
 
-  .card.reveal.visible:hover {
+  .card.reveal.visible:not(.lcard):hover {
     transform: translateY(-6px) scale(1.01);
     box-shadow: 0 14px 36px rgba(0,0,0,0.18);
   }
 
   .acard:hover .aico {
     transform: scale(1.15);
-    background: var(--gm);
   }
 
-  .acard:hover .aico i {
-    background: none;
-    -webkit-text-fill-color: #fff;
-    color: #fff;
-  }
 
   .thesis-card:hover .tico {
     transform: scale(1.12);
@@ -1203,29 +1128,14 @@ footer span {
 
   .pc:hover .pico {
     transform: scale(1.18);
-    background: var(--gm);
   }
 
-  .pc:hover .pico i {
-    background: none;
-    -webkit-text-fill-color: #fff;
-    color: #fff;
-  }
 
   .pl:hover {
-    background: var(--gm);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
     transform: scale(1.15);
   }
 
   .pill:hover {
-    background: var(--gm);
-    color: #fff;
-    border: 1px solid transparent;
-    background-clip: padding-box;
     transform: translateY(-3px);
   }
 
@@ -1266,11 +1176,6 @@ footer span {
   }
 
   .pl:active {
-    background: var(--gm);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
     transform: scale(1.18);
   }
 
@@ -1575,8 +1480,6 @@ footer span {
     </div>
   </div>
 </div>
-
-<canvas id="bg-canvas"></canvas>
 
 <nav>
   <div class="nav-logo">GDT</div>
@@ -3705,51 +3608,6 @@ startRenderLoop();
 
 </script>
 
-<script>
-(function() {
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
-
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const lights = [
-    { x: 0.75, y: 0.15, r: 0.65, ox: 0.22, oy: 0.18, sx: 0.0020, sy: 0.0016, color: [0, 116, 255] },
-    { x: 0.10, y: 0.70, r: 0.60, ox: 0.31, oy: 0.27, sx: 0.0015, sy: 0.0022, color: [94, 0, 245] },
-    { x: 0.50, y: 0.45, r: 0.50, ox: 0.44, oy: 0.38, sx: 0.0018, sy: 0.0013, color: [40, 0, 200] },
-    { x: 0.85, y: 0.80, r: 0.45, ox: 0.55, oy: 0.62, sx: 0.0012, sy: 0.0019, color: [0, 60, 200] },
-  ];
-
-  let t = 0;
-  function draw() {
-    const W = canvas.width, H = canvas.height;
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#0a0f2e';
-    ctx.fillRect(0, 0, W, H);
-
-    for (const l of lights) {
-      const px = (l.x + Math.sin(t * l.sx * Math.PI * 2 + l.ox) * 0.38) * W;
-      const py = (l.y + Math.cos(t * l.sy * Math.PI * 2 + l.oy) * 0.32) * H;
-      const radius = l.r * Math.max(W, H);
-      const g = ctx.createRadialGradient(px, py, 0, px, py, radius);
-      const [r, gb, b] = l.color;
-      g.addColorStop(0,   `rgba(${r},${gb},${b},0.22)`);
-      g.addColorStop(0.4, `rgba(${r},${gb},${b},0.10)`);
-      g.addColorStop(1,   `rgba(${r},${gb},${b},0)`);
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
-    }
-
-    t++;
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-</script>
 
 </body>
 </html>
