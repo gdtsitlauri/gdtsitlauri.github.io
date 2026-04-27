@@ -564,11 +564,12 @@ nav {
   width: fit-content;
 
   font-family: 'Caveat', cursive;
-  font-size: 1.22rem;
+  font-size: clamp(1rem, 3vw, 1.22rem);
   font-weight: 400;
   letter-spacing: .012em;
   text-align: center;
   line-height: 1.35;
+  white-space: nowrap;
 
   color: var(--tp);
   background: var(--cardg);
@@ -1345,17 +1346,9 @@ footer span {
   }
 
   .cat-label {
-    width: auto;
-    max-width: 85%;
+    max-width: 98%;
     padding: 13px 18px 12px;
     border-radius: 22px;
-    font-size: 1.12rem;
-    flex-wrap: wrap;
-    white-space: normal;
-  }
-
-  .cat-label i {
-    flex-shrink: 0;
   }
 
 }
