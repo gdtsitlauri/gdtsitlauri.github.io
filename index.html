@@ -36,7 +36,6 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-padding-top: 90px;
   background-color: #190a3f;
 }
 
@@ -48,15 +47,11 @@ html, body {
 :root {
   --eb: #0074FF;
   --ep: #5e00f5;
-  --db: #0a0f2e;
-  --cb: rgba(255,255,255,0.015);
   --cardg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
   --cardbrd: rgba(180, 197, 255, 0.14);
-  --cbrd: rgba(94,0,245,0.18);
   --tp: #f0f4ff;
   --ts: #b0bcd4;
   --gm: linear-gradient(135deg,#0074FF 0%,#5e00f5 100%);
-  --gg: linear-gradient(135deg,rgba(0,116,255,0.15) 0%,rgba(94,0,245,0.15) 100%);
 }
 
 *, *::before, *::after {
@@ -83,7 +78,6 @@ section {
   padding: 100px 6% 60px;
   max-width: 1100px;
   margin: 0 auto;
-  scroll-margin-top: 90px;
 }
 
 /* ── LOADER ── */
@@ -146,21 +140,15 @@ section {
 
 /* ── NAV ── */
 nav {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: calc(18px + env(safe-area-inset-top, 0px)) 6% 18px;
   background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom: 1px solid transparent;
-  border-radius: 0 0 14px 14px;
-  transition: background .3s ease, border-color .3s ease;
 }
 
 .nav-logo {
@@ -173,43 +161,6 @@ nav {
   margin: -2px -6px -5px;
   transition: transform .3s, opacity .2s;
   transform-origin: center;
-  flex-shrink: 0;
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  min-width: 0;
-}
-
-.nav-links {
-  display: flex;
-  gap: 28px;
-  list-style: none;
-  min-width: 0;
-}
-
-.nav-links a {
-  color: var(--ts);
-  text-decoration: none;
-  font-size: .88rem;
-  font-weight: 400;
-  position: relative;
-  transition: color .25s;
-  white-space: nowrap;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 100%;
-  height: 2px;
-  background: var(--ts);
-  border-radius: 2px;
-  transition: right .35s cubic-bezier(.4,0,.2,1);
 }
 
 /* ── HERO ── */
@@ -477,7 +428,7 @@ nav {
 .acard {
   display: flex;
   gap: 16px;
-  align-items: flex-start;
+  align-items: center;
   grid-column: span 1;
 }
 
@@ -1084,14 +1035,6 @@ footer span {
     opacity: .85;
   }
 
-  .nav-links a:hover {
-    color: var(--ts);
-  }
-
-  .nav-links a:hover::after {
-    right: 0;
-  }
-
   .photo-wrap:hover img {
     transform: scale(1.04);
   }
@@ -1150,15 +1093,6 @@ footer span {
 
 /* ── TOUCH / MOBILE ── */
 @media (hover: none) and (pointer: coarse) {
-  .nav-links a:active {
-    color: var(--ts);
-  }
-
-  .nav-links a:active::after {
-    right: 0;
-    transition: right .12s linear;
-  }
-
   .btn-project:active,
   .btn-research:active,
   .btn-cv-hero:active,
@@ -1257,6 +1191,7 @@ footer span {
 
 @media (max-width: 680px) {
   nav {
+    position: absolute;
     padding: calc(16px + env(safe-area-inset-top, 0px)) 4% 16px;
     gap: 10px;
   }
@@ -1274,30 +1209,8 @@ footer span {
     font-size: 1.2rem;
   }
 
-  .nav-right {
-    gap: 12px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    max-width: calc(100vw - 70px);
-  }
-
-  .nav-right::-webkit-scrollbar {
-    display: none;
-  }
-
   .nav-logo {
     font-size: 1.3rem;
-  }
-
-  .nav-links {
-    gap: 12px;
-    flex-wrap: nowrap;
-  }
-
-  .nav-links a {
-    font-size: .8rem;
   }
 
   .about-grid {
@@ -1431,22 +1344,9 @@ footer span {
     font-size: 1.2rem;
   }
 
-  .nav-right {
-    gap: 10px;
-    max-width: calc(100vw - 62px);
-  }
-
-  .nav-links {
-    gap: 10px;
-  }
-
-  .nav-links a {
-    font-size: .74rem;
-  }
-
   .cat-label {
-    width: 100%;
-    max-width: 100%;
+    width: auto;
+    max-width: 85%;
     padding: 13px 18px 12px;
     border-radius: 22px;
     font-size: 1.12rem;
@@ -1474,36 +1374,7 @@ footer span {
 
 <nav>
   <div class="nav-logo">GDT</div>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#researches">Researches</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
 </nav>
-<script>
-(function(){
-  var n=document.querySelector('nav');
-  function upd(){
-    if(window.scrollY>40){
-      n.style.background='rgba(10,15,46,0.45)';
-      n.style.backdropFilter='blur(16px)';
-      n.style.webkitBackdropFilter='blur(16px)';
-      n.style.borderColor='rgba(180,197,255,0.12)';
-    }else{
-      n.style.background='transparent';
-      n.style.backdropFilter='none';
-      n.style.webkitBackdropFilter='none';
-      n.style.borderColor='transparent';
-    }
-  }
-  window.addEventListener('scroll',upd,{passive:true});
-  upd();
-})();
-</script>
 
 <section class="hero" id="home">
   <div class="hero-text">

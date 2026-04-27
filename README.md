@@ -33,20 +33,19 @@ The site includes:
 ## Main Features
 
 - Responsive desktop and mobile layout
-- Static `linear-gradient(180deg, #0a0f2e → #2d0550)` background matching the GDT favicon palette — no canvas animation
-- `theme-color` meta tag set to `#0a0f2e` for perfect Safari/Chrome status bar match
-- Custom animated hero section with structured vertical layout (name → title → 3D CPU → tagline)
+- Solid `#190a3f` background — perfect match with `theme-color` for Safari/Chrome status bar on all devices
+- `theme-color` meta tag for mobile browser chrome color matching
+- Custom animated hero section with structured vertical layout (photo → name → tag → 3D CPU → tagline → buttons)
 - Interactive / auto-rotating 3D chip render with realistic material colors
 - Glass morphism cards, buttons, hero tag, and contact links with `backdrop-filter` blur
-- Smooth scrolling navigation (desktop only, RAF-based)
-- Nav bar transparent, no scroll-color change
+- Nav bar: GDT logo only, transparent, scrolls with page (not fixed)
 - Section reveal animations (fade, zoom) via IntersectionObserver
-- Custom loader with animated progress bar (white bar on gradient background)
-- GDT favicon set — 11 files covering all platforms (browser, iOS, Android/PWA), dark navy→purple gradient matching site
+- Custom loader with animated white progress bar
+- GDT favicon set — 11 files covering all platforms (browser, iOS, Android/PWA), dark navy→purple gradient
 - `viewport-fit=cover` + `env(safe-area-inset-*)` support for iPhone notch / Dynamic Island
 - Adaptive rendering quality profiles to reduce unnecessary GPU load on smaller screens
 - Hover effects (scale, translateY) desktop-only via `@media (hover: hover) and (pointer: fine)` — no color changes on icons
-- Icon colors: white by default, no hover color change on any device
+- Icon colors: white/muted by default, no hover color change on any device
 - SEO and Open Graph / Twitter Card meta tags
 - Static hosting friendly deployment
 
@@ -129,4 +128,4 @@ The repository includes a [`CNAME`](./CNAME) file for:
 
 - The main site logic and styling live in [`index.html`](./index.html).
 - Some external assets are loaded from CDNs, so internet access is required unless they are bundled locally.
-- Background is a static CSS gradient — no canvas/animation — ensuring the Safari status bar color matches perfectly via `theme-color`.
+- Background is a solid `#190a3f` color — no canvas, no animation — ensuring perfect Safari/Chrome browser chrome match via `theme-color`.
