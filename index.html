@@ -432,12 +432,6 @@ nav {
   grid-column: span 1;
 }
 
-.about-grid > .acard:nth-child(3) {
-  grid-column: span 2;
-  width: 50%;
-  justify-self: center;
-}
-
 .aico,
 .pico {
   display: flex;
@@ -682,6 +676,7 @@ nav {
 .project-private {
   display: inline-flex;
   align-items: center;
+  margin-left: auto;
   gap: 6px;
   padding: 4px 10px;
   border-radius: 999px;
@@ -1184,8 +1179,7 @@ footer span {
     grid-column: auto !important;
   }
 
-  .about-grid > .acard,
-  .about-grid > .acard:nth-child(3) {
+  .about-grid > .acard {
     grid-column: span 1;
   }
 }
@@ -1216,11 +1210,6 @@ footer span {
 
   .about-grid {
     grid-template-columns: 1fr;
-  }
-
-  .about-grid > .acard:nth-child(3) {
-    justify-self: unset;
-    width: 100%;
   }
 
   #researches .research-grid,
@@ -1422,10 +1411,18 @@ footer span {
     </div>
 
     <div class="card acard reveal">
+      <div class="aico"><i class="fas fa-scroll"></i></div>
+      <div>
+        <h3>MSc Education</h3>
+        <p>Artificial Intelligence &amp; Applications, University of Thessaly, Greece (2026–2027).</p>
+      </div>
+    </div>
+
+    <div class="card acard reveal">
       <div class="aico"><i class="fas fa-lightbulb"></i></div>
       <div>
         <h3>Specialization</h3>
-        <p>Data Management and Artificial Intelligence — combining theory with real hands-on projects.</p>
+                    <p>Data Management and Artificial Intelligence — combining theory with real-world, hands-on projects.</p>
       </div>
     </div>
 

@@ -1,25 +1,21 @@
 # George David Tsitlauri | Portfolio Website
 
 **Author:** George David Tsitlauri  
-**Affiliation:** Dept. of Informatics & Telecommunications, University of Thessaly, Greece  
-**Contact:** gdtsitlauri@gmail.com  
-**Year:** 2026
+**Contact:** [gdtsitlauri@gmail.com](mailto:gdtsitlauri@gmail.com)
 
-Personal portfolio website for **George David Tsitlauri**, focused on AI, systems, security, infrastructure, research, and selected software projects.
+Personal portfolio focused on artificial intelligence, systems, security, infrastructure, research, and selected software projects.
 
-Live site: **[gdtsitlauri.dev](https://gdtsitlauri.dev)**
+**Live site:** [gdtsitlauri.dev](https://gdtsitlauri.dev)
 
 ## Overview
 
-This repository contains a **static single-page portfolio** implemented primarily in [`index.html`](./index.html).
+This repository contains a static single-page website implemented in [`index.html`](./index.html). It presents:
 
-The site includes:
-
-- a responsive hero section with a custom **Three.js 3D render** of a **cryptographic processor with 3D-stacked memory**
-- academic thesis and research sections
-- selected public projects
-- skills and spoken languages
-- contact links and CV access
+- BSc and MSc education
+- research work and selected academic or software projects
+- technical skills and spoken languages
+- contact links and a downloadable CV
+- an interactive Three.js visualization of a cryptographic processor with 3D-stacked memory
 
 ## Tech Stack
 
@@ -30,102 +26,59 @@ The site includes:
 - Google Fonts
 - Font Awesome
 
-## Main Features
+## Features
 
 - Responsive desktop and mobile layout
-- Solid `#190a3f` background — perfect match with `theme-color` for Safari/Chrome status bar on all devices
-- `theme-color` meta tag for mobile browser chrome color matching
-- Custom animated hero section with structured vertical layout (photo → name → tag → 3D CPU → tagline → buttons)
-- Interactive / auto-rotating 3D chip render with realistic material colors
-- Glass morphism cards, buttons, hero tag, and contact links with `backdrop-filter` blur
-- Nav bar: GDT logo only, transparent, scrolls with page (not fixed)
-- Section reveal animations (fade, zoom) via IntersectionObserver
-- Custom loader with animated white progress bar
-- GDT favicon set — 11 files covering all platforms (browser, iOS, Android/PWA), dark navy→purple gradient
-- `viewport-fit=cover` + `env(safe-area-inset-*)` support for iPhone notch / Dynamic Island
-- Adaptive rendering quality profiles to reduce unnecessary GPU load on smaller screens
-- Hover effects (scale, translateY) desktop-only via `@media (hover: hover) and (pointer: fine)` — no color changes on icons
-- Icon colors: white/muted by default, no hover color change on any device
-- SEO and Open Graph / Twitter Card meta tags
-- Static hosting friendly deployment
+- Interactive, auto-rotating 3D chip visualization
+- Adaptive 3D rendering settings for desktop and mobile devices
+- Animated loader and section reveal effects
+- Mobile safe-area support
+- Basic SEO, Open Graph, and Twitter Card metadata
+- Static-hosting-compatible deployment
 
 ## 3D Hero Render
 
-The hero canvas renders a stylized but realistic semiconductor-inspired package:
+The hero canvas depicts a semiconductor-inspired package with:
 
-- IHS lid (nickel-plated silver, laser-engraved label)
-- CPU logic die and TSV redistribution bridge
-- 3D-stacked memory layers (L0–L3) with distinct color-coded silicon dies
-- PCB substrate (forest green FR4)
-- Realistic materials: MeshPhysicalMaterial with tuned metalness, roughness, and environment lighting
-- Adaptive internal render resolution, texture sizes, shadow budget, and FPS cap
-
-Quality is controlled inside [`index.html`](./index.html) with:
-
-```js
-const QUALITY_MODE = 'auto'; // 'auto' | 'balanced' | 'mobile' | 'ultra'
-```
-
-Current behavior:
-
-- `auto`: chooses a balanced desktop profile or lighter mobile profile
-- `balanced`: good visual quality with lower render cost on desktop
-- `mobile`: lighter internal render settings for smaller/coarse-pointer devices
-- `ultra`: maximum sharpness / highest GPU usage
+- a metallic IHS lid
+- a CPU logic die and redistribution bridge
+- color-coded L0–L3 stacked-memory layers
+- a green package substrate
+- physically based materials and environment lighting
+- adaptive texture size, render resolution, and device-pixel ratio
 
 ## Project Structure
 
 ```text
 .
-├── index.html
-├── README.md
-├── LICENSE
-├── CNAME
-├── profile.jpg
-├── George_David_Tsitlauri_CV.pdf
-├── favicon.ico
+├── index.html                      # Website markup, styles, and scripts
+├── profile.jpg                     # Profile image
+├── George_David_Tsitlauri_CV.pdf  # Downloadable CV
+├── favicon-* / favicon.ico         # Site icons
 ├── apple-touch-icon.png
-├── favicon-16x16.png
-├── favicon-32x32.png
-├── favicon-48x48.png
-├── favicon-64x64.png
-├── favicon-180x180.png
-├── favicon-192x192.png
-├── favicon-256x256.png
-├── favicon-512.png
-└── favicon-512x512.png
+├── CNAME                           # Custom domain
+├── LICENSE
+└── README.md
 ```
 
-## Local Usage
+## Local Development
 
-Because the site is static, you can run it locally in either of these ways:
-
-1. Open [`index.html`](./index.html) directly in a browser.
-2. Serve the folder with any simple static server for a cleaner preview.
-
-Example:
+Run a local HTTP server from the repository directory:
 
 ```bash
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000`.
+Then open [http://localhost:8000](http://localhost:8000).
 
 ## Deployment
 
-The project is suitable for any static hosting platform, including:
+The site can be deployed to any static hosting service. The included [`CNAME`](./CNAME) configures the custom domain `gdtsitlauri.dev`.
 
-- GitHub Pages
-- Netlify
-- Vercel static hosting
-- Cloudflare Pages
+## External Dependencies
 
-The repository includes a [`CNAME`](./CNAME) file for:
+Three.js, Google Fonts, and Font Awesome are loaded from CDNs, so an internet connection is required when previewing the site locally.
 
-- `gdtsitlauri.dev`
+## License
 
-## Notes
-
-- The main site logic and styling live in [`index.html`](./index.html).
-- Some external assets are loaded from CDNs, so internet access is required unless they are bundled locally.
-- Background is a solid `#190a3f` color — no canvas, no animation — ensuring perfect Safari/Chrome browser chrome match via `theme-color`.
+This project is available under the [MIT License](./LICENSE).
