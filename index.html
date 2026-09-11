@@ -13,22 +13,28 @@
 <meta property="og:image" content="https://gdtsitlauri.dev/favicon-512x512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="George David Tsitlauri portfolio">
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:url" content="https://gdtsitlauri.dev">
-<meta name="description" content="AI & Systems Research Engineer. Explore researches and projects by George David Tsitlauri.">
+<meta name="description" content="AI & Systems Research Engineer. Explore research and projects by George David Tsitlauri.">
 <meta name="twitter:title" content="George David Tsitlauri | Portfolio">
 <meta name="twitter:description" content="AI & Systems Research Engineer.">
 <meta name="twitter:image" content="https://gdtsitlauri.dev/favicon-512x512.png">
+<meta name="twitter:image:alt" content="George David Tsitlauri portfolio">
+
+<link rel="canonical" href="https://gdtsitlauri.dev/">
 
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="preload" as="image" href="profile.jpg" fetchpriority="high">
 
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=block" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
@@ -45,8 +51,6 @@ html, body {
 }
 
 :root {
-  --eb: #0074FF;
-  --ep: #5e00f5;
   --cardg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
   --cardbrd: rgba(180, 197, 255, 0.14);
   --tp: #f0f4ff;
@@ -66,7 +70,7 @@ button {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'IBM Plex Mono', 'Trebuchet MS', monospace;
   color: var(--tp);
 }
 
@@ -140,20 +144,23 @@ section {
 
 /* ── NAV ── */
 nav {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
-  padding: calc(18px + env(safe-area-inset-top, 0px)) 6% 18px;
-  background: transparent;
+  justify-content: space-between;
+  padding: calc(16px + env(safe-area-inset-top, 0px)) 2.5% 16px;
+  background: rgba(25, 10, 63, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .nav-logo {
   font-family: 'Caveat', cursive;
-  font-size: 1.55rem;
+  font-size: 1.75rem;
   font-weight: 400;
   color: #ffffff;
   display: inline-block;
@@ -161,6 +168,24 @@ nav {
   margin: -2px -6px -5px;
   transition: transform .3s, opacity .2s;
   transform-origin: center;
+}
+
+.nav-contact {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-contact a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  color: var(--ts);
+  font-size: 1.12rem;
+  text-decoration: none;
+  transition: transform .25s ease, color .2s ease;
 }
 
 /* ── HERO ── */
@@ -264,7 +289,8 @@ nav {
 .hero-tag {
   position: relative;
   display: block;
-  font-size: .78rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .86rem;
   font-weight: 400;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -305,8 +331,7 @@ nav {
 }
 
 .hero-sub {
-  font-family: 'Caveat', cursive;
-  font-size: 1.5rem;
+  font-size: 1.18rem;
   color: #fff;
   max-width: 560px;
   line-height: 1.7;
@@ -317,7 +342,7 @@ nav {
 
 .hero-btns {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: nowrap;
   animation: fadeUp .75s .3s ease both;
 }
@@ -327,20 +352,21 @@ nav {
 .btn-o,
 .btn-cv-hero {
   display: inline-flex;
+  font-family: 'IBM Plex Mono', monospace;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 13px 28px;
-  font-family: 'Caveat', cursive;
+  padding: 10px 16px;
   font-weight: 400;
-  font-size: 1.15rem;
-  border-radius: 20px;
+  font-size: .92rem;
+  line-height: 1.2;
+  border-radius: 14px;
   text-decoration: none;
   min-width: 0;
   white-space: nowrap;
   color: #fff;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background: var(--cardg);
   border: 1px solid var(--cardbrd);
   backdrop-filter: blur(14px) saturate(130%);
@@ -350,6 +376,7 @@ nav {
 
 /* ── SECTION TITLES ── */
 .slabel {
+  font-family: 'IBM Plex Mono', monospace;
   font-size: .75rem;
   font-weight: 400;
   letter-spacing: .14em;
@@ -371,7 +398,6 @@ nav {
 }
 
 .stitle {
-  font-family: 'Caveat', cursive;
   font-size: clamp(2.2rem,4vw,3.2rem);
   font-weight: 400;
   line-height: 1.2;
@@ -397,7 +423,6 @@ nav {
   backdrop-filter: blur(14px) saturate(130%);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
   box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-  will-change: transform, opacity;
 }
 
 .reveal {
@@ -423,6 +448,14 @@ nav {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 22px;
+}
+
+@media (min-width: 681px) {
+  .about-grid > .acard:last-child {
+    grid-column: 1 / -1;
+    width: calc(50% - 11px);
+    justify-self: center;
+  }
 }
 
 .acard {
@@ -456,7 +489,6 @@ nav {
 }
 
 .acard h3 {
-  font-family: 'Caveat', cursive;
   font-size: 1.4rem;
   font-weight: 400;
   color: var(--tp);
@@ -516,7 +548,6 @@ nav {
 }
 
 .thesis-card h3 {
-  font-family: 'Caveat', cursive;
   font-size: 1.4rem;
   font-weight: 400;
   margin-bottom: 10px;
@@ -557,7 +588,6 @@ nav {
   max-width: 100%;
   width: fit-content;
 
-  font-family: 'Caveat', cursive;
   font-size: clamp(1rem, 3vw, 1.22rem);
   font-weight: 400;
   letter-spacing: .012em;
@@ -597,25 +627,32 @@ nav {
   align-items: stretch;
 }
 
+#researches .research-grid-featured {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#researches .research-grid-balanced {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#researches .research-grid > .pc {
+  grid-column: auto;
+}
+
+#researches .research-grid + .research-grid {
+  margin-top: 22px;
+}
+
+@media (min-width: 681px) {
+  #researches .research-grid .project-centered {
+    grid-column: 1 / -1;
+    width: calc(50% - 11px);
+    justify-self: center;
+  }
+}
+
 #researches .research-grid > .pc {
   min-height: 100%;
-}
-
-#researches .research-grid-featured > .pc {
-  grid-column: span 4;
-}
-
-#researches .research-grid-featured > .pc:nth-child(-n+2) {
-  grid-column: span 6;
-}
-
-#researches .research-grid-balanced > .pc {
-  grid-column: span 3;
-}
-
-#researches .research-grid-balanced > .pc:nth-child(-n+2),
-#researches .research-grid-balanced > .pc:nth-last-child(-n+2) {
-  grid-column: span 6;
 }
 
 /* ── PROJECTS ── */
@@ -643,6 +680,10 @@ nav {
 }
 
 #projects .project-grid-engineering > .pc:nth-last-child(-n+2) {
+  grid-column: span 3;
+}
+
+#projects .project-grid-engineering > .academic-wide {
   grid-column: span 3;
 }
 
@@ -699,6 +740,18 @@ nav {
   position: relative;
 }
 
+.pc:has(.pl) {
+  cursor: pointer;
+}
+
+.research-grid .project-hidden {
+  display: none;
+}
+
+.project-grid .project-hidden {
+  display: none;
+}
+
 .pctop {
   display: flex;
   align-items: center;
@@ -747,7 +800,6 @@ nav {
 }
 
 .pc h3 {
-  font-family: 'Caveat', cursive;
   font-size: 1.18rem;
   font-weight: 400;
   color: var(--tp);
@@ -808,7 +860,6 @@ nav {
 }
 
 .scat h3 {
-  font-family: 'Caveat', cursive;
   font-size: 1.15rem;
   font-weight: 400;
   letter-spacing: .04em;
@@ -895,7 +946,6 @@ nav {
 }
 
 .li h3 {
-  font-family: 'Caveat', cursive;
   font-size: 1.16rem;
   font-weight: 400;
 }
@@ -924,7 +974,6 @@ nav {
   border-radius: 20px;
   text-decoration: none;
   color: #fff;
-  font-family: 'Caveat', cursive;
   font-weight: 400;
   font-size: 1.15rem;
   transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .25s;
@@ -1031,6 +1080,11 @@ footer span {
     opacity: .85;
   }
 
+  .nav-contact a:hover {
+    color: var(--tp);
+    transform: translateY(-2px);
+  }
+
   .photo-wrap:hover img {
     transform: scale(1.04);
   }
@@ -1062,6 +1116,10 @@ footer span {
 
 
   .pl:hover {
+    transform: scale(1.15);
+  }
+
+  .pc:hover .pl {
     transform: scale(1.15);
   }
 
@@ -1186,8 +1244,7 @@ footer span {
 
 @media (max-width: 680px) {
   nav {
-    position: absolute;
-    padding: calc(16px + env(safe-area-inset-top, 0px)) 4% 16px;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) 2.5% 14px;
     gap: 10px;
   }
 
@@ -1205,7 +1262,7 @@ footer span {
   }
 
   .nav-logo {
-    font-size: 1.3rem;
+    font-size: 1.45rem;
   }
 
   .about-grid {
@@ -1280,7 +1337,7 @@ footer span {
   }
 
   .hero-sub {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     max-width: 100%;
   }
 
@@ -1327,11 +1384,11 @@ footer span {
   }
 
   nav {
-    padding: calc(14px + env(safe-area-inset-top, 0px)) 4% 14px;
+    padding: calc(12px + env(safe-area-inset-top, 0px)) 2.5% 12px;
   }
 
   .nav-logo {
-    font-size: 1.2rem;
+    font-size: 1.35rem;
   }
 
   .cat-label {
@@ -1341,11 +1398,74 @@ footer span {
   }
 
 }
+
+/* ── ACCESSIBILITY ── */
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10000;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #190a3f;
+  text-decoration: none;
+  font-size: .82rem;
+  transform: translateY(-160%);
+  transition: transform .2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.nav-contact a:focus-visible,
+.pl:focus-visible,
+.footer-top-btn:focus-visible,
+#chip3d:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .section-anim,
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 </style>
+
+<noscript>
+  <style>
+    #site-loader { display: none !important; }
+    .section-anim,
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  </style>
+</noscript>
 </head>
 <body>
 
-<div id="site-loader">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<div id="site-loader" aria-hidden="true">
   <div class="loader-box">
     <div class="loader-text">GDT</div>
     <div class="loader-bar-track">
@@ -1354,10 +1474,17 @@ footer span {
   </div>
 </div>
 
-<nav>
+<nav aria-label="Primary">
   <div class="nav-logo">GDT</div>
+  <div class="nav-contact" aria-label="Contact links">
+    <a href="George_David_Tsitlauri_CV.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open CV" title="CV"><i class="fas fa-file-alt" aria-hidden="true"></i></a>
+    <a href="mailto:gdtsitlauri@gmail.com" aria-label="Email George David Tsitlauri" title="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+    <a href="https://github.com/gdtsitlauri" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile" title="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+    <a href="https://www.linkedin.com/in/gdtsitlauri/" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile" title="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+  </div>
 </nav>
 
+<main id="main-content">
 <section class="hero" id="home">
   <div class="hero-text">
     <h1>George David <span>Tsitlauri</span></h1>
@@ -1368,18 +1495,12 @@ footer span {
       </div>
     </div>
 
-    <canvas id="chip3d"></canvas>
+    <canvas id="chip3d" role="button" tabindex="0" aria-label="Toggle exploded view of the Crypto3DStackCPU 3D model" aria-pressed="false"></canvas>
 
     <p class="hero-sub">
       From hardware to AI.
     </p>
 
-    <div class="hero-btns">
-      <a href="#researches" class="btn-research"><i class="fas fa-book-open"></i> View Researches</a>
-      <a href="#projects" class="btn-project"><i class="fas fa-folder-open"></i> View Projects</a>
-      <a href="#contact" class="btn-o"><i class="fas fa-paper-plane"></i> Contact Me</a>
-      <a href="George_David_Tsitlauri_CV.pdf" target="_blank" rel="noopener noreferrer" class="btn-cv-hero"><i class="fas fa-file-alt"></i> View CV</a>
-    </div>
   </div>
 
   <div class="hero-photo">
@@ -1387,6 +1508,8 @@ footer span {
       <img
         src="profile.jpg"
         alt="George David Tsitlauri"
+        decoding="async"
+        fetchpriority="high"
         draggable="false"
         oncontextmenu="return false;"
         onmousedown="if(event.button==2)return false;"
@@ -1398,20 +1521,12 @@ footer span {
 </section>
 
 <section id="about" class="section-anim anim-left">
-  <div class="slabel"><i class="fas fa-user"></i> About Me</div>
+  <div class="slabel"><i class="fas fa-user" aria-hidden="true"></i> About Me</div>
   <h2 class="stitle">Who I <span>Am</span></h2>
 
   <div class="about-grid">
     <div class="card acard reveal">
-      <div class="aico"><i class="fas fa-user-graduate"></i></div>
-      <div>
-        <h3>BSc Education</h3>
-        <p>Informatics &amp; Telecommunications, University of Thessaly, Greece (2021–2026).</p>
-      </div>
-    </div>
-
-    <div class="card acard reveal">
-      <div class="aico"><i class="fas fa-scroll"></i></div>
+      <div class="aico"><i class="fas fa-scroll" aria-hidden="true"></i></div>
       <div>
         <h3>MSc Education</h3>
         <p>Artificial Intelligence &amp; Applications, University of Thessaly, Greece (2026–2027).</p>
@@ -1419,7 +1534,15 @@ footer span {
     </div>
 
     <div class="card acard reveal">
-      <div class="aico"><i class="fas fa-lightbulb"></i></div>
+      <div class="aico"><i class="fas fa-user-graduate" aria-hidden="true"></i></div>
+      <div>
+        <h3>BSc Education</h3>
+        <p>Informatics &amp; Telecommunications, University of Thessaly, Greece (2021–2026).</p>
+      </div>
+    </div>
+
+    <div class="card acard reveal">
+      <div class="aico"><i class="fas fa-lightbulb" aria-hidden="true"></i></div>
       <div>
         <h3>Specialization</h3>
                     <p>Data Management and Artificial Intelligence — combining theory with real-world, hands-on projects.</p>
@@ -1427,10 +1550,18 @@ footer span {
     </div>
 
     <div class="card acard reveal">
-      <div class="aico"><i class="fas fa-flask"></i></div>
+      <div class="aico"><i class="fas fa-flask" aria-hidden="true"></i></div>
       <div>
         <h3>Research Lab</h3>
         <p>Member of the Research Laboratory of Computer Architecture, Compilers and System Security.</p>
+      </div>
+    </div>
+
+    <div class="card acard reveal">
+      <div class="aico"><i class="fas fa-compass" aria-hidden="true"></i></div>
+      <div>
+        <h3>What Drives Me</h3>
+        <p>I enjoy research, exploring new ideas, and learning across the stack — from hardware and computer architecture to AI — so I can understand and build systems end to end.</p>
       </div>
     </div>
 
@@ -1439,229 +1570,220 @@ footer span {
 
 
 <section id="researches" class="section-anim anim-up">
-  <div class="slabel"><i class="fas fa-microscope"></i> Researches</div>
+  <div class="slabel"><i class="fas fa-microscope" aria-hidden="true"></i> Research</div>
   <h2 class="stitle">Research <span>Projects</span></h2>
 
   <!-- AI, Data & Intelligent Systems -->
-  <div class="cat-header reveal">
-    <span class="cat-label"><i class="fas fa-chart-pie"></i> AI, Data &amp; Intelligent Systems</span>
-  </div>
   <div class="cat-grid research-grid research-grid-featured">
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-route"></i></div>
-        <a href="https://github.com/gdtsitlauri/kronos-algorithm" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
-      <h3>KRONOS</h3>
-      <p>Causal domain-invariant learning algorithm that enables AI models to generalize reliably across unseen domains and conditions.</p>
+      <div class="pctop"><div class="pico"><i class="fas fa-layer-group" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/Crypto3DStackCPU" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
+      <h3>Crypto3DStackCPU</h3>
+      <p>Secure CPU-extension research project combining 3D-stacked memory with hardware cryptographic extensions, custom assembler, and runtime integrity validation.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-comments"></i></div>
-        <a href="https://github.com/gdtsitlauri/nous-llm" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-route" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/kronos-algorithm" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
+      <h3>KRONOS</h3>
+      <p>Causal-inspired domain generalization algorithm that achieves competitive performance under unseen distribution shifts, including improved robustness under severe shortcut reversal.</p>
+    </div>
+    <div class="card pc reveal">
+      <div class="pctop"><div class="pico"><i class="fas fa-eye-slash" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/cuda-zkml" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
+      <h3>CUDA-zkML</h3>
+      <p>GPU-accelerated zero-knowledge machine-learning system for verifiable neural-network inference.</p>
+    </div>
+    <div class="card pc reveal">
+      <div class="pctop"><div class="pico"><i class="fas fa-comments" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/nous-llm" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>NOUS</h3>
       <p>Self-improving LLM research framework for iterative refinement, reasoning loops, and resource-constrained experimentation.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-film"></i></div>
-        <a href="https://github.com/gdtsitlauri/valkyrie-enhance" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-film" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/valkyrie-enhance" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>VALKYRIE</h3>
       <p>Real-time video and audio enhancement framework optimized for consumer GPUs.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-eye"></i></div>
-        <a href="https://github.com/gdtsitlauri/patv-x" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-eye" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/patv-x" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>PATV-X</h3>
       <p>Training-free explainable deepfake-video detection framework using frequency-domain analysis and forensic signal cues.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-music"></i></div>
-        <a href="https://github.com/gdtsitlauri/siren-audio" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-music" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/siren-audio" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>SIREN</h3>
       <p>Adversarial-audio and voice-forensics framework for spoofing analysis, deepfake detection, and audio-security evaluation.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-heartbeat"></i></div>
-        <a href="https://github.com/gdtsitlauri/athena-biomedical" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-heartbeat" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/athena-biomedical" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>ATHENA</h3>
       <p>Precision-medicine and biomedical-informatics framework integrating genomics, health records, biomedical knowledge graphs, and causal reasoning.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-stethoscope"></i></div>
-        <a href="https://github.com/gdtsitlauri/asclepius-biosignal" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-stethoscope" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/asclepius-biosignal" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>ASCLEPIUS</h3>
       <p>Biomedical AI framework for multimodal biosignal analysis, anomaly detection, explainability, and federated-health experimentation.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-graduation-cap"></i></div>
-        <a href="https://github.com/gdtsitlauri/socrates-edutech" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/socrates-edutech" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>SOCRATES</h3>
       <p>Adaptive education research framework that models why learners struggle and dynamically adjusts learning paths using causal tutoring algorithms.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-magnifying-glass"></i></div>
-        <a href="https://github.com/gdtsitlauri/themis-search" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-magnifying-glass" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/themis-search" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>THEMIS</h3>
       <p>Hybrid search framework combining classical and neural retrieval with causal reranking to improve result relevance across text and multimedia queries.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-chart-line"></i></div>
-        <a href="https://github.com/gdtsitlauri/marketmind-ai" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/marketmind-ai" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>MarketMindAI</h3>
       <p>Behavioral-finance research framework linking internet sentiment and NLP signals to cryptocurrency market dynamics.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-seedling"></i></div>
-        <a href="https://github.com/gdtsitlauri/evoo-adulteration-ai" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-seedling" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/evoo-adulteration-ai" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>EVOO</h3>
       <p>Applied machine-learning framework for olive-oil authenticity and adulteration analysis with spectroscopy data.</p>
     </div>
   </div>
 
   <!-- Cybersecurity, Systems & Infrastructure -->
-  <div class="cat-header reveal">
-    <span class="cat-label"><i class="fas fa-user-secret"></i> Cybersecurity, Systems &amp; Infrastructure</span>
-  </div>
   <div class="cat-grid research-grid research-grid-balanced">
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-shield-halved"></i></div>
-        <a href="https://github.com/gdtsitlauri/olympus-security" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/olympus-security" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>OLYMPUS</h3>
-      <p>AI security research platform covering offensive, defensive, forensic, and intelligence modules — with co-evolutionary attacker/defender simulation, reverse engineering, and malware analysis.</p>
+      <p>AI security platform for threat simulation, reverse engineering, and malware analysis.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-chess-knight"></i></div>
-        <a href="https://github.com/gdtsitlauri/caesar-framework" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-chess-knight" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/caesar-framework" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>CAESAR</h3>
       <p>Standalone co-evolutionary engine for adversarial strategy search, where attacker and defender populations evolve independently to discover non-obvious attack/defense equilibria.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-network-wired"></i></div>
-        <a href="https://github.com/gdtsitlauri/lykomides-ids" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-network-wired" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/lykomides-ids" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>LYKOMIDES</h3>
       <p>Cross-domain AI intrusion-detection framework designed to transfer across cyber-physical and IoT environments without retraining on target data.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-eye-slash"></i></div>
-        <a href="https://github.com/gdtsitlauri/cuda-zkml" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
-      <h3>CUDA-zkML</h3>
-      <p>GPU-accelerated zero-knowledge machine-learning system for verifiable neural-network inference.</p>
-    </div>
-    <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-sitemap"></i></div>
-        <a href="https://github.com/gdtsitlauri/atlas-trident" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-sitemap" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/atlas-trident" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>ATLAS</h3>
-      <p>Distributed cloud-autonomy framework combining digital twins, orchestration, governance, and intelligent control.</p>
+      <p>Self-governing cloud-native platform combining digital twins, LLM reasoning, reinforcement learning, and blockchain-backed governance.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-puzzle-piece"></i></div>
-        <a href="https://github.com/gdtsitlauri/nexus-platform" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-puzzle-piece" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/nexus-platform" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>NEXUS</h3>
       <p>End-to-end systems research platform spanning compiler construction, MIPS code generation, CPU simulation, parallel execution, and hardware validation.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-database"></i></div>
-        <a href="https://github.com/gdtsitlauri/apollo-database" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-database" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/apollo-database" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>APOLLO</h3>
       <p>From-scratch Java database-engine research project covering storage, B+-tree indexing, MVCC transactions, and an ML-learned query optimizer.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-infinity"></i></div>
-        <a href="https://github.com/gdtsitlauri/pythagoras-theory" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-infinity" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/pythagoras-theory" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>PYTHAGORAS</h3>
       <p>Unified computational theory and discrete mathematics research framework covering the full Chomsky hierarchy, Turing machines, NP-completeness, and decidability, with the LOGOS formal verifier.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-diagram-project"></i></div>
-        <a href="https://github.com/gdtsitlauri/polaris-sdn-orchestrator" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-diagram-project" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/polaris-sdn-orchestrator" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>POLARIS</h3>
       <p>SDN/cloud orchestration research platform for multi-objective service placement and network-aware optimization.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-wave-square"></i></div>
-        <a href="https://github.com/gdtsitlauri/chronos-edge-iot" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-wave-square" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/chronos-edge-iot" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>CHRONOS</h3>
       <p>Edge-IoT scheduling and offloading research framework using causal structures and multi-objective decision policies.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-server"></i></div>
-        <a href="https://github.com/gdtsitlauri/argus-os" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-server" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/argus-os" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>ARGUS</h3>
       <p>Game-theoretic distributed microkernel research with Nash-equilibrium scheduling and lock-free IPC for edge-AI workloads.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-mobile-screen"></i></div>
-        <a href="https://github.com/gdtsitlauri/artemis-mobile" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-mobile-screen" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/artemis-mobile" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>ARTEMIS</h3>
       <p>Mobile reliability research framework for proactive fault detection and SLO monitoring that identifies service degradation before users are affected.</p>
     </div>
   </div>
 
   <!-- Hardware, Telecom & Robotics -->
-  <div class="cat-header reveal">
-    <span class="cat-label"><i class="fas fa-satellite-dish"></i> Hardware, Telecom &amp; Robotics</span>
-  </div>
   <div class="cat-grid research-grid research-grid-featured">
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-atom"></i></div>
-        <a href="https://github.com/gdtsitlauri/odyssey-quantum" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-atom" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/odyssey-quantum" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>ODYSSEY</h3>
-      <p>Hybrid quantum-classical security research platform for post-quantum reasoning and risk-aware intrusion analysis.</p>
+      <p>Risk-aware intrusion-detection framework for post-quantum transition environments.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-layer-group"></i></div>
-        <a href="https://github.com/gdtsitlauri/Crypto3DStackCPU" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
-      <h3>Crypto3DStackCPU</h3>
-      <p>Secure CPU-extension research project combining 3D-stacked memory with hardware cryptographic extensions, custom assembler, and runtime integrity validation.</p>
-    </div>
-    <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-dna"></i></div>
-        <a href="https://github.com/gdtsitlauri/daedalus-gene" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-dna" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/daedalus-gene" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>DAEDALUS</h3>
       <p>Evolutionary robotics and optimization framework for co-designing morphology, controllers, and adaptive behaviors.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-radio"></i></div>
-        <a href="https://github.com/gdtsitlauri/hermes-sdr" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-radio" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/hermes-sdr" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>HERMES</h3>
       <p>AI-native software-defined radio framework for learned modulation, channel adaptation, and intelligent signal processing.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-tower-broadcast"></i></div>
-        <a href="https://github.com/gdtsitlauri/gate-6g" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-tower-broadcast" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/gate-6g" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>GATE-6G</h3>
       <p>Semantic-communication and split-inference research framework for adaptive 6G-style AI-native transmission.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-signal"></i></div>
-        <a href="https://github.com/gdtsitlauri/helios-signal" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-signal" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/helios-signal" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>HELIOS</h3>
       <p>Multi-language signal-processing framework (Python, Julia, R, Octave) covering arithmetic coding, rate-distortion theory, and Markov-channel modeling.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-paintbrush"></i></div>
-        <a href="https://github.com/gdtsitlauri/iris-graphics" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-paintbrush" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/iris-graphics" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>IRIS</h3>
       <p>Neural rendering research framework for real-time perception and visualization on consumer GPUs.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-robot"></i></div>
-        <a href="https://github.com/gdtsitlauri/ares-robotics" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-robot" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/ares-robotics" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>ARES</h3>
       <p>Robotics autonomy research platform for control, planning, navigation, and multi-agent coordination experiments.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-helicopter"></i></div>
-        <a href="https://github.com/gdtsitlauri/kladenets-uav" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-helicopter" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/kladenets-uav" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>KLADENETS</h3>
       <p>Autonomous UAV-swarm research architecture centered on edge AI, resilience, and explainable decision-making.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-water"></i></div>
-        <a href="https://github.com/gdtsitlauri/poseidon-ocean-systems" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-water" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/poseidon-ocean-systems" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>POSEIDON</h3>
       <p>Multi-domain maritime systems research framework combining GIS, CAD, optical networks, and TRIDENT optimization.</p>
     </div>
     <div class="card pc reveal">
-      <div class="pctop"><div class="pico"><i class="fas fa-hammer"></i></div>
-        <a href="https://github.com/gdtsitlauri/hephaestus-mac-core" target="_blank" rel="noopener noreferrer" class="pl"><i class="fab fa-github"></i></a></div>
+      <div class="pctop"><div class="pico"><i class="fas fa-hammer" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/hephaestus-mac-core" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a></div>
       <h3>HEPHAESTUS</h3>
       <p>RTL and physical-design research on power-aware INT8 MAC architectures for edge-AI workloads, with measured power reduction via the CYCLOPS algorithm (SkyWater-130nm).</p>
     </div>
@@ -1669,17 +1791,14 @@ footer span {
 </section>
 
 <section id="projects" class="section-anim anim-up">
-  <div class="slabel"><i class="fas fa-folder"></i> Projects</div>
+  <div class="slabel"><i class="fas fa-folder" aria-hidden="true"></i> Projects</div>
   <h2 class="stitle">Academic <span>Projects</span></h2>
 
-  <div class="cat-header reveal">
-    <span class="cat-label"><i class="fas fa-screwdriver-wrench"></i> Engineering</span>
-  </div>
   <div class="pgrid project-grid project-grid-engineering">
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-microchip"></i></div>
-        <a href="https://github.com/gdtsitlauri/CryptoCPU" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open CryptoCPU GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-microchip" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/CryptoCPU" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open CryptoCPU GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>CryptoCPU <span style="font-size:0.7em;opacity:0.7;">(BSc Thesis)</span></h3>
       <p>Design and implementation of an FPGA-based encrypted instruction-set processor.</p>
@@ -1687,8 +1806,8 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-key"></i></div>
-        <a href="https://github.com/gdtsitlauri/parallel-aes-cuda" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Parallel AES CUDA GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-key" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/parallel-aes-cuda" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Parallel AES CUDA GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>Parallel AES CUDA</h3>
       <p>Parallel implementation of AES encryption and decryption on NVIDIA GPUs.</p>
@@ -1696,8 +1815,8 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-bolt"></i></div>
-        <a href="https://github.com/gdtsitlauri/ccc-ir-optimizer" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open CCC IR Optimizer GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-bolt" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/ccc-ir-optimizer" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open CCC IR Optimizer GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>CCC IR Optimizer</h3>
       <p>Intermediate-representation optimizer with analysis passes and compiler optimizations for the CCC toolchain.</p>
@@ -1705,40 +1824,26 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-link"></i></div>
-        <a href="https://github.com/gdtsitlauri/gpbft-consensus-protocol" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GPBFT Consensus Protocol GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-puzzle-piece" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/nexus-platform" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open NEXUS GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
+      </div>
+      <h3>NEXUS</h3>
+      <p>End-to-end systems platform spanning compiler construction, MIPS code generation, CPU simulation, parallel execution, and hardware validation.</p>
+    </div>
+
+    <div class="card pc reveal academic-wide">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-link" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/gpbft-consensus-protocol" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open GPBFT Consensus Protocol GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>GPBFT Consensus Protocol</h3>
-      <p>Distributed consensus implementation inspired by Byzantine agreement and signature-based coordination.</p>
+      <p>Group-based PBFT consensus implementation evaluated with the SymBChainSim simulator.</p>
     </div>
 
-    <div class="card pc reveal">
+    <div class="card pc reveal academic-wide">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-cogs"></i></div>
-        <a href="https://github.com/gdtsitlauri/build-a-compiler" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Build a Compiler GitHub repository"><i class="fab fa-github"></i></a>
-      </div>
-      <h3>Build a Compiler</h3>
-      <p>Compiler project covering frontend parsing, AST construction, semantic analysis, and MIPS-oriented code generation.</p>
-    </div>
-  </div>
-
-  <div class="cat-header reveal">
-    <span class="cat-label"><i class="fas fa-sliders"></i> AI / Data Implementations</span>
-  </div>
-  <div class="pgrid project-grid project-grid-ai">
-    <div class="card pc reveal">
-      <div class="pctop">
-        <div class="pico"><i class="fas fa-terminal"></i></div>
-        <a href="https://github.com/gdtsitlauri/advanced-ai-projects" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Advanced AI Projects GitHub repository"><i class="fab fa-github"></i></a>
-      </div>
-      <h3>Advanced AI Projects</h3>
-      <p>Collection of advanced machine-learning and deep-learning implementations across vision, generation, and optimization tasks.</p>
-    </div>
-
-    <div class="card pc reveal">
-      <div class="pctop">
-        <div class="pico"><i class="fas fa-cloud"></i></div>
-        <a href="https://github.com/gdtsitlauri/weather-app-autoscaler-k8s" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Weather App Autoscaler GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-cloud" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/weather-app-autoscaler-k8s" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Weather App Autoscaler GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>Weather App Autoscaler</h3>
       <p>Kubernetes-based weather application with autoscaling and load-aware deployment behavior.</p>
@@ -1746,8 +1851,28 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-taxi"></i></div>
-        <a href="https://github.com/gdtsitlauri/big-data-spark-taxi" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Big Data Spark Taxi GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-cogs" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/build-a-compiler" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Build a Compiler GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
+      </div>
+      <h3>Build a Compiler</h3>
+      <p>Compiler project covering frontend parsing, AST construction, semantic analysis, and MIPS-oriented code generation.</p>
+    </div>
+  </div>
+
+  <div class="pgrid project-grid project-grid-ai">
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-terminal" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/advanced-ai-projects" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Advanced AI Projects GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
+      </div>
+      <h3>Advanced AI Projects</h3>
+      <p>Collection of advanced machine-learning and deep-learning implementations across vision, generation, and optimization tasks.</p>
+    </div>
+
+    <div class="card pc reveal">
+      <div class="pctop">
+        <div class="pico"><i class="fas fa-taxi" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/big-data-spark-taxi" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Big Data Spark Taxi GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>Big Data Spark Taxi</h3>
       <p>Distributed Spark pipeline for large-scale taxi-trip analytics.</p>
@@ -1755,8 +1880,8 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-video"></i></div>
-        <a href="https://github.com/gdtsitlauri/video-coding-for-machines" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Video Coding for Machines GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-video" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/video-coding-for-machines" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Video Coding for Machines GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>Video Coding for Machines</h3>
       <p>Video-coding experiments tailored to machine-learning and machine-vision applications.</p>
@@ -1764,8 +1889,8 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-gamepad"></i></div>
-        <a href="https://github.com/gdtsitlauri/reinforcement-learning-experiments" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Reinforcement Learning Experiments GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-gamepad" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/reinforcement-learning-experiments" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Reinforcement Learning Experiments GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>Reinforcement Learning Experiments</h3>
       <p>Reinforcement-learning implementations and experiments across core algorithms and environments.</p>
@@ -1773,8 +1898,8 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-chart-bar"></i></div>
-        <a href="https://github.com/gdtsitlauri/tourism-data-mining" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Tourism Data Mining GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-chart-bar" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/tourism-data-mining" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Tourism Data Mining GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>Tourism Data Mining</h3>
       <p>Data-mining project for tourism datasets, trend analysis, and pattern discovery.</p>
@@ -1782,8 +1907,8 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-school"></i></div>
-        <a href="https://github.com/gdtsitlauri/egram-student-management-system" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Egram Student Management System GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-school" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/egram-student-management-system" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Egram Student Management System GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>Egram Student Management System</h3>
       <p>Student-management platform for academic administration, records, and workflow handling.</p>
@@ -1791,13 +1916,13 @@ footer span {
   </div>
 
   <div class="cat-header reveal">
-    <span class="cat-label"><i class="fas fa-globe"></i> Websites</span>
+    <span class="cat-label"><i class="fas fa-globe" aria-hidden="true"></i> Websites</span>
   </div>
   <div class="pgrid project-grid project-grid-web">
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-sun"></i></div>
-        <a href="https://github.com/gdtsitlauri/Skyrianos" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Skyrianos GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-sun" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/Skyrianos" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open Skyrianos GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>Skyrianos</h3>
       <p>Public-facing website about the island of Skyros with informational content and visitor-oriented presentation.</p>
@@ -1805,8 +1930,8 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-        <div class="pico"><i class="fas fa-feather"></i></div>
-        <a href="https://github.com/gdtsitlauri/ostrichzoopark" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open OstrichZooPark GitHub repository"><i class="fab fa-github"></i></a>
+        <div class="pico"><i class="fas fa-feather" aria-hidden="true"></i></div>
+        <a href="https://github.com/gdtsitlauri/ostrichzoopark" target="_blank" rel="noopener noreferrer" class="pl" aria-label="Open OstrichZooPark GitHub repository"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <h3>OstrichZooPark</h3>
       <p>Public-facing website for Ostrich Zoo Park with visitor information and general presentation.</p>
@@ -1814,8 +1939,8 @@ footer span {
 
     <div class="card pc reveal">
       <div class="pctop">
-          <div class="pico"><i class="fas fa-shopping-cart"></i></div>
-          <span class="project-private"><i class="fas fa-lock"></i> Private</span>
+          <div class="pico"><i class="fas fa-shopping-cart" aria-hidden="true"></i></div>
+          <span class="project-private"><i class="fas fa-lock" aria-hidden="true"></i> Private</span>
       </div>
       <h3>Pavlidi Home E-shop</h3>
       <p>E-commerce website for online product presentation and storefront workflows.</p>
@@ -1824,61 +1949,40 @@ footer span {
 </section>
 
 <section id="skills" class="section-anim anim-zoom">
-  <div class="slabel"><i class="fas fa-toolbox"></i> Skills</div>
+  <div class="slabel"><i class="fas fa-toolbox" aria-hidden="true"></i> Skills</div>
   <h2 class="stitle">Tech <span>Stack</span></h2>
 
   <div class="sgrid skills-grid">
     <div class="card scat reveal">
-      <h3><i class="fas fa-code" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Programming Languages</h3>
+      <h3><i class="fas fa-code" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" aria-hidden="true"></i> Programming Languages</h3>
       <div class="pills">
-        <span class="pill">Python</span><span class="pill">C</span><span class="pill">C++</span><span class="pill">Java</span><span class="pill">SQL</span><span class="pill">JavaScript</span><span class="pill">TypeScript</span><span class="pill">Assembly</span><span class="pill">Go</span><span class="pill">Rust</span><span class="pill">Haskell</span><span class="pill">Dart</span><span class="pill">VHDL</span><span class="pill">Verilog</span><span class="pill">C#</span><span class="pill">Scala</span><span class="pill">Julia</span><span class="pill">R</span><span class="pill">MATLAB</span><span class="pill">Octave</span><span class="pill">Kotlin</span><span class="pill">Swift</span><span class="pill">Solidity</span><span class="pill">GLSL</span><span class="pill">Fortran</span><span class="pill">PHP</span><span class="pill">Ruby</span><span class="pill">Perl</span><span class="pill">Pascal</span>
+        <span class="pill">Python</span><span class="pill">C</span><span class="pill">C++</span><span class="pill">Java</span><span class="pill">SQL</span><span class="pill">JavaScript</span><span class="pill">TypeScript</span><span class="pill">Assembly</span><span class="pill">Go</span><span class="pill">Rust</span><span class="pill">Dart</span><span class="pill">VHDL</span><span class="pill">Verilog</span><span class="pill">C#</span><span class="pill">Scala</span><span class="pill">R</span><span class="pill">MATLAB</span><span class="pill">Kotlin</span><span class="pill">Swift</span><span class="pill">Fortran</span><span class="pill">PHP</span><span class="pill">Pascal</span>
       </div>
     </div>
 
     <div class="card scat reveal">
-      <h3><i class="fas fa-brain" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> AI / Data</h3>
+      <h3><i class="fas fa-brain" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" aria-hidden="true"></i> AI / Data</h3>
       <div class="pills">
-        <span class="pill">PyTorch</span><span class="pill">TensorFlow</span><span class="pill">XGBoost</span><span class="pill">Apache Spark</span><span class="pill">Apache Hadoop</span>
+        <span class="pill">PyTorch</span><span class="pill">TensorFlow</span><span class="pill">XGBoost</span><span class="pill">Apache Spark</span><span class="pill">Apache Hadoop</span><span class="pill">FastAPI</span><span class="pill">Flutter</span><span class="pill">Streamlit</span><span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">PostgreSQL</span>
       </div>
     </div>
 
     <div class="card scat reveal">
-      <h3><i class="fas fa-cubes" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Systems / Software</h3>
-      <div class="pills">
-        <span class="pill">FastAPI</span><span class="pill">Flutter</span><span class="pill">Streamlit</span><span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">PostgreSQL</span>
-      </div>
-    </div>
-
-    <div class="card scat reveal">
-      <h3><i class="fas fa-cloud-arrow-up" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Cloud / MLOps</h3>
-      <div class="pills">
-        <span class="pill">MLflow</span><span class="pill">Weights &amp; Biases</span><span class="pill">AWS Lambda</span><span class="pill">AWS SageMaker</span><span class="pill">Azure Functions</span><span class="pill">Azure Blob Storage</span><span class="pill">Azure ML</span><span class="pill">GCP BigQuery</span><span class="pill">Google Cloud Storage</span><span class="pill">Cloud Functions</span>
-      </div>
-    </div>
-
-    <div class="card scat reveal">
-      <h3><i class="fas fa-hard-drive" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Hardware / Parallel Computing</h3>
-      <div class="pills">
-        <span class="pill">CUDA</span><span class="pill">OpenMP</span><span class="pill">MPI</span><span class="pill">TensorRT</span><span class="pill">Xilinx Vivado</span><span class="pill">Vitis HLS</span><span class="pill">FPGA/RTL Workflows</span><span class="pill">HPC</span>
-      </div>
-    </div>
-
-    <div class="card scat reveal">
-      <h3><i class="fas fa-cube" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Graphics / XR</h3>
-      <div class="pills">
-        <span class="pill">Neural Rendering</span><span class="pill">WebXR</span><span class="pill">Three.js</span>
-      </div>
-    </div>
-
-    <div class="card scat reveal">
-      <h3><i class="fas fa-desktop" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Web / Frontend</h3>
+      <h3><i class="fas fa-desktop" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" aria-hidden="true"></i> Web</h3>
       <div class="pills">
         <span class="pill">React</span><span class="pill">Next.js</span><span class="pill">Node.js</span><span class="pill">Tailwind CSS</span><span class="pill">HTML5</span><span class="pill">CSS3</span>
       </div>
     </div>
 
     <div class="card scat reveal">
-      <h3><i class="fas fa-tools" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"></i> Dev / Research Tools</h3>
+      <h3><i class="fas fa-hard-drive" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" aria-hidden="true"></i> Hardware / Parallel Computing</h3>
+      <div class="pills">
+        <span class="pill">CUDA</span><span class="pill">OpenMP</span><span class="pill">MPI</span><span class="pill">TensorRT</span><span class="pill">Xilinx Vivado</span><span class="pill">Vitis HLS</span><span class="pill">FPGA/RTL Workflows</span><span class="pill">HPC</span>
+      </div>
+    </div>
+
+    <div class="card scat reveal">
+      <h3><i class="fas fa-tools" style="display:inline-block;padding:2px 3px;margin:-2px -3px;background:linear-gradient(135deg,#0074FF,#5e00f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" aria-hidden="true"></i> Dev / Research Tools</h3>
       <div class="pills">
         <span class="pill">Git</span><span class="pill">CI/CD</span><span class="pill">CMake</span><span class="pill">Jupyter</span><span class="pill">Wireshark</span><span class="pill">Bash</span><span class="pill">PowerShell</span><span class="pill">Linux</span><span class="pill">Windows</span><span class="pill">Visual Studio</span><span class="pill">LaTeX</span>
       </div>
@@ -1887,7 +1991,7 @@ footer span {
 </section>
 
 <section id="languages" class="section-anim anim-up">
-  <div class="slabel"><i class="fas fa-language"></i> Languages</div>
+  <div class="slabel"><i class="fas fa-language" aria-hidden="true"></i> Languages</div>
   <h2 class="stitle">Spoken <span>Languages</span></h2>
 
   <div class="lgrid">
@@ -1959,28 +2063,7 @@ footer span {
     </div>
   </div>
 </section>
-
-<section id="contact" class="section-anim anim-fade">
-  <div class="slabel"><i class="fas fa-address-book"></i> Contact</div>
-  <h2 class="stitle">Get In <span>Touch</span></h2>
-
-  <div class="cgrid">
-    <a href="mailto:gdtsitlauri@gmail.com" class="ci ci-email reveal" aria-label="Send email to George David Tsitlauri">
-      <i class="fas fa-envelope"></i>
-      <span>Email Me</span>
-    </a>
-
-    <a href="https://github.com/gdtsitlauri" target="_blank" rel="noopener noreferrer" class="ci ci-github reveal" aria-label="Open George David Tsitlauri GitHub profile">
-      <i class="fab fa-github"></i>
-      <span>GitHub</span>
-    </a>
-
-    <a href="https://www.linkedin.com/in/gdtsitlauri/" target="_blank" rel="noopener noreferrer" class="ci ci-linkedin reveal" aria-label="Open George David Tsitlauri LinkedIn profile">
-      <i class="fab fa-linkedin-in"></i>
-      <span>LinkedIn</span>
-    </a>
-  </div>
-</section>
+</main>
 
 <footer>
   <a href="#home" class="footer-top-btn">
@@ -1989,39 +2072,103 @@ footer span {
 </footer>
 
 <script>
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const animatedSections = document.querySelectorAll('.section-anim');
+const revealElements = document.querySelectorAll('.reveal');
 
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('in-view');
-    }
+if ('IntersectionObserver' in window && !prefersReducedMotion) {
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        sectionObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0,
+    rootMargin: '0px 0px -10% 0px'
   });
-}, {
-  threshold: 0,
-  rootMargin: '0px 0px -10% 0px'
+
+  animatedSections.forEach((section) => {
+    sectionObserver.observe(section);
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
+        const siblings = Array.from(entry.target.parentElement.children)
+          .filter((el) => el.classList.contains('reveal'));
+        const index = siblings.indexOf(entry.target);
+
+        window.setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, Math.max(0, index) * 70);
+
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0,
+    rootMargin: '0px 0px -8% 0px'
+  });
+
+  revealElements.forEach((el) => {
+    revealObserver.observe(el);
+  });
+} else {
+  animatedSections.forEach((section) => section.classList.add('in-view'));
+  revealElements.forEach((el) => el.classList.add('visible'));
+}
+
+const visibleResearchProjects = new Set([
+  'Crypto3DStackCPU',
+  'CUDA-zkML',
+  'PATV-X',
+  'ODYSSEY',
+  'KRONOS',
+  'NOUS',
+  'ATLAS',
+  'ASCLEPIUS',
+  'OLYMPUS',
+  'GATE-6G'
+]);
+
+document.querySelectorAll('#researches .research-grid .pc').forEach((card) => {
+  const name = card.querySelector('h3')?.textContent.trim();
+  if (!visibleResearchProjects.has(name)) {
+    card.classList.add('project-hidden');
+  }
 });
 
-animatedSections.forEach((section) => {
-  sectionObserver.observe(section);
+const visibleAcademicProjects = new Set([
+  'CryptoCPU (BSc Thesis)',
+  'CCC IR Optimizer',
+  'GPBFT Consensus Protocol',
+  'NEXUS',
+  'Weather App Autoscaler'
+]);
+
+document.querySelectorAll('#projects .project-grid:not(.project-grid-web) .pc').forEach((card) => {
+  const name = card.querySelector('h3')?.textContent.trim();
+  if (!visibleAcademicProjects.has(name)) {
+    card.classList.add('project-hidden');
+  }
 });
 
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
-      const siblings = Array.from(entry.target.parentElement.children)
-        .filter((el) => el.classList.contains('reveal'));
-      const index = siblings.indexOf(entry.target);
+/*
+ * Keep the whole project card clickable with a pointer, while leaving keyboard
+ * semantics to the real <a> element inside the card. This avoids nested
+ * interactive roles and duplicate tab stops.
+ */
+document.querySelectorAll('.pc').forEach((card) => {
+  const projectLink = card.querySelector('.pl');
+  if (!projectLink) return;
 
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, index * 70);
-    }
+  card.addEventListener('click', (event) => {
+    if (event.target.closest('a')) return;
+    window.open(projectLink.href, '_blank', 'noopener,noreferrer');
   });
-}, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
-
-document.querySelectorAll('.reveal').forEach((el) => {
-  revealObserver.observe(el);
 });
 
 const nav = document.querySelector('nav');
@@ -2033,20 +2180,27 @@ function hideLoader(delay = 0) {
 
   loaderHidden = true;
   const bar = document.querySelector('.loader-bar-fill');
+
   if (bar) {
     bar.style.animation = 'none';
     bar.style.transition = 'transform 0.3s ease-out';
+
     requestAnimationFrame(() => {
       bar.style.transform = 'scaleX(1)';
     });
   }
+
   window.setTimeout(() => {
     loader.classList.add('hide');
   }, delay + 350);
 }
 
-
 function smoothScrollTo(targetY, duration = 900) {
+  if (prefersReducedMotion) {
+    window.scrollTo(0, targetY);
+    return;
+  }
+
   const startY = window.pageYOffset;
   const distance = targetY - startY;
   const startTime = performance.now();
@@ -2076,48 +2230,46 @@ function revealTargetSection(target) {
   target.classList.add('in-view');
 
   target.querySelectorAll('.reveal').forEach((el, i) => {
-    setTimeout(() => {
+    if (prefersReducedMotion) {
+      el.classList.add('visible');
+      return;
+    }
+
+    window.setTimeout(() => {
       el.classList.add('visible');
     }, i * 50);
   });
 }
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener('click', function(e) {
+  link.addEventListener('click', function (event) {
     const targetId = this.getAttribute('href');
+    if (!targetId || targetId === '#') return;
+
     const target = document.querySelector(targetId);
     if (!target) return;
 
-    e.preventDefault();
+    event.preventDefault();
 
     const navHeight = nav ? nav.offsetHeight : 0;
     const targetPosition = Math.max(
       target.getBoundingClientRect().top + window.pageYOffset - navHeight - 10,
-      0 
+      0
     );
 
     const isMobile = window.matchMedia('(max-width: 820px), (pointer: coarse)').matches;
 
     revealTargetSection(target);
-
-    if (isMobile) {
-      smoothScrollTo(targetPosition, 1400);
-
-      requestAnimationFrame(() => revealTargetSection(target));
-      setTimeout(() => revealTargetSection(target), 180);
-      setTimeout(() => revealTargetSection(target), 340);
-    } else {
-      smoothScrollTo(targetPosition, 900);
-    }
+    smoothScrollTo(targetPosition, isMobile ? 1400 : 900);
   });
 });
 
-window.addEventListener('chip3d-ready', function() {
+window.addEventListener('chip3d-ready', () => {
   hideLoader(220);
 });
 
-window.addEventListener('load', function() {
-  setTimeout(() => hideLoader(), 4000);
+window.addEventListener('load', () => {
+  window.setTimeout(() => hideLoader(), 4000);
 });
 </script>
 
@@ -2127,7 +2279,9 @@ window.addEventListener('load', function() {
     '(hover: hover) and (pointer: fine) and (min-width: 821px)'
   ).matches;
 
-  if (!isDesktopSmooth) return;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!isDesktopSmooth || prefersReducedMotion) return;
 
   let current = window.scrollY;
   let target = window.scrollY;
@@ -2188,6 +2342,14 @@ window.addEventListener('load', function() {
   }, { passive: false });
 
   window.addEventListener('keydown', (e) => {
+    const activeElement = document.activeElement;
+    if (
+      activeElement &&
+      activeElement.matches('input, textarea, select, button, [contenteditable="true"]')
+    ) {
+      return;
+    }
+
     updateMaxScroll();
     const step = window.innerHeight * 0.85;
 
@@ -2237,8 +2399,8 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 const canvas = document.getElementById('chip3d');
 if (!canvas) return;
 
-canvas.title = '';
-canvas.setAttribute('aria-label', 'Crypto3DStackCPU 3D secure-memory stack visualization');
+canvas.title = 'Click or press Enter/Space to toggle the exploded view';
+const prefersReducedMotion3D = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (document.fonts) {
   try {
@@ -2253,16 +2415,16 @@ const isMobile = window.matchMedia('(max-width: 820px), (pointer: coarse)').matc
 const deviceDPR = Math.max(1, window.devicePixelRatio || 1);
 
 const quality = isMobile ? {
-  tex: 2048,
+  tex: 1024,
   minDPR: 0.75,
   startDPR: Math.min(Math.max(deviceDPR * 0.9, 1.0), 1.8),
   maxDPR: 2.2,
   maxRenderEdge: 1080,
   targetFpsCap: 60
 } : {
-  tex: 4096,
+  tex: 2048,
   minDPR: 1.0,
-  startDPR: Math.min(Math.max(deviceDPR, 1.5), 2.5),
+  startDPR: Math.min(Math.max(deviceDPR, 1.25), 2.5),
   maxDPR: 3.5,
   maxRenderEdge: 1920,
   targetFpsCap: 144
@@ -3196,7 +3358,7 @@ controls.dampingFactor = 0.065;
 controls.enablePan = false;
 controls.enableZoom = false;
 controls.enableRotate = true;
-controls.autoRotate = true;
+controls.autoRotate = !prefersReducedMotion3D;
 controls.autoRotateSpeed = 0.44;
 controls.target.set(0, 0.22, 0);
 controls.minPolarAngle = 0;
@@ -3209,8 +3371,14 @@ let pointerStart = null;
 
 function toggleExplode() {
   explodeTarget = explodeTarget > 0.5 ? 0 : 1;
-
+  canvas.setAttribute('aria-pressed', explodeTarget > 0.5 ? 'true' : 'false');
 }
+
+canvas.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  event.preventDefault();
+  toggleExplode();
+});
 
 canvas.addEventListener('pointerdown', (e) => {
   pointerStart = {
@@ -3276,12 +3444,12 @@ function applyRendererSize(force = false) {
 
   adaptive.currentDPR = THREE.MathUtils.clamp(adaptive.currentDPR, adaptive.minDPR, adaptive.maxDPR);
 
-  const screenDPR = Math.max(1, window.devicePixelRatio || 1);
-  const visualZoom = (window.visualViewport && window.visualViewport.scale > 0)
-    ? window.visualViewport.scale : 1;
-  const liveDPR = Math.max(1, screenDPR * visualZoom);
   const maxEdge = Math.max(cssW, cssH);
-  const effectiveDPR = Math.min(adaptive.currentDPR * liveDPR, quality.maxRenderEdge / maxEdge);
+  const maxDPRForEdge = quality.maxRenderEdge / maxEdge;
+  const effectiveDPR = Math.max(
+    0.5,
+    Math.min(adaptive.currentDPR, maxDPRForEdge)
+  );
 
   const expectedW = Math.max(1, Math.round(cssW * effectiveDPR));
   const expectedH = Math.max(1, Math.round(cssH * effectiveDPR));
@@ -3347,9 +3515,23 @@ window.addEventListener('resize', () => {
 }, { passive: true });
 
 (function watchDPR() {
-  const mq = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+  const currentDPR = Math.max(1, window.devicePixelRatio || 1);
+  const mq = window.matchMedia(`(resolution: ${currentDPR}dppx)`);
+
   mq.addEventListener('change', function handler() {
     mq.removeEventListener('change', handler);
+
+    const nextDeviceDPR = Math.max(1, window.devicePixelRatio || 1);
+    const preferredDPR = isMobile
+      ? Math.min(Math.max(nextDeviceDPR * 0.9, 1.0), 1.8)
+      : Math.min(Math.max(nextDeviceDPR, 1.25), 2.5);
+
+    adaptive.currentDPR = THREE.MathUtils.clamp(
+      preferredDPR,
+      adaptive.minDPR,
+      adaptive.maxDPR
+    );
+
     scheduleResize(true);
     watchDPR();
   });
@@ -3357,14 +3539,11 @@ window.addEventListener('resize', () => {
 
 if (window.visualViewport) {
   let vpDebounce;
-  window.visualViewport.addEventListener('scale', () => {
-    clearTimeout(vpDebounce);
-    vpDebounce = setTimeout(() => scheduleResize(true), 60);
-  });
+
   window.visualViewport.addEventListener('resize', () => {
     clearTimeout(vpDebounce);
     vpDebounce = setTimeout(() => scheduleResize(true), 60);
-  });
+  }, { passive: true });
 }
 
 const clock = new THREE.Clock();
@@ -3397,8 +3576,13 @@ function animate(now = performance.now()) {
 
   updateExplodedStack();
 
-  chipRoot.rotation.x = baseRotX + Math.sin(t * 0.70) * 0.004;
-  chipRoot.rotation.z = baseRotZ + Math.sin(t * 0.43) * 0.0023;
+  if (prefersReducedMotion3D) {
+    chipRoot.rotation.x = baseRotX;
+    chipRoot.rotation.z = baseRotZ;
+  } else {
+    chipRoot.rotation.x = baseRotX + Math.sin(t * 0.70) * 0.004;
+    chipRoot.rotation.z = baseRotZ + Math.sin(t * 0.43) * 0.0023;
+  }
 
   controls.update();
   renderer.render(scene, camera);
