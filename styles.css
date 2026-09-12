@@ -77,7 +77,7 @@ body::before {
   background-color: var(--navy);
 }
 
-@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine) {
   .safari-tint {
     display: none;
   }
@@ -1043,15 +1043,15 @@ footer {
   }
 }
 
-/* ── FIXED INTRO / DESKTOP ── */
-@media (min-width: 901px) and (min-height: 620px) and (hover: hover) and (pointer: fine) {
-  /* Fixed two-column desktop composition. Only enabled when the viewport is tall enough. */
-  .hero-text .hero-photo,
-  .hero h1 {
-    transform: translateY(12px);
-  }
+/* ── FIXED INTRO / DESKTOP ────────────────────────────────────────────────
+   Keep the split desktop composition only while the CSS viewport still has
+   enough room. On a typical 1920×1080 desktop this keeps 100–125% browser
+   zoom in desktop mode. The next common zoom step (150%) drops below the
+   height threshold and reflows to the mobile-style hero automatically.
 
-  /* The intro is fixed and completely removed from the right-column document flow. */
+   CSS cannot read the browser's zoom percentage directly, so this uses the
+   space that actually matters to layout: the CSS viewport width + height. */
+@media (min-width: 1200px) and (min-height: 760px) and (hover: hover) and (pointer: fine) {
   .hero {
     width: 0;
     height: 0;
@@ -1064,41 +1064,50 @@ footer {
 
   .hero-text {
     position: fixed;
-    top: clamp(88px, 11vh, 122px);
-    bottom: clamp(26px, 4vh, 46px);
+    top: clamp(62px, 8.5vh, 100px);
+    bottom: clamp(22px, 3vh, 34px);
     left: clamp(42px, 5vw, 86px);
     z-index: 20;
     width: min(35vw, 520px);
-    transform: none;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    overflow: visible;
+    transform: none;
   }
 
-  /* Profile image now sits above the name inside the fixed panel. */
+  .hero-text .hero-photo,
+  .hero h1 {
+    transform: none;
+  }
+
   .hero-text .hero-photo {
     order: initial;
-    margin: 0 0 18px 0;
+    flex: 0 0 auto;
+    margin: 0 0 clamp(10px, 1.3vh, 16px);
     animation: fadeUp .75s .05s ease both;
   }
 
   .hero-text .photo-wrap {
-    width: clamp(160px, 14vw, 215px);
-    height: clamp(160px, 14vw, 215px);
+    width: clamp(160px, 20vh, 210px);
+    height: clamp(160px, 20vh, 210px);
   }
 
   .hero h1 {
+    flex: 0 0 auto;
     margin-top: 0;
-    margin-bottom: 14px;
-    font-size: clamp(2.5rem, 3.6vw, 3.8rem);
+    margin-bottom: clamp(8px, 1.1vh, 13px);
+    font-size: clamp(2.45rem, 4.8vh, 3.6rem);
   }
 
   .hero-tag-row {
-    margin-bottom: 8px;
+    flex: 0 0 auto;
+    margin-bottom: clamp(5px, .8vh, 9px);
   }
 
   .hero-tag {
-    transform: translateY(6px);
+    transform: none;
   }
 
   .hero h1,
@@ -1111,26 +1120,27 @@ footer {
   }
 
   #chip3d {
-    width: clamp(180px, 17vw, 235px);
-    height: clamp(180px, 17vw, 235px);
-    transform: translateX(-22px);
-    margin-top: 4px;
+    width: clamp(150px, 18vh, 195px);
+    height: clamp(150px, 18vh, 195px);
+    margin-top: 0;
+    flex: 0 0 auto;
+    transform: translateX(-14px);
   }
 
+  /* The bottom block stays anchored. Free space is inserted above it, not
+     below it, so the message + contact buttons remain bottom-left. */
   .hero-sub {
-    margin-top: 2px;
+    flex: 0 0 auto;
+    margin-top: auto;
     margin-bottom: 0;
   }
 
-  /* Keep the contact buttons directly below the subtitle.
-     Avoid bottom anchoring: browser zoom and desktop taskbars can otherwise
-     cover the buttons even when the layout viewport still reports space. */
   .fixed-contact {
-    margin-top: clamp(10px, 1.8vh, 18px);
+    flex: 0 0 auto;
+    margin-top: 14px;
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
-  /* The right side starts immediately with About Me. */
   #main-content > section:not(.hero) {
     width: auto;
     max-width: none;
@@ -1150,8 +1160,6 @@ footer {
     padding-right: 3.5vw;
   }
 
-  /* Keep dense grids readable inside the right-hand scrolling column. */
-
   #websites .project-grid-web {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: none;
@@ -1165,10 +1173,10 @@ footer {
     grid-column: span 6;
   }
 
-  /* Wider final About card. */
   .about-grid > .acard:last-child {
     width: 72%;
   }
+
   #websites .project-grid-web > .pc:last-child {
     grid-column: 1 / -1;
     width: auto;
@@ -1184,180 +1192,53 @@ footer {
   }
 }
 
-/* Height-aware desktop compaction.
-   Browser zoom reduces the CSS viewport height. Instead of letting the fixed
-   intro drift into the taskbar/browser chrome, progressively pull the whole
-   composition upward and reduce only the large visual elements. */
-@media (min-width: 901px) and (min-height: 680px) and (max-height: 900px) and (hover: hover) and (pointer: fine) {
+/* 125%-ish desktop height: compact only the upper stack enough to preserve
+   breathing room above the bottom-left message and icons. */
+@media (min-width: 1200px) and (min-height: 760px) and (max-height: 900px) and (hover: hover) and (pointer: fine) {
   .hero-text {
-    top: clamp(8px, 1.8vh, 16px);
-    bottom: auto;
-    max-height: calc(100dvh - 16px);
-  }
-
-  /* Cancel the normal desktop downward offset in short/zoomed viewports. */
-  .hero-text .hero-photo,
-  .hero h1 {
-    transform: none;
+    top: clamp(36px, 5.5vh, 52px);
+    bottom: 16px;
   }
 
   .hero-text .photo-wrap {
-    width: clamp(110px, 15.5vh, 150px);
-    height: clamp(110px, 15.5vh, 150px);
+    width: clamp(136px, 17.5vh, 154px);
+    height: clamp(136px, 17.5vh, 154px);
   }
 
   .hero-text .hero-photo {
-    margin-bottom: clamp(4px, .8vh, 8px);
+    margin-bottom: 7px;
   }
 
   .hero h1 {
-    font-size: clamp(1.9rem, 4.25vh, 2.7rem);
-    margin-bottom: clamp(4px, .7vh, 7px);
+    font-size: clamp(2.08rem, 4.35vh, 2.65rem);
+    margin-bottom: 6px;
   }
 
   .hero-tag-row {
-    margin-bottom: clamp(2px, .5vh, 5px);
-  }
-
-  .hero-tag {
-    font-size: clamp(.64rem, 1.28vh, .75rem);
-    padding: 4px 10px;
-    letter-spacing: .10em;
-    transform: none;
-  }
-
-  #chip3d {
-    width: clamp(108px, 15.5vh, 150px);
-    height: clamp(108px, 15.5vh, 150px);
-    margin-top: 0;
-    transform: translateX(-10px);
-  }
-
-  .hero-sub {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: clamp(.86rem, 1.75vh, .98rem);
-    line-height: 1.35;
-  }
-
-  .fixed-contact {
-    margin-top: clamp(6px, 1vh, 10px);
-    gap: clamp(8px, 1vw, 12px);
-    padding-bottom: 0;
-    flex-shrink: 0;
-  }
-
-  .fixed-contact a {
-    width: clamp(30px, 4vh, 34px);
-    height: clamp(30px, 4vh, 34px);
-    font-size: clamp(.86rem, 1.7vh, .98rem);
-  }
-}
-
-/* 125% zoom on a typical 1080p desktop commonly lands in this height band.
-   Compact a little more and use the freed space at the top for the contact row. */
-@media (min-width: 901px) and (min-height: 680px) and (max-height: 800px) and (hover: hover) and (pointer: fine) {
-  .hero-text {
-    top: 6px;
-  }
-
-  .hero-text .photo-wrap {
-    width: clamp(104px, 14.5vh, 128px);
-    height: clamp(104px, 14.5vh, 128px);
-  }
-
-  .hero-text .hero-photo {
     margin-bottom: 3px;
   }
 
-  .hero h1 {
-    font-size: clamp(1.82rem, 4vh, 2.35rem);
-    margin-bottom: 3px;
-  }
-
-  .hero-tag-row {
-    margin-bottom: 1px;
-  }
-
   .hero-tag {
-    font-size: clamp(.62rem, 1.22vh, .70rem);
-    padding: 4px 9px;
+    font-size: .72rem;
+    padding: 5px 10px;
+    letter-spacing: .1em;
   }
 
   #chip3d {
-    width: clamp(102px, 14.5vh, 128px);
-    height: clamp(102px, 14.5vh, 128px);
+    width: clamp(116px, 14.5vh, 132px);
+    height: clamp(116px, 14.5vh, 132px);
     transform: translateX(-8px);
   }
-
-  .hero-sub {
-    font-size: clamp(.84rem, 1.65vh, .94rem);
-  }
-
-  .fixed-contact {
-    margin-top: 5px;
-    gap: 8px;
-  }
-
-  .fixed-contact a {
-    width: 30px;
-    height: 30px;
-    font-size: .86rem;
-  }
 }
 
-/* Last fixed-panel step before we switch to normal document flow. */
-@media (min-width: 901px) and (min-height: 680px) and (max-height: 720px) and (hover: hover) and (pointer: fine) {
-  .hero-text {
-    top: 4px;
-  }
-
-  .hero-text .photo-wrap {
-    width: 98px;
-    height: 98px;
-  }
-
-  .hero-text .hero-photo {
-    margin-bottom: 2px;
-  }
-
-  .hero h1 {
-    font-size: 1.78rem;
-    margin-bottom: 2px;
-  }
-
-  .hero-tag {
-    font-size: .60rem;
-    padding: 3px 8px;
-  }
-
-  #chip3d {
-    width: 96px;
-    height: 96px;
-    transform: translateX(-6px);
-  }
-
-  .hero-sub {
-    font-size: .82rem;
-    line-height: 1.25;
-  }
-
-  .fixed-contact {
-    margin-top: 4px;
-    gap: 7px;
-  }
-
-  .fixed-contact a {
-    width: 29px;
-    height: 29px;
-    font-size: .82rem;
-  }
-}
-
-/* ── REFLOW / BROWSER-ZOOM SAFETY ──
-   At narrow widths OR short CSS viewports (common at 125–200% browser zoom),
-   the intro returns to document flow so nothing can be clipped off-screen. */
-@media (max-width: 900px), (max-height: 679px), (hover: none) and (pointer: coarse) {
+/* ── MOBILE-STYLE REFLOW / ZOOM SAFETY ────────────────────────────────────
+   This is deliberately the same flow used on mobile/tablet. It activates
+   when the desktop viewport becomes too small/short (for example the common
+   step after 125% zoom on a 1080p display), or whenever the device is touch-
+   first. Nothing remains fixed, so higher zoom levels can simply scroll. */
+@media (max-width: 1199px),
+       (max-height: 759px),
+       (hover: none) and (pointer: coarse) {
   .hero {
     width: auto;
     height: auto;
@@ -1367,8 +1248,7 @@ footer {
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding-top: clamp(64px, 10vh, 100px);
-    padding-bottom: clamp(48px, 8vh, 80px);
+    padding: clamp(54px, 8vh, 90px) 6% clamp(46px, 7vh, 76px);
     margin: 0 auto;
     overflow: visible;
     text-align: center;
@@ -1378,33 +1258,34 @@ footer {
     position: static;
     width: min(100%, 680px);
     min-width: 0;
-    transform: none;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: visible;
+    transform: none;
   }
 
   .hero-text .hero-photo {
     order: -1;
-    margin: 0 0 20px;
+    margin: 0 0 18px;
     transform: none;
   }
 
   .hero-text .photo-wrap {
-    width: 180px;
-    height: 180px;
+    width: clamp(150px, 24vh, 180px);
+    height: clamp(150px, 24vh, 180px);
   }
 
   .hero h1 {
-    margin: -4px -8px 14px;
+    margin: -4px -8px 12px;
     transform: none;
-    font-size: clamp(2.6rem, 7vw, 3.5rem);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
     text-align: center;
   }
 
   .hero-tag-row {
     justify-content: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .hero-tag {
@@ -1415,22 +1296,22 @@ footer {
   }
 
   #chip3d {
-    width: 190px;
-    height: 190px;
-    transform: translateY(8px);
+    width: clamp(155px, 24vh, 190px);
+    height: clamp(155px, 24vh, 190px);
     margin: 0;
     align-self: center;
+    transform: translateY(6px);
   }
 
   .hero-sub {
-    margin-top: 12px;
+    margin-top: 10px;
     margin-bottom: 0;
     text-align: center;
   }
 
   .fixed-contact {
     justify-content: center;
-    margin-top: 22px;
+    margin-top: 20px;
     padding-bottom: 0;
   }
 
@@ -1443,7 +1324,6 @@ footer {
 
   #websites .project-grid-web,
   #skills .skills-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: none;
     margin-left: 0;
     margin-right: 0;
@@ -1451,7 +1331,6 @@ footer {
 
   #websites .project-grid-web > .pc,
   #skills .skills-grid > .scat {
-    grid-column: auto !important;
     width: auto;
     justify-self: stretch;
     margin-left: 0;
@@ -1459,12 +1338,14 @@ footer {
   }
 }
 
-/* Short viewports (landscape phones or high browser zoom) use a compact intro.
-   The section remains in normal document flow, so nothing can be clipped. */
-@media (max-height: 679px) {
+/* Short reflow viewport: keep the mobile-style hierarchy compact enough to
+   fit comfortably, but allow the page to scroll instead of clipping. */
+@media (max-height: 679px), (max-width: 680px) {
   .hero {
+    min-height: 100dvh;
+    justify-content: flex-start;
     padding-top: 32px;
-    padding-bottom: 32px;
+    padding-bottom: 36px;
   }
 
   .hero-text .photo-wrap {
@@ -1477,7 +1358,7 @@ footer {
   }
 
   .hero h1 {
-    font-size: clamp(2.2rem, 4.2vw, 2.8rem);
+    font-size: clamp(2.2rem, 8vw, 2.8rem);
     margin-bottom: 7px;
   }
 
@@ -1513,18 +1394,29 @@ footer {
   }
 }
 
-
-/* Final narrow-screen overrides come last so they win over the general
-   zoom/reflow rules above. */
-@media (max-width: 680px) {
+/* True narrow layouts collapse the content grids as well. */
+@media (max-width: 820px) {
+  .about-grid,
+  #researches .research-grid,
+  #projects .project-grid-engineering,
   #websites .project-grid-web,
   #skills .skills-grid {
     grid-template-columns: 1fr;
   }
+
+  .about-grid > .acard:last-child,
+  #projects .project-grid-engineering > .project-centered,
+  #websites .project-grid-web > .pc:last-child,
+  #skills .skills-grid > .scat:last-child {
+    grid-column: auto;
+    width: 100%;
+    justify-self: stretch;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
-/* Extra-small reflow target (including 200% zoom on smaller displays). */
-@media (max-width: 420px) {
+@media (max-width: 560px) {
   section {
     padding-left: 16px;
     padding-right: 16px;
@@ -1535,15 +1427,21 @@ footer {
     padding-right: 16px;
   }
 
+  .hero-sub {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
   .hero h1 {
-    font-size: clamp(2.35rem, 12vw, 2.8rem);
+    font-size: clamp(2.25rem, 12vw, 2.75rem);
   }
 
   .hero-tag {
-    font-size: .72rem;
-    letter-spacing: .08em;
+    font-size: .70rem;
+    letter-spacing: .075em;
     line-height: 1.45;
-    padding: 6px 10px;
+    padding: 6px 9px;
   }
 
   .card {
