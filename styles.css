@@ -1,10 +1,11 @@
 html{
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: transparent;
+  background: var(--navy);
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--navy) var(--cream);
+  overscroll-behavior-y: none;
 }
 
 html,
@@ -19,12 +20,16 @@ body{
    while the full-screen loader is visible. */
 .site-background{
   position: fixed;
-  inset: 0;
+  top: -2px;
+  right: 0;
+  bottom: -160px;
+  left: 0;
   z-index: 0;
   pointer-events: none;
   background: linear-gradient(
     180deg,
     var(--cream) 0%,
+    var(--navy) calc(100% - 160px),
     var(--navy) 100%
   );
   transform: translateZ(0);
