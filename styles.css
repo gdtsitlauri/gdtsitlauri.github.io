@@ -1122,9 +1122,11 @@ footer {
     margin-bottom: 0;
   }
 
-  /* Social / CV icons are anchored to the bottom-left of the fixed intro. */
+  /* Keep the contact buttons directly below the subtitle.
+     Avoid bottom anchoring: browser zoom and desktop taskbars can otherwise
+     cover the buttons even when the layout viewport still reports space. */
   .fixed-contact {
-    margin-top: auto;
+    margin-top: clamp(10px, 1.8vh, 18px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
@@ -1182,46 +1184,114 @@ footer {
   }
 }
 
-/* Tighter composition on shorter desktop screens. */
-@media (min-width: 901px) and (min-height: 620px) and (max-height: 760px) and (hover: hover) and (pointer: fine) {
+/* Height-aware desktop compaction.
+   This catches 110–125% browser zoom on common 1080p displays while
+   preserving the fixed two-column composition and keeping every control visible. */
+@media (min-width: 901px) and (min-height: 620px) and (max-height: 900px) and (hover: hover) and (pointer: fine) {
   .hero-text {
-    top: 54px;
-    bottom: 20px;
+    top: clamp(24px, 4.5vh, 48px);
+    bottom: auto;
   }
 
   .hero-text .photo-wrap {
-    width: 136px;
-    height: 136px;
+    width: clamp(118px, 17vh, 168px);
+    height: clamp(118px, 17vh, 168px);
   }
 
   .hero-text .hero-photo {
-    margin-bottom: 10px;
+    margin-bottom: clamp(6px, 1.2vh, 10px);
   }
 
   .hero h1 {
-    font-size: clamp(2.15rem, 3.2vw, 3rem);
-    margin-bottom: 8px;
+    font-size: clamp(2rem, 4.8vh, 3rem);
+    margin-bottom: clamp(5px, 1vh, 9px);
+  }
+
+  .hero-tag-row {
+    margin-bottom: clamp(3px, .8vh, 7px);
   }
 
   .hero-tag {
-    font-size: .76rem;
-    padding: 5px 12px;
+    font-size: clamp(.68rem, 1.45vh, .78rem);
+    padding: 5px 11px;
   }
 
   #chip3d {
-    width: 165px;
-    height: 165px;
+    width: clamp(120px, 18vh, 165px);
+    height: clamp(120px, 18vh, 165px);
     margin-top: 0;
+    transform: translateX(-14px);
   }
 
   .hero-sub {
     margin-top: 0;
-    font-size: 1rem;
+    font-size: clamp(.9rem, 1.9vh, 1rem);
+    line-height: 1.45;
+  }
+
+  .fixed-contact {
+    margin-top: clamp(7px, 1.4vh, 12px);
+    gap: clamp(9px, 1.4vw, 14px);
   }
 
   .fixed-contact a {
-    width: 36px;
-    height: 36px;
+    width: clamp(32px, 4.6vh, 36px);
+    height: clamp(32px, 4.6vh, 36px);
+    font-size: clamp(.92rem, 2vh, 1rem);
+  }
+}
+
+/* Extra compression for the small band where width still permits the
+   two-column desktop layout but browser zoom has made the viewport very short. */
+@media (min-width: 901px) and (min-height: 620px) and (max-height: 700px) and (hover: hover) and (pointer: fine) {
+  .hero-text {
+    top: 18px;
+  }
+
+  .hero-text .photo-wrap {
+    width: 106px;
+    height: 106px;
+  }
+
+  .hero-text .hero-photo {
+    margin-bottom: 5px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    margin-bottom: 4px;
+  }
+
+  .hero-tag {
+    font-size: .66rem;
+    padding: 4px 9px;
+    letter-spacing: .10em;
+  }
+
+  .hero-tag-row {
+    margin-bottom: 2px;
+  }
+
+  #chip3d {
+    width: 112px;
+    height: 112px;
+    transform: translateX(-10px);
+  }
+
+  .hero-sub {
+    font-size: .88rem;
+    line-height: 1.35;
+  }
+
+  .fixed-contact {
+    margin-top: 6px;
+    gap: 9px;
+  }
+
+  .fixed-contact a {
+    width: 31px;
+    height: 31px;
+    font-size: .9rem;
   }
 }
 
