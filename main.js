@@ -62,6 +62,27 @@ document.querySelectorAll('.pc').forEach((card) => {
   });
 });
 
+// Footer button: scroll to top without adding #home to the URL
+const footerTopButton = document.querySelector('.footer-top-btn');
+
+if (footerTopButton) {
+  footerTopButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth'
+    });
+
+    history.replaceState(
+      null,
+      '',
+      window.location.pathname + window.location.search
+    );
+  });
+}
+
 const loader = document.getElementById('site-loader');
 let loaderHidden = false;
 
