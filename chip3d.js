@@ -8,6 +8,8 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   if (!canvas) return;
 
   canvas.title = 'Drag to rotate. Click/tap or press Enter/Space to toggle the exploded view';
+
+  /* ── FONT / DEVICE PROFILE ── */
   const prefersReducedMotion3D = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (document.fonts) {
@@ -41,6 +43,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     adaptiveFpsCap: 144
   };
 
+  /* ── RENDERER / SCENE ── */
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
@@ -140,6 +143,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const maxSupportedTex = renderer.capabilities.maxTextureSize || quality.tex;
   const textureSize = Math.min(quality.tex, maxSupportedTex);
 
+  /* ── PROCEDURAL TEXTURE HELPERS ── */
   function makeCanvasTexture(draw, size = textureSize) {
     const c = document.createElement('canvas');
     c.width = size;
@@ -556,6 +560,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     });
   }
 
+  /* ── TEXTURE GENERATION ── */
   const yieldUI = () => new Promise((resolve) => setTimeout(resolve, 0));
 
   const texSubstrate = substrateTexture();
@@ -672,6 +677,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const texLid = topLidTexture();
   await yieldUI();
 
+  /* ── 3D MODEL CONSTRUCTION ── */
   function makeLayer({
     name,
     width,
@@ -726,7 +732,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   function makePart({
     name,
     baseY,
-    height,
     explodeOffset = 0,
     mesh,
     driftX = 0,
@@ -743,7 +748,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
       name,
       group,
       baseY,
-      height,
       explodeOffset,
       driftX,
       driftZ,
@@ -763,7 +767,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const substratePart = makePart({
     name: 'fixed package substrate',
     baseY: 0.000,
-    height: 0.22,
     mesh: makeLayer({
       name: 'light ceramic organic package substrate',
       width: 6.25,
@@ -783,7 +786,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const logicPart = makePart({
     name: 'fixed secure CPU logic die',
     baseY: 0.160,
-    height: 0.060,
     mesh: makeLayer({
       name: 'secure CPU and cryptographic logic die',
       width: 4.78,
@@ -803,7 +805,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const bridgePart = makePart({
     name: 'fixed RTL TSV memory bridge',
     baseY: 0.207,
-    height: 0.042,
     mesh: makeLayer({
       name: 'silicon interposer redistribution bridge',
       width: 4.70,
@@ -823,7 +824,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const l0Part = makePart({
     name: 'unfolding L0 encrypted instruction text layer',
     baseY: 0.249,
-    height: 0.040,
     explodeOffset: 0.58,
     driftX: -0.010,
     driftZ: -0.018,
@@ -847,7 +847,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const l1Part = makePart({
     name: 'unfolding L1 encrypted data layer',
     baseY: 0.291,
-    height: 0.040,
     explodeOffset: 1.02,
     driftX: 0.015,
     driftZ: 0.012,
@@ -871,7 +870,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const l2Part = makePart({
     name: 'unfolding L2 key metadata layer',
     baseY: 0.333,
-    height: 0.040,
     explodeOffset: 1.46,
     driftX: -0.012,
     driftZ: 0.018,
@@ -895,7 +893,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const l3Part = makePart({
     name: 'unfolding L3 tamper sentinel redundancy layer',
     baseY: 0.375,
-    height: 0.040,
     explodeOffset: 1.90,
     driftX: 0.014,
     driftZ: -0.012,
@@ -919,7 +916,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   const lidPart = makePart({
     name: 'CPU-style engraved lid',
     baseY: 0.443,
-    height: 0.080,
     explodeOffset: 2.28,
     isLid: true,
     mesh: makeLayer({
@@ -955,6 +951,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   chipRoot.rotation.y = 0.76;
   chipRoot.rotation.z = baseRotZ;
 
+  /* ── INTERACTION / EXPLODED VIEW ── */
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.065;
@@ -1040,6 +1037,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     controls.autoRotateSpeed = THREE.MathUtils.lerp(0.44, 0.26, e);
   }
 
+  /* ── RESPONSIVE RENDERING / ADAPTIVE DPR ── */
   function applyRendererSize(force = false) {
     const r = canvas.getBoundingClientRect();
     const cssW = Math.max(64, Math.round(r.width || 160));
@@ -1149,6 +1147,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     }, { passive: true });
   }
 
+  /* ── RENDER LOOP / VISIBILITY ── */
   const clock = new THREE.Clock();
 
   let running = true;

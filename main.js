@@ -59,12 +59,11 @@ document.querySelectorAll('.pc').forEach((card) => {
 });
 
 /* ── FOOTER: BACK TO TOP ──
-   Keep href="#home" as a no-JS fallback, but do not leave #home in the URL. */
-const footerTopButton = document.querySelector('.footer-top-btn[href="#home"]');
+   The footer control is now a <button>, so no URL preview/hash is exposed.
+   Keep the same smooth scroll-to-top behavior. */
+const footerTopButton = document.querySelector('.footer-top-btn');
 
-footerTopButton?.addEventListener('click', (event) => {
-  event.preventDefault();
-
+footerTopButton?.addEventListener('click', () => {
   window.scrollTo({
     top: 0,
     left: 0,
