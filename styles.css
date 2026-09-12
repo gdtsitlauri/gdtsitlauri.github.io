@@ -1,10 +1,32 @@
+:root{
+  --cream: #E6E1CF;
+  --navy: #082660;
+  --text: #ffffff;
+
+  /* One shared background definition for the whole site + loader. */
+  --site-background: linear-gradient(
+    180deg,
+    var(--cream) 0%,
+    var(--navy) 82%,
+    var(--navy) 100%
+  );
+
+  --card-bg: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.055) 0%,
+    rgba(255,255,255,0.022) 42%,
+    rgba(0,116,255,0.032) 100%
+  );
+}
+
 html{
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: transparent;
+  background: var(--cream);
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--navy) var(--cream);
+  overscroll-behavior-y: none;
 }
 
 html,
@@ -19,14 +41,13 @@ body{
    while the full-screen loader is visible. */
 .site-background{
   position: fixed;
-  inset: 0;
+  top: -2px;
+  right: 0;
+  bottom: -160px;
+  left: 0;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    var(--cream) 0%,
-    var(--navy) 100%
-  );
+  background: var(--site-background);
   transform: translateZ(0);
 }
 
@@ -37,13 +58,6 @@ footer{
   z-index: 1;
 }
 
-
-:root{
-  --cream: #E6E1CF;
-  --navy: #082660;
-  --text: #ffffff;
-  --card-bg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
-}
 
 *,
 *::before,
@@ -67,22 +81,6 @@ body{
   background: transparent;
 }
 
-@media (max-width: 900px) {
-  @supports (-webkit-touch-callout: none) {
-    .safari-top-tint{
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: max(env(safe-area-inset-top, 0px), 1px);
-      background: var(--cream);
-      pointer-events: none;
-      z-index: 2;
-    }
-  }
-}
-
 section{
   position: relative;
   z-index: 1;
@@ -99,7 +97,7 @@ section{
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, var(--cream) 0%, var(--navy) 100%);
+  background: var(--site-background);
   transition: opacity .5s ease, visibility .5s ease;
 }
 
