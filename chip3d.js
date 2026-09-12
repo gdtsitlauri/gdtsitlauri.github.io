@@ -35,11 +35,11 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     maxRenderEdge: 1080,
     adaptiveFpsCap: 60
   } : {
-    tex: 2048,
+    tex: 1024,
     minDPR: 1.0,
     startDPR: Math.min(Math.max(deviceDPR, 1.25), 2.5),
     maxDPR: 3.5,
-    maxRenderEdge: 1920,
+    maxRenderEdge: 1280,
     adaptiveFpsCap: 144
   };
 
@@ -953,7 +953,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
   /* ── INTERACTION / EXPLODED VIEW ── */
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
+  controls.enableDamping = !prefersReducedMotion3D;
   controls.dampingFactor = 0.065;
   controls.enablePan = false;
   controls.enableZoom = false;
@@ -971,6 +971,11 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
   function toggleExplode() {
     explodeTarget = explodeTarget > 0.5 ? 0 : 1;
+
+    if (prefersReducedMotion3D) {
+      explodeValue = explodeTarget;
+    }
+
     canvas.setAttribute('aria-pressed', explodeTarget > 0.5 ? 'true' : 'false');
   }
 

@@ -236,6 +236,7 @@ section {
 
 #chip3d.ready {
   opacity: 1;
+  will-change: auto;
 }
 
 .hero-tag {
@@ -278,7 +279,6 @@ section {
   display: inline-block;
   padding: 2px 8px 10px;
   margin: -2px -8px -10px;
-  -webkit-text-fill-color: #ffffff;
   color: #ffffff;
 }
 
@@ -362,7 +362,6 @@ section {
   padding: 0 5px 6px;
   margin: 0 -5px;
   color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
 }
 
 /* ── CARDS ── */
@@ -438,7 +437,7 @@ section {
   justify-content: center;
   background: transparent;
   border: none;
-  transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1);
 }
 
 .aico {
@@ -447,7 +446,6 @@ section {
   border-radius: 14px;
   font-size: 1.1rem;
   flex-shrink: 0;
-  background: transparent;
 }
 
 .aico i {
@@ -583,7 +581,6 @@ section {
   height: 46px;
   border-radius: 14px;
   font-size: 1.1rem;
-  color: transparent;
 }
 
 .pico i {
@@ -594,7 +591,7 @@ section {
   color: var(--text);
   font-size: .92rem;
   text-decoration: none;
-  transition: transform .3s cubic-bezier(.34,1.56,.64,1), color .2s;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -689,10 +686,7 @@ section {
 }
 
 .scat h3 i {
-  background: none !important;
-  -webkit-text-fill-color: var(--text) !important;
   color: var(--text);
-  transition: opacity .25s;
 }
 
 .pill {
@@ -703,7 +697,7 @@ section {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
   color: var(--text);
-  transition: background .25s, border-color .25s, color .25s, transform .3s cubic-bezier(.34,1.56,.64,1);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
   cursor: default;
 }
 
@@ -763,7 +757,6 @@ footer {
   padding: 36px 6% calc(36px + env(safe-area-inset-bottom, 0px));
   color: var(--text);
   font-size: .82rem;
-  border-top: none;
   position: relative;
   z-index: 1;
 }
@@ -776,7 +769,6 @@ footer {
   padding: 0;
   margin: 0;
   color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
 }
 
 /* ── ANIMATIONS ── */
@@ -836,19 +828,19 @@ footer {
   position: relative;
   display: inline-flex;
   border: 0;
+  -webkit-appearance: none;
+  appearance: none;
   font: inherit;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   gap: 0;
   padding: 14px 22px 13px;
-  text-decoration: none;
   color: var(--text);
   background: transparent;
   font-size: .88rem;
   font-weight: 400;
-  transition: transform .25s ease, color .25s ease, opacity .25s ease;
-  isolation: isolate;
+  transition: transform .25s ease;
   border-radius: 10px;
   white-space: nowrap;
 }
@@ -890,7 +882,6 @@ footer {
 
   .footer-top-btn:hover {
     transform: translateY(-2px);
-    color: var(--text);
   }
 }
 
@@ -902,7 +893,6 @@ footer {
 
   .footer-top-btn:active {
     transform: translateY(-2px);
-    color: var(--text);
   }
 }
 
@@ -1179,7 +1169,10 @@ footer {
     justify-content: center;
 
     gap: 0;
-    padding: clamp(54px, 8vh, 90px) 6% clamp(46px, 7vh, 76px);
+    padding:
+      calc(clamp(54px, 8vh, 90px) + env(safe-area-inset-top, 0px))
+      6%
+      calc(clamp(46px, 7vh, 76px) + env(safe-area-inset-bottom, 0px));
     margin: 0 auto;
 
     overflow: visible;
@@ -1271,8 +1264,8 @@ footer {
   .hero {
     min-height: 100dvh;
     justify-content: flex-start;
-    padding-top: 32px;
-    padding-bottom: 36px;
+    padding-top: calc(32px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(36px + env(safe-area-inset-bottom, 0px));
   }
 
   .hero-text .hero-photo {

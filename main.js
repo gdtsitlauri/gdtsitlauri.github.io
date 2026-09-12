@@ -63,12 +63,16 @@ document.querySelectorAll('.pc').forEach((card) => {
    Keep the same smooth scroll-to-top behavior. */
 const footerTopButton = document.querySelector('.footer-top-btn');
 
-footerTopButton?.addEventListener('click', () => {
+footerTopButton?.addEventListener('click', (event) => {
   window.scrollTo({
     top: 0,
     left: 0,
     behavior: prefersReducedMotion ? 'auto' : 'smooth'
   });
+
+  if (event.detail === 0) {
+    document.getElementById('main-content')?.focus({ preventScroll: true });
+  }
 
   if (window.location.hash) {
     history.replaceState(
@@ -105,20 +109,22 @@ function hideLoader(delay = 0) {
     });
   }
 
+  const settleDelay = prefersReducedMotion ? 0 : delay + 350;
+  const cleanupDelay = prefersReducedMotion ? 0 : 550;
+
   window.setTimeout(() => {
     loader.classList.add('hide');
 
     // Remove the fixed full-screen layer after its fade. This also keeps
     // Safari's browser-chrome color sampling from seeing an invisible overlay.
-    window.setTimeout(() => loader.remove(), 550);
-  }, delay + 350);
+    window.setTimeout(() => loader.remove(), cleanupDelay);
+  }, settleDelay);
 }
+
+// Never let a slow/failed external 3D dependency keep the full-screen loader
+// blocking the portfolio indefinitely.
+loaderFallbackTimer = window.setTimeout(() => hideLoader(), 6000);
 
 window.addEventListener('chip3d-ready', () => {
   hideLoader(220);
-}, { once: true });
-
-window.addEventListener('load', () => {
-  if (loaderHidden) return;
-  loaderFallbackTimer = window.setTimeout(() => hideLoader(), 4000);
 }, { once: true });
