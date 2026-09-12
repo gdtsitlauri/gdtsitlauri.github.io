@@ -1,28 +1,7 @@
-:root{
-  --cream: #E6E1CF;
-  --navy: #082660;
-  --text: #ffffff;
-
-  /* One shared background definition for the whole site + loader. */
-  --site-background: linear-gradient(
-    180deg,
-    var(--cream) 0%,
-    var(--navy) 82%,
-    var(--navy) 100%
-  );
-
-  --card-bg: linear-gradient(
-    135deg,
-    rgba(255,255,255,0.055) 0%,
-    rgba(255,255,255,0.022) 42%,
-    rgba(0,116,255,0.032) 100%
-  );
-}
-
 html{
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: var(--cream);
+  background: var(--navy);
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--navy) var(--cream);
@@ -41,15 +20,31 @@ body{
    while the full-screen loader is visible. */
 .site-background{
   position: fixed;
-  top: -2px;
-  right: 0;
-  bottom: -160px;
-  left: 0;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: var(--site-background);
+  background: linear-gradient(
+    180deg,
+    var(--cream) 0%,
+    var(--navy) 100%
+  );
   transform: translateZ(0);
 }
+
+/* On mobile the gradient reaches navy at the visible bottom, then continues
+   farther below the viewport so Safari's elastic scroll cannot expose a seam. */
+@media (max-width: 900px){
+  .site-background{
+    bottom: -180px;
+    background: linear-gradient(
+      180deg,
+      var(--cream) 0%,
+      var(--navy) calc(100% - 180px),
+      var(--navy) 100%
+    );
+  }
+}
+
 
 /* Keep all page content above the permanent background. */
 main,
@@ -58,6 +53,13 @@ footer{
   z-index: 1;
 }
 
+
+:root{
+  --cream: #E6E1CF;
+  --navy: #082660;
+  --text: #ffffff;
+  --card-bg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
+}
 
 *,
 *::before,
@@ -81,6 +83,54 @@ body{
   background: transparent;
 }
 
+/* ── MOBILE-ONLY SITE HEADER ── */
+.mobile-site-header{
+  display: none;
+}
+
+@media (max-width: 900px){
+  .mobile-site-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+
+    height: calc(54px + env(safe-area-inset-top, 0px));
+    padding:
+      env(safe-area-inset-top, 0px)
+      20px
+      0;
+
+    background: var(--cream);
+    border-bottom: 1px solid rgba(8,38,96,0.08);
+  }
+
+  .mobile-site-header a{
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+
+    font-family: "Caveat", cursive;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 600;
+
+    color: var(--navy);
+    -webkit-text-fill-color: var(--navy);
+  }
+
+  .mobile-site-header a:focus-visible{
+    outline: 2px solid var(--navy);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+}
+
+
 section{
   position: relative;
   z-index: 1;
@@ -97,7 +147,7 @@ section{
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--site-background);
+  background: linear-gradient(180deg, var(--cream) 0%, var(--navy) 100%);
   transition: opacity .5s ease, visibility .5s ease;
 }
 
