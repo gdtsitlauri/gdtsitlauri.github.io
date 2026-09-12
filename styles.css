@@ -39,7 +39,7 @@ body{
   min-height: 100dvh;
   position: relative;
   isolation: isolate;
-  background: var(--navy);
+  background: transparent;
 }
 
 /* Lightweight fixed viewport background.
