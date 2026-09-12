@@ -53,6 +53,33 @@ body::before{
   transform: translateZ(0);
 }
 
+/* iOS Safari: real fixed edge colors help the browser chrome sample
+   the correct color at each end of the cream -> navy viewport gradient. */
+.safari-tint{
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.safari-tint-top{
+  top: 0;
+  background-color: var(--cream);
+}
+
+.safari-tint-bottom{
+  bottom: 0;
+  background-color: var(--navy);
+}
+
+@media (min-width: 901px){
+  .safari-tint{
+    display: none;
+  }
+}
+
 
 section{
   position: relative;
@@ -961,21 +988,36 @@ footer{
 /* ── ACCESSIBILITY ── */
 .skip-link{
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: calc(env(safe-area-inset-top, 0px) + 8px);
+  left: 8px;
   z-index: 10000;
-  padding: 10px 14px;
+
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+
+  border: 0;
   border-radius: 10px;
   background: #ffffff;
   color: var(--navy);
   text-decoration: none;
   font-size: .82rem;
-  transform: translateY(-160%);
-  transition: transform .2s ease;
 }
 
-.skip-link:focus{
-  transform: translateY(0);
+.skip-link:focus,
+.skip-link:focus-visible{
+  width: auto;
+  height: auto;
+  padding: 10px 14px;
+  overflow: visible;
+  white-space: normal;
+  clip: auto;
+  clip-path: none;
 }
 
 .fixed-contact a:focus-visible,

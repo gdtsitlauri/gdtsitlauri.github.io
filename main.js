@@ -82,6 +82,10 @@ function hideLoader(delay = 0) {
 
   window.setTimeout(() => {
     loader.classList.add('hide');
+
+    window.setTimeout(() => {
+      loader.remove();
+    }, 550);
   }, delay + 350);
 }
 
