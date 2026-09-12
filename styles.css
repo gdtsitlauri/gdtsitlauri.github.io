@@ -1,7 +1,7 @@
 html{
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: var(--cream);
+  background: var(--navy);
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--navy) var(--cream);
@@ -36,9 +36,10 @@ body{
   font-family: "IBM Plex Mono", "Trebuchet MS", monospace;
   color: var(--text);
   min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
   isolation: isolate;
-  background: transparent;
+  background: var(--navy);
 }
 
 /* Lightweight fixed viewport background.
@@ -51,6 +52,23 @@ body::before{
   pointer-events: none;
   background: linear-gradient(180deg, var(--cream) 0%, var(--navy) 100%);
   transform: translateZ(0);
+}
+
+/* iPhone / mobile WebKit:
+   finish the gradient before the bottom browser chrome and keep the
+   lowest part of the viewport solid navy. This makes Safari's
+   translucent bottom bar visually blend into the page. */
+@media (max-width: 900px) {
+  @supports (-webkit-touch-callout: none) {
+    body::before{
+      background: linear-gradient(
+        180deg,
+        var(--cream) 0%,
+        var(--navy) 82%,
+        var(--navy) 100%
+      );
+    }
+  }
 }
 
 
@@ -961,21 +979,34 @@ footer{
 /* ── ACCESSIBILITY ── */
 .skip-link{
   position: fixed;
-  top: 10px;
-  left: 10px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
   z-index: 10000;
+}
+
+.skip-link:focus-visible{
+  top: calc(env(safe-area-inset-top, 0px) + 10px);
+  left: 10px;
+  width: auto;
+  height: auto;
   padding: 10px 14px;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
   border-radius: 10px;
   background: #ffffff;
   color: var(--navy);
   text-decoration: none;
   font-size: .82rem;
-  transform: translateY(-160%);
-  transition: transform .2s ease;
-}
-
-.skip-link:focus{
-  transform: translateY(0);
 }
 
 .fixed-contact a:focus-visible,
