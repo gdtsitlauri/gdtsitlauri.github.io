@@ -1,7 +1,7 @@
 html{
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: var(--navy);
+  background: var(--cream);
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--navy) var(--cream);
