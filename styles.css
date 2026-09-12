@@ -14,6 +14,13 @@ body {
 }
 
 :root {
+  --hero-photo-size: 230px;
+  --hero-name-size: 3.65rem;
+  --hero-role-size: .95rem;
+  --chip-size: 220px;
+  --hero-sub-size: 1.32rem;
+  --contact-size: 46px;
+  --contact-icon-size: 1.24rem;
   --cream: #E6E1CF;
   --navy: #082660;
   --text: #ffffff;
@@ -211,8 +218,8 @@ section {
 }
 
 #chip3d {
-  width: 260px;
-  height: 260px;
+  width: var(--chip-size);
+  height: var(--chip-size);
   display: block;
   flex-shrink: 0;
   cursor: grab;
@@ -236,7 +243,7 @@ section {
   width: fit-content;
   max-width: 100%;
   font-family: "IBM Plex Mono", monospace;
-  font-size: .86rem;
+  font-size: .92rem;
   font-weight: 400;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -256,7 +263,7 @@ section {
 
 .hero h1 {
   font-family: "Caveat", cursive;
-  font-size: clamp(2.8rem, 4.5vw, 4rem);
+  font-size: clamp(3rem, 4.8vw, 4.3rem);
   font-weight: 400;
   line-height: 1.3;
   display: inline-block;
@@ -274,7 +281,7 @@ section {
 }
 
 .hero-sub {
-  font-size: 1.18rem;
+  font-size: 1.28rem;
   color: #fff;
   max-width: 560px;
   line-height: 1.7;
@@ -295,10 +302,10 @@ section {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   color: #ffffff;
-  font-size: 1.12rem;
+  font-size: 1.20rem;
   text-decoration: none;
   border-radius: 12px;
   background: rgba(255,255,255,0.08);
@@ -1044,14 +1051,17 @@ footer {
 }
 
 /* ── FIXED INTRO / DESKTOP ────────────────────────────────────────────────
-   Keep the split desktop composition only while the CSS viewport still has
-   enough room. On a typical 1920×1080 desktop this keeps 100–125% browser
-   zoom in desktop mode. The next common zoom step (150%) drops below the
-   height threshold and reflows to the mobile-style hero automatically.
+   Desktop stays desktop through the user's 125%-ish zoom case.
+   The contact icons are always anchored at the bottom-left.
+   "From hardware to AI" stays directly under the chip.
+   At the next browser zoom step after 125% (133% on a 1920px-wide desktop),
+   the CSS viewport drops below 1500px and the layout reflows to mobile style.
 
-   CSS cannot read the browser's zoom percentage directly, so this uses the
-   space that actually matters to layout: the CSS viewport width + height. */
-@media (min-width: 1200px) and (min-height: 760px) and (hover: hover) and (pointer: fine) {
+   CSS cannot read browser zoom directly, so the breakpoint is based on the
+   actual CSS viewport width. */
+
+/* Desktop / laptop split layout */
+@media (min-width: 1500px) and (hover: hover) and (pointer: fine) {
   .hero {
     width: 0;
     height: 0;
@@ -1064,15 +1074,18 @@ footer {
 
   .hero-text {
     position: fixed;
-    top: clamp(62px, 8.5vh, 100px);
-    bottom: clamp(22px, 3vh, 34px);
+    top: clamp(58px, 7.5vh, 92px);
+    bottom: 18px;
     left: clamp(42px, 5vw, 86px);
     z-index: 20;
+
     width: min(35vw, 520px);
     min-height: 0;
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
     overflow: visible;
     transform: none;
   }
@@ -1085,29 +1098,31 @@ footer {
   .hero-text .hero-photo {
     order: initial;
     flex: 0 0 auto;
-    margin: 0 0 clamp(10px, 1.3vh, 16px);
+    margin: 0 0 12px;
     animation: fadeUp .75s .05s ease both;
   }
 
   .hero-text .photo-wrap {
-    width: clamp(160px, 20vh, 210px);
-    height: clamp(160px, 20vh, 210px);
+    width: clamp(190px, 21vh, 225px);
+    height: clamp(190px, 21vh, 225px);
   }
 
   .hero h1 {
     flex: 0 0 auto;
     margin-top: 0;
-    margin-bottom: clamp(8px, 1.1vh, 13px);
-    font-size: clamp(2.45rem, 4.8vh, 3.6rem);
+    margin-bottom: 10px;
+    font-size: clamp(2.75rem, 4.9vh, 3.9rem);
   }
 
   .hero-tag-row {
     flex: 0 0 auto;
-    margin-bottom: clamp(5px, .8vh, 9px);
+    margin-bottom: 8px;
   }
 
   .hero-tag {
     transform: none;
+    font-size: .90rem;
+    padding: 7px 16px;
   }
 
   .hero h1,
@@ -1119,25 +1134,35 @@ footer {
     z-index: 1;
   }
 
+  /* Keep the processor visually consistent across every responsive/zoom layout. */
   #chip3d {
-    width: clamp(150px, 18vh, 195px);
-    height: clamp(150px, 18vh, 195px);
-    margin-top: 0;
+    width: var(--chip-size);
+    height: var(--chip-size);
     flex: 0 0 auto;
-    transform: translateX(-14px);
+
+    margin-top: 0;
+    margin-bottom: 0;
+
+    transform: translateX(-10px);
+    align-self: flex-start;
   }
 
-  /* The bottom block stays anchored. Free space is inserted above it, not
-     below it, so the message + contact buttons remain bottom-left. */
+  /* Subtitle belongs to the chip, so it always remains directly below it. */
   .hero-sub {
     flex: 0 0 auto;
-    margin-top: auto;
+    margin-top: 8px;
     margin-bottom: 0;
+    text-align: left;
+    font-size: 1.22rem;
   }
 
+  /* ONLY the contact row is pushed to the bottom.
+     This keeps the icons permanently bottom-left while allowing empty space
+     between the subtitle and the contacts. */
   .fixed-contact {
     flex: 0 0 auto;
-    margin-top: 14px;
+    margin-top: auto;
+    justify-content: flex-start;
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
@@ -1192,17 +1217,19 @@ footer {
   }
 }
 
-/* 125%-ish desktop height: compact only the upper stack enough to preserve
-   breathing room above the bottom-left message and icons. */
-@media (min-width: 1200px) and (min-height: 760px) and (max-height: 900px) and (hover: hover) and (pointer: fine) {
+/* 125%-ish desktop:
+   move/compact ONLY the content ABOVE the subtitle/contact area.
+   The chip keeps the same canonical size; the subtitle stays directly below it; contacts
+   stay pinned to the bottom-left. */
+@media (min-width: 1500px) and (max-width: 1599px) and (hover: hover) and (pointer: fine) {
   .hero-text {
-    top: clamp(36px, 5.5vh, 52px);
-    bottom: 16px;
+    top: 20px;
+    bottom: 14px;
   }
 
   .hero-text .photo-wrap {
-    width: clamp(136px, 17.5vh, 154px);
-    height: clamp(136px, 17.5vh, 154px);
+    width: 172px;
+    height: 172px;
   }
 
   .hero-text .hero-photo {
@@ -1210,46 +1237,64 @@ footer {
   }
 
   .hero h1 {
-    font-size: clamp(2.08rem, 4.35vh, 2.65rem);
-    margin-bottom: 6px;
+    font-size: 2.55rem;
+    margin-bottom: 7px;
   }
 
   .hero-tag-row {
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 
   .hero-tag {
-    font-size: .72rem;
-    padding: 5px 10px;
-    letter-spacing: .1em;
+    font-size: .82rem;
+    padding: 6px 14px;
+    letter-spacing: .105em;
   }
 
   #chip3d {
-    width: clamp(116px, 14.5vh, 132px);
-    height: clamp(116px, 14.5vh, 132px);
-    transform: translateX(-8px);
+    width: var(--chip-size);
+    height: var(--chip-size);
+    transform: translateX(-10px);
+  }
+
+  .hero-sub {
+    margin-top: 6px;
+    font-size: 1.12rem;
+  }
+
+  .fixed-contact {
+    gap: 12px;
+  }
+
+  .fixed-contact a {
+    width: 42px;
+    height: 42px;
+    font-size: 1.14rem;
   }
 }
 
-/* ── MOBILE-STYLE REFLOW / ZOOM SAFETY ────────────────────────────────────
-   This is deliberately the same flow used on mobile/tablet. It activates
-   when the desktop viewport becomes too small/short (for example the common
-   step after 125% zoom on a 1080p display), or whenever the device is touch-
-   first. Nothing remains fixed, so higher zoom levels can simply scroll. */
-@media (max-width: 1199px),
-       (max-height: 759px),
+/* ── MOBILE-STYLE REFLOW / HIGHER ZOOM ────────────────────────────────────
+   The 125% case above remains desktop. At 133% on a 1920px-wide desktop,
+   the CSS viewport drops below 1500px, so the page reflows to the same
+   safe stacked layout used on mobile.
+   True touch/coarse-pointer devices also use this flow. */
+@media (max-width: 1499px),
        (hover: none) and (pointer: coarse) {
   .hero {
     width: auto;
     height: auto;
     min-height: 100vh;
     min-height: 100dvh;
+
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     gap: 0;
     padding: clamp(54px, 8vh, 90px) 6% clamp(46px, 7vh, 76px);
     margin: 0 auto;
+
     overflow: visible;
     text-align: center;
   }
@@ -1258,9 +1303,11 @@ footer {
     position: static;
     width: min(100%, 680px);
     min-width: 0;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
     overflow: visible;
     transform: none;
   }
@@ -1272,14 +1319,14 @@ footer {
   }
 
   .hero-text .photo-wrap {
-    width: clamp(150px, 24vh, 180px);
-    height: clamp(150px, 24vh, 180px);
+    width: clamp(170px, 26vh, 205px);
+    height: clamp(170px, 26vh, 205px);
   }
 
   .hero h1 {
     margin: -4px -8px 12px;
     transform: none;
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-size: clamp(2.8rem, 6.5vw, 3.9rem);
     text-align: center;
   }
 
@@ -1293,11 +1340,13 @@ footer {
     margin-left: 0;
     margin-right: 0;
     text-align: center;
+    font-size: .88rem;
+    padding: 7px 15px;
   }
 
   #chip3d {
-    width: clamp(155px, 24vh, 190px);
-    height: clamp(155px, 24vh, 190px);
+    width: var(--chip-size);
+    height: var(--chip-size);
     margin: 0;
     align-self: center;
     transform: translateY(6px);
@@ -1307,6 +1356,7 @@ footer {
     margin-top: 10px;
     margin-bottom: 0;
     text-align: center;
+    font-size: 1.20rem;
   }
 
   .fixed-contact {
@@ -1338,9 +1388,10 @@ footer {
   }
 }
 
-/* Short reflow viewport: keep the mobile-style hierarchy compact enough to
-   fit comfortably, but allow the page to scroll instead of clipping. */
-@media (max-height: 679px), (max-width: 680px) {
+/* Compact stacked flow for genuinely short/narrow viewports.
+   These rules apply only after the layout has already reflowed. */
+@media (max-width: 1499px) and (max-height: 679px),
+       (max-width: 680px) {
   .hero {
     min-height: 100dvh;
     justify-content: flex-start;
@@ -1349,8 +1400,8 @@ footer {
   }
 
   .hero-text .photo-wrap {
-    width: 132px;
-    height: 132px;
+    width: 150px;
+    height: 150px;
   }
 
   .hero-text .hero-photo {
@@ -1358,13 +1409,13 @@ footer {
   }
 
   .hero h1 {
-    font-size: clamp(2.2rem, 8vw, 2.8rem);
+    font-size: clamp(2.45rem, 8.5vw, 3.05rem);
     margin-bottom: 7px;
   }
 
   .hero-tag {
-    font-size: .74rem;
-    padding: 5px 11px;
+    font-size: .80rem;
+    padding: 6px 12px;
   }
 
   .hero-tag-row {
@@ -1372,14 +1423,14 @@ footer {
   }
 
   #chip3d {
-    width: 145px;
-    height: 145px;
+    width: var(--chip-size);
+    height: var(--chip-size);
     transform: none;
   }
 
   .hero-sub {
-    margin-top: 4px;
-    font-size: .98rem;
+    margin-top: 6px;
+    font-size: 1.08rem;
   }
 
   .fixed-contact {
@@ -1388,9 +1439,9 @@ footer {
   }
 
   .fixed-contact a {
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.10rem;
   }
 }
 
@@ -1434,14 +1485,14 @@ footer {
 
 @media (max-width: 420px) {
   .hero h1 {
-    font-size: clamp(2.25rem, 12vw, 2.75rem);
+    font-size: clamp(2.45rem, 12vw, 3rem);
   }
 
   .hero-tag {
-    font-size: .70rem;
+    font-size: .76rem;
     letter-spacing: .075em;
     line-height: 1.45;
-    padding: 6px 9px;
+    padding: 6px 10px;
   }
 
   .card {
@@ -1460,5 +1511,66 @@ footer {
   .fixed-contact a {
     width: 38px;
     height: 38px;
+  }
+}
+
+/* ── UNIFORM HERO SIZE ACROSS DESKTOP ZOOM LEVELS ───────────────────────
+   Browser zoom may change the layout mode (split desktop -> stacked/mobile-style),
+   but it must NOT shrink the hero identity elements.
+   The same CSS sizes are kept through normal desktop zoom levels. */
+@media (min-width: 600px) {
+  .hero-text .photo-wrap {
+    width: var(--hero-photo-size) !important;
+    height: var(--hero-photo-size) !important;
+  }
+
+  .hero h1 {
+    font-size: var(--hero-name-size) !important;
+  }
+
+  .hero-tag {
+    font-size: var(--hero-role-size) !important;
+    padding: 7px 16px !important;
+    letter-spacing: .11em !important;
+  }
+
+  #chip3d {
+    width: var(--chip-size) !important;
+    height: var(--chip-size) !important;
+  }
+
+  .hero-sub {
+    font-size: var(--hero-sub-size) !important;
+  }
+
+  .fixed-contact a {
+    width: var(--contact-size) !important;
+    height: var(--contact-size) !important;
+    font-size: var(--contact-icon-size) !important;
+  }
+}
+
+/* On true narrow phones, preserve fit while keeping the same proportions. */
+@media (max-width: 599px) {
+  .hero-text .photo-wrap {
+    width: min(var(--hero-photo-size), 56vw) !important;
+    height: min(var(--hero-photo-size), 56vw) !important;
+  }
+
+  .hero h1 {
+    font-size: min(var(--hero-name-size), 12vw) !important;
+  }
+
+  .hero-tag {
+    font-size: min(var(--hero-role-size), 3.4vw) !important;
+  }
+
+  #chip3d {
+    width: min(var(--chip-size), 56vw) !important;
+    height: min(var(--chip-size), 56vw) !important;
+  }
+
+  .hero-sub {
+    font-size: min(var(--hero-sub-size), 5vw) !important;
   }
 }
