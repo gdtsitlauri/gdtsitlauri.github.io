@@ -1574,3 +1574,17 @@ footer {
     font-size: min(var(--hero-sub-size), 5vw) !important;
   }
 }
+
+
+/* ── 100% desktop only: make the processor slightly larger ───────────────
+   Calibrated for the current 1920px desktop setup:
+   - 100% zoom (~1920 CSS px): larger chip
+   - 110% / 125% zoom: keeps the normal chip size
+   CSS cannot detect browser zoom directly, so this targets the wide viewport
+   that corresponds to 100% on the user's screen. */
+@media (min-width: 1800px) and (hover: hover) and (pointer: fine) {
+  #chip3d {
+    width: 300px !important;
+    height: 300px !important;
+  }
+}
