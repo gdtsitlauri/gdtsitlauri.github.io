@@ -1584,7 +1584,11 @@ footer {
    that corresponds to 100% on the user's screen. */
 @media (min-width: 1800px) and (hover: hover) and (pointer: fine) {
   #chip3d {
-    width: 300px !important;
-    height: 300px !important;
+    width: 290px !important;
+    height: 290px !important;
+  }
+
+  .hero-sub {
+    font-size: 1.50rem !important;
   }
 }
