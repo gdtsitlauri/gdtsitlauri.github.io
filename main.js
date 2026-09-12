@@ -1,57 +1,53 @@
+'use strict';
+
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* ── SECTION / CARD REVEALS ── */
 const animatedSections = document.querySelectorAll('.section-anim');
 const revealElements = document.querySelectorAll('.reveal');
 
 if ('IntersectionObserver' in window && !prefersReducedMotion) {
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        sectionObserver.unobserve(entry.target);
-      }
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in-view');
+      sectionObserver.unobserve(entry.target);
     });
   }, {
     threshold: 0,
     rootMargin: '0px 0px -10% 0px'
   });
 
-  animatedSections.forEach((section) => {
-    sectionObserver.observe(section);
-  });
+  animatedSections.forEach((section) => sectionObserver.observe(section));
 
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
-        const siblings = Array.from(entry.target.parentElement.children)
-          .filter((el) => el.classList.contains('reveal'));
-        const index = siblings.indexOf(entry.target);
+      if (!entry.isIntersecting || entry.target.classList.contains('visible')) return;
 
-        window.setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, Math.max(0, index) * 70);
+      const siblings = Array.from(entry.target.parentElement?.children ?? [])
+        .filter((element) => element.classList.contains('reveal'));
+      const index = Math.max(0, siblings.indexOf(entry.target));
 
-        revealObserver.unobserve(entry.target);
-      }
+      window.setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, index * 70);
+
+      revealObserver.unobserve(entry.target);
     });
   }, {
     threshold: 0,
     rootMargin: '0px 0px -8% 0px'
   });
 
-  revealElements.forEach((el) => {
-    revealObserver.observe(el);
-  });
+  revealElements.forEach((element) => revealObserver.observe(element));
 } else {
   animatedSections.forEach((section) => section.classList.add('in-view'));
-  revealElements.forEach((el) => el.classList.add('visible'));
+  revealElements.forEach((element) => element.classList.add('visible'));
 }
 
-/*
- * Keep the whole project card clickable with a pointer, while leaving keyboard
- * semantics to the real <a> element inside the card. This avoids nested
- * interactive roles and duplicate tab stops.
- */
+/* ── PROJECT CARDS ──
+   Pointer users can click the whole card. Keyboard semantics remain on the
+   real anchor inside each card, avoiding duplicate interactive tab stops. */
 document.querySelectorAll('.pc').forEach((card) => {
   const projectLink = card.querySelector('.pl');
   if (!projectLink) return;
@@ -62,35 +58,44 @@ document.querySelectorAll('.pc').forEach((card) => {
   });
 });
 
-// Footer button: scroll to top without adding #home to the URL
-const footerTopButton = document.querySelector('.footer-top-btn');
+/* ── FOOTER: BACK TO TOP ──
+   Keep href="#home" as a no-JS fallback, but do not leave #home in the URL. */
+const footerTopButton = document.querySelector('.footer-top-btn[href="#home"]');
 
-if (footerTopButton) {
-  footerTopButton.addEventListener('click', (event) => {
-    event.preventDefault();
+footerTopButton?.addEventListener('click', (event) => {
+  event.preventDefault();
 
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: prefersReducedMotion ? 'auto' : 'smooth'
-    });
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: prefersReducedMotion ? 'auto' : 'smooth'
+  });
 
+  if (window.location.hash) {
     history.replaceState(
       null,
       '',
       window.location.pathname + window.location.search
     );
-  });
-}
+  }
+});
 
+/* ── SITE LOADER ── */
 const loader = document.getElementById('site-loader');
 let loaderHidden = false;
+let loaderFallbackTimer = null;
 
 function hideLoader(delay = 0) {
   if (!loader || loaderHidden) return;
 
   loaderHidden = true;
-  const bar = document.querySelector('.loader-bar-fill');
+
+  if (loaderFallbackTimer !== null) {
+    window.clearTimeout(loaderFallbackTimer);
+    loaderFallbackTimer = null;
+  }
+
+  const bar = loader.querySelector('.loader-bar-fill');
 
   if (bar) {
     bar.style.animation = 'none';
@@ -104,17 +109,17 @@ function hideLoader(delay = 0) {
   window.setTimeout(() => {
     loader.classList.add('hide');
 
-    window.setTimeout(() => {
-      loader.remove();
-    }, 550);
+    // Remove the fixed full-screen layer after its fade. This also keeps
+    // Safari's browser-chrome color sampling from seeing an invisible overlay.
+    window.setTimeout(() => loader.remove(), 550);
   }, delay + 350);
 }
 
-
 window.addEventListener('chip3d-ready', () => {
   hideLoader(220);
-});
+}, { once: true });
 
 window.addEventListener('load', () => {
-  window.setTimeout(() => hideLoader(), 4000);
-});
+  if (loaderHidden) return;
+  loaderFallbackTimer = window.setTimeout(() => hideLoader(), 4000);
+}, { once: true });
