@@ -1,84 +1,167 @@
-# George David Tsitlauri | Portfolio Website
+George David Tsitlauri | Portfolio Website
 
-**Author:** George David Tsitlauri  
-**Contact:** [gdtsitlauri@gmail.com](mailto:gdtsitlauri@gmail.com)
+Author: George David Tsitlauri
+Contact: gdtsitlauri@gmail.com
 
 Personal portfolio focused on artificial intelligence, systems, security, infrastructure, research, and selected software projects.
 
-**Live site:** [gdtsitlauri.dev](https://gdtsitlauri.dev)
+Live site: gdtsitlauri.dev
 
-## Overview
+Overview
 
-This repository contains a static single-page website implemented in [`index.html`](./index.html). It presents:
+This repository contains a static single-page portfolio website. The project is separated into dedicated HTML, CSS, and JavaScript files for easier maintenance.
 
-- BSc and MSc education
-- research work and selected academic or software projects
-- technical skills and spoken languages
-- contact links and a downloadable CV
-- an interactive Three.js visualization of a cryptographic processor with 3D-stacked memory
+The website presents:
 
-## Tech Stack
+BSc and MSc education
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- Three.js via import map / CDN
-- Google Fonts
-- Font Awesome
+research work and selected academic projects
 
-## Features
+selected web projects
 
-- Responsive desktop and mobile layout
-- Interactive, auto-rotating 3D chip visualization
-- Adaptive 3D rendering settings for desktop and mobile devices
-- Animated loader and section reveal effects
-- Mobile safe-area support
-- Basic SEO, Open Graph, and Twitter Card metadata
-- Static-hosting-compatible deployment
+technical skills and spoken languages
 
-## 3D Hero Render
+contact links and a downloadable CV
 
-The hero canvas depicts a semiconductor-inspired package with:
+an interactive Three.js visualization of a cryptographic processor with 3D-stacked memory
 
-- a metallic IHS lid
-- a CPU logic die and redistribution bridge
-- color-coded L0–L3 stacked-memory layers
-- a green package substrate
-- physically based materials and environment lighting
-- adaptive texture size, render resolution, and device-pixel ratio
+Tech Stack
 
-## Project Structure
+HTML5
 
-```text
+CSS3
+
+Vanilla JavaScript
+
+Three.js via ES modules and import map
+
+Google Fonts
+
+Font Awesome
+
+Features
+
+Responsive desktop, tablet, and mobile layout
+
+Fixed desktop introduction panel
+
+Interactive, auto-rotating 3D chip visualization
+
+Click / keyboard-controlled exploded view for the 3D processor
+
+Adaptive 3D rendering quality for desktop and mobile devices
+
+Performance-aware rendering that pauses when the 3D canvas is not visible
+
+Animated loader and section reveal effects
+
+Reduced-motion accessibility support
+
+Keyboard focus states and skip-to-content navigation
+
+Custom scrollbar styling
+
+Mobile safe-area support
+
+SEO, Open Graph, and Twitter Card metadata
+
+Static-hosting-compatible deployment
+
+Custom domain support through CNAME
+
+3D Hero Render
+
+The hero canvas depicts a semiconductor-inspired processor package with:
+
+a metallic IHS lid
+
+a CPU logic die and redistribution bridge
+
+color-coded L0–L3 stacked-memory layers
+
+a green package substrate
+
+physically based materials and environment lighting
+
+adaptive texture size, render resolution, and device-pixel ratio
+
+automatic rendering pause when the canvas is off-screen or the browser tab is inactive
+
+The Three.js dependencies are loaded from a CDN through an import map defined in index.html.
+
+Project Structure
+
 .
-├── index.html                      # Website markup, styles, and scripts
-├── profile.jpg                     # Profile image
-├── George_David_Tsitlauri_CV.pdf  # Downloadable CV
-├── favicon-* / favicon.ico         # Site icons
+├── index.html                       # Main website markup and metadata
+├── styles.css                       # Layout, responsive design, cards, animations, and theme
+├── main.js                          # Loader, reveal animations, and project-card interactions
+├── chip3d.js                        # Three.js processor visualization and rendering logic
+├── profile.jpg                      # Profile image
+├── George_David_Tsitlauri_CV.pdf   # Downloadable CV
+├── favicon.ico
+├── favicon-16x16.png
+├── favicon-32x32.png
+├── favicon-48x48.png
+├── favicon-64x64.png
+├── favicon-180x180.png
+├── favicon-192x192.png
+├── favicon-256x256.png
+├── favicon-512x512.png
 ├── apple-touch-icon.png
-├── CNAME                           # Custom domain
+├── CNAME                            # Custom domain configuration
 ├── LICENSE
 └── README.md
-```
 
-## Local Development
+Local Development
 
-Run a local HTTP server from the repository directory:
+Because the 3D visualization uses JavaScript ES modules, the website should be previewed through a local HTTP server rather than by opening index.html directly with a file:/// URL.
 
-```bash
+Python
+
+If Python is installed:
+
 python -m http.server 8000
-```
 
-Then open [http://localhost:8000](http://localhost:8000).
+Then open:
 
-## Deployment
+http://localhost:8000/
 
-The site can be deployed to any static hosting service. The included [`CNAME`](./CNAME) configures the custom domain `gdtsitlauri.dev`.
+Node.js
 
-## External Dependencies
+If Node.js is installed:
 
-Three.js, Google Fonts, and Font Awesome are loaded from CDNs, so an internet connection is required when previewing the site locally.
+npx serve .
 
-## License
+VS Code
 
-This project is available under the [MIT License](./LICENSE).
+You can also use the Live Server extension in Visual Studio Code and open index.html with Open with Live Server.
+
+The deployed GitHub Pages / custom-domain version runs over HTTPS, so ES modules load normally there.
+
+Deployment
+
+The site is designed for static hosting and can be deployed with GitHub Pages or another static hosting service.
+
+The included CNAME file configures the custom domain:
+
+gdtsitlauri.dev
+
+The main site files (index.html, styles.css, main.js, and chip3d.js) should remain in the repository root so their relative paths resolve correctly.
+
+External Dependencies
+
+The following dependencies are loaded from CDNs:
+
+Three.js
+
+Three.js addons
+
+Google Fonts
+
+Font Awesome
+
+An internet connection is therefore required for the complete local preview, including the 3D processor visualization, fonts, and icons.
+
+License
+
+This project is available under the MIT License.
