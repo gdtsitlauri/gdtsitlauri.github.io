@@ -3,6 +3,21 @@
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0,viewport-fit=cover" name="viewport">
+    <script>
+      // Apply the scroll policy before the loader's first paint. Safari 26's
+      // iOS UA freezes the OS version, so use the browser Version/ token.
+      (() => {
+        const ua = navigator.userAgent;
+        const isSafari26 = navigator.vendor === 'Apple Computer, Inc.'
+          && /\bVersion\/26(?:\.|\s)/.test(ua)
+          && /\bSafari\//.test(ua)
+          && !/(?:Chrome|Chromium|CriOS|FxiOS|Edg|EdgA|EdgiOS|OPR|OPiOS|SamsungBrowser|DuckDuckGo|GSA)\//i.test(ua);
+
+        if (isSafari26 && window.CSS?.supports('overscroll-behavior-y', 'none')) {
+          document.documentElement.classList.add('safari-26');
+        }
+      })();
+    </script>
     <meta content="#E6E1CF" name="theme-color">
     <title>George David Tsitlauri | Portfolio</title>
     <meta content="George David Tsitlauri | Portfolio" property="og:title">
@@ -45,13 +60,11 @@
   </head>
   <body>
     <!--
-      Permanent viewport gradient. Safari 26 samples solid background-color
-      from qualifying fixed/sticky edge elements for browser-chrome tinting.
-      This layer intentionally uses only a background image (no solid color),
-      matching the loader's working transparent-glass behavior.
+      Permanent viewport gradient, preserving the pre-shim glass baseline.
+      Safari controls browser-chrome translucency; edge layers can affect
+      its color-extension heuristics. Keep the original image and geometry.
     -->
     <div aria-hidden="true" class="viewport-gradient"></div>
-    <div aria-hidden="true" id="safari-bottom-glass-hint"></div>
     <div aria-hidden="true" id="site-loader">
       <div class="loader-box">
         <div class="loader-text">GDT</div>

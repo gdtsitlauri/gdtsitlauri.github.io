@@ -85,7 +85,6 @@ footerTopButton?.addEventListener('click', (event) => {
 
 /* ── SITE LOADER ── */
 const loader = document.getElementById('site-loader');
-const safariBottomGlassHint = document.getElementById('safari-bottom-glass-hint');
 let loaderHidden = false;
 let loaderFallbackTimer = null;
 
@@ -116,12 +115,9 @@ function hideLoader(delay = 0) {
   window.setTimeout(() => {
     loader.classList.add('hide');
 
-    // Remove the loader first so its known-good glass behavior stays untouched.
-    // Only then enable the tiny iOS Safari bottom-edge image hint.
-    window.setTimeout(() => {
-      loader.remove();
-      safariBottomGlassHint?.classList.add('is-active');
-    }, cleanupDelay);
+    // Remove the fixed full-screen layer after its fade. This also keeps
+    // Safari's browser-chrome color sampling from seeing an invisible overlay.
+    window.setTimeout(() => loader.remove(), cleanupDelay);
   }, settleDelay);
 }
 
