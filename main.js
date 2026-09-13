@@ -85,6 +85,7 @@ footerTopButton?.addEventListener('click', (event) => {
 
 /* ── SITE LOADER ── */
 const loader = document.getElementById('site-loader');
+const safariBottomGlassShim = document.getElementById('safari-bottom-glass-shim');
 let loaderHidden = false;
 let loaderFallbackTimer = null;
 
@@ -115,9 +116,13 @@ function hideLoader(delay = 0) {
   window.setTimeout(() => {
     loader.classList.add('hide');
 
-    // Remove the fixed full-screen layer after its fade. This also keeps
-    // Safari's browser-chrome color sampling from seeing an invisible overlay.
-    window.setTimeout(() => loader.remove(), cleanupDelay);
+    // Remove the loader after its fade, then enable the real Safari bottom
+    // glass shim. Keeping the shim display:none until this point preserves the
+    // loader's original transparent top/bottom browser chrome.
+    window.setTimeout(() => {
+      loader.remove();
+      safariBottomGlassShim?.classList.add('is-active');
+    }, cleanupDelay);
   }, settleDelay);
 }
 

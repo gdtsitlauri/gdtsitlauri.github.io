@@ -10,8 +10,7 @@ html {
 html,
 body {
   max-width: 100%;
-  overflow-x: hidden; /* fallback for older browsers */
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 :root {
@@ -67,10 +66,8 @@ body {
   background-image: linear-gradient(180deg, var(--cream) 0%, var(--navy) 100%);
 }
 
-/* Safari / iOS Safari: give the fixed gradient generous vertical overscan so
-   fast momentum scrolling and the moving browser chrome never expose the
-   root canvas for a frame. The gradient stops are offset by the same amount,
-   so the visible viewport keeps the exact same cream -> navy appearance. */
+/* Safari/iOS: keep the painted gradient beyond the moving visual viewport so
+   fast momentum/rubber-band scrolling cannot expose the root canvas. */
 @supports (-webkit-touch-callout: none) {
   .viewport-gradient {
     --safari-overscan: 160px;
@@ -82,29 +79,24 @@ body {
     );
   }
 
-  /* Safari 26 Liquid Glass edge shim.
-     Community-tested workaround: a tiny fixed transparent strip at each
-     viewport edge gives Safari a neutral edge element to sample, helping
-     keep the top and bottom browser chrome translucent instead of extending
-     a solid page colour into the bars. */
-  body::before,
-  body::after {
-    content: "";
+  /* Real DOM shim for Safari 26 bottom Liquid Glass sampling.
+     It is display:none during the loader and is enabled by main.js only after
+     the loader has been removed, so the loading-screen glass is untouched. */
+  #safari-bottom-glass-shim {
+    display: none;
     position: fixed;
     left: 0;
     right: 0;
-    height: 5px;
+    bottom: -8px;
+    width: 100%;
+    min-height: 12px;
     z-index: 2147483646;
     pointer-events: none;
-    background: transparent;
+    background-color: transparent;
   }
 
-  body::before {
-    top: 0;
-  }
-
-  body::after {
-    bottom: 0;
+  #safari-bottom-glass-shim.is-active {
+    display: block;
   }
 }
 
