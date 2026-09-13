@@ -81,6 +81,31 @@ body {
       var(--navy) calc(100% - var(--safari-overscan)) 100%
     );
   }
+
+  /* Safari 26 Liquid Glass edge shim.
+     Community-tested workaround: a tiny fixed transparent strip at each
+     viewport edge gives Safari a neutral edge element to sample, helping
+     keep the top and bottom browser chrome translucent instead of extending
+     a solid page colour into the bars. */
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 5px;
+    z-index: 2147483646;
+    pointer-events: none;
+    background: transparent;
+  }
+
+  body::before {
+    top: 0;
+  }
+
+  body::after {
+    bottom: 0;
+  }
 }
 
 section {
