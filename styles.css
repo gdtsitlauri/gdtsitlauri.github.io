@@ -50,44 +50,25 @@ body {
   background: transparent;
 }
 
-/* Lightweight fixed viewport background.
-   Avoids background-attachment: fixed, which can jank during fast scrollbar dragging. */
-body::before {
-  content: "";
+/* Real fixed viewport background.
+   This intentionally mirrors the loader's full-screen structure instead of
+   using a pseudo-element or Safari-only edge tint strips. Keeping the gradient
+   on a real fixed DOM element lets iOS Safari see one continuous layer behind
+   its translucent top and bottom browser chrome. */
+.site-background {
   position: fixed;
-  /* Overscan prevents a 1px root-background seam while iOS Safari
-     animates/resizes its bottom toolbar during the first scroll. */
-  inset: -4px 0;
-  z-index: -1;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
   background: linear-gradient(180deg, var(--cream) 0%, var(--navy) 100%);
   transform: translateZ(0);
 }
 
-/* iOS Safari only: fixed edge colors help Safari's mobile browser chrome
-   sample the correct color at each end of the cream -> navy viewport gradient. */
-.safari-tint {
-  display: none;
-  position: fixed;
-  left: 0;
-  width: 100%;
-  height: 10px;
-  pointer-events: none;
-  z-index: 9998;
-}
-
-html.ios-safari .safari-tint {
-  display: block;
-}
-
-.safari-tint-top {
-  top: -2px;
-  background-color: var(--cream);
-}
-
-.safari-tint-bottom {
-  bottom: -2px;
-  background-color: var(--navy);
+/* Keep all page content above the fixed background layer. */
+#main-content,
+footer {
+  position: relative;
+  z-index: 1;
 }
 
 section {
