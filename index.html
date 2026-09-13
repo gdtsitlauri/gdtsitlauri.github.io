@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0,viewport-fit=cover" name="viewport">
     <script>
-      // Apply the scroll policy before the loader's first paint. Safari 26's
-      // iOS UA freezes the OS version, so use the browser Version/ token.
+      // Select Safari's background rendering before the loader's first paint.
+      // Safari 26 freezes the iOS UA version; use the browser Version/ token.
       (() => {
         const ua = navigator.userAgent;
         const isSafari26 = navigator.vendor === 'Apple Computer, Inc.'
@@ -13,7 +13,7 @@
           && /\bSafari\//.test(ua)
           && !/(?:Chrome|Chromium|CriOS|FxiOS|Edg|EdgA|EdgiOS|OPR|OPiOS|SamsungBrowser|DuckDuckGo|GSA)\//i.test(ua);
 
-        if (isSafari26 && window.CSS?.supports('overscroll-behavior-y', 'none')) {
+        if (isSafari26) {
           document.documentElement.classList.add('safari-26');
         }
       })();
@@ -45,7 +45,7 @@
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&amp;family=IBM+Plex+Mono:wght@400&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <link href="styles.css?v=safari26-image-1" rel="stylesheet">
     <noscript>
       <style>
         #site-loader,
@@ -60,12 +60,15 @@
   </head>
   <body>
     <!--
-      Permanent viewport gradient, preserving the pre-shim glass baseline.
-      Safari controls browser-chrome translucency; edge layers can affect
-      its color-extension heuristics. Keep the original image and geometry.
+      Safari uses an actual image for the same gradient: WebKit excludes
+      replaced content from fixed-edge color sampling. Other browsers keep
+      the CSS background. See the Safari rule in styles.css.
     -->
-    <div aria-hidden="true" class="viewport-gradient"></div>
+    <div aria-hidden="true" class="viewport-gradient">
+      <img alt="" class="safari-gradient-image" decoding="sync" draggable="false" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3ClinearGradient id='g' x2='0' y2='1' color-interpolation='sRGB'%3E%3Cstop stop-color='%23E6E1CF'/%3E%3Cstop offset='1' stop-color='%23082660'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23g)' d='M0 0h1v1H0z'/%3E%3C/svg%3E">
+    </div>
     <div aria-hidden="true" id="site-loader">
+      <img alt="" class="safari-gradient-image" decoding="sync" draggable="false" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3ClinearGradient id='g' x2='0' y2='1' color-interpolation='sRGB'%3E%3Cstop stop-color='%23E6E1CF'/%3E%3Cstop offset='1' stop-color='%23082660'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23g)' d='M0 0h1v1H0z'/%3E%3C/svg%3E">
       <div class="loader-box">
         <div class="loader-text">GDT</div>
         <div class="loader-bar-track">
