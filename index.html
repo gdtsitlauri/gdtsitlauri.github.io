@@ -30,6 +30,25 @@
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&amp;family=IBM+Plex+Mono:wght@400&amp;family=IBM+Plex+Sans+Condensed:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script>
+      (() => {
+        const ua = navigator.userAgent || '';
+        const vendor = navigator.vendor || '';
+
+        const isIOS =
+          /iPad|iPhone|iPod/.test(ua) ||
+          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        const isSafari =
+          /Safari/i.test(ua) &&
+          /Apple Computer/i.test(vendor) &&
+          !/(CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo|GSA|Brave)/i.test(ua);
+
+        if (isIOS && isSafari) {
+          document.documentElement.classList.add('ios-safari');
+        }
+      })();
+    </script>
     <link href="styles.css" rel="stylesheet">
     <noscript>
       <style>

@@ -64,15 +64,20 @@ body::before {
   transform: translateZ(0);
 }
 
-/* iOS Safari: real fixed edge colors help the browser chrome sample
-   the correct color at each end of the cream -> navy viewport gradient. */
+/* iOS Safari only: fixed edge colors help Safari's mobile browser chrome
+   sample the correct color at each end of the cream -> navy viewport gradient. */
 .safari-tint {
+  display: none;
   position: fixed;
   left: 0;
   width: 100%;
   height: 10px;
   pointer-events: none;
   z-index: 9998;
+}
+
+html.ios-safari .safari-tint {
+  display: block;
 }
 
 .safari-tint-top {
@@ -83,12 +88,6 @@ body::before {
 .safari-tint-bottom {
   bottom: -2px;
   background-color: var(--navy);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .safari-tint {
-    display: none;
-  }
 }
 
 section {
