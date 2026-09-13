@@ -85,7 +85,7 @@ footerTopButton?.addEventListener('click', (event) => {
 
 /* ── SITE LOADER ── */
 const loader = document.getElementById('site-loader');
-const safariBottomGlassShim = document.getElementById('safari-bottom-glass-shim');
+const safariBottomGlassHint = document.getElementById('safari-bottom-glass-hint');
 let loaderHidden = false;
 let loaderFallbackTimer = null;
 
@@ -116,12 +116,11 @@ function hideLoader(delay = 0) {
   window.setTimeout(() => {
     loader.classList.add('hide');
 
-    // Remove the loader after its fade, then enable the real Safari bottom
-    // glass shim. Keeping the shim display:none until this point preserves the
-    // loader's original transparent top/bottom browser chrome.
+    // Remove the loader first so its known-good glass behavior stays untouched.
+    // Only then enable the tiny iOS Safari bottom-edge image hint.
     window.setTimeout(() => {
       loader.remove();
-      safariBottomGlassShim?.classList.add('is-active');
+      safariBottomGlassHint?.classList.add('is-active');
     }, cleanupDelay);
   }, settleDelay);
 }
