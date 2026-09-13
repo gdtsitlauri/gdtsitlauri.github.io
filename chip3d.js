@@ -1070,13 +1070,9 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
   }
 
   function scheduleResize(force = false) {
-    // If render loop is active, delegate to animate() so resize+render happen in same frame
-    if (running) {
-      adaptive.resizePending = true;
-      if (force) adaptive.resizeForce = true;
-    } else {
-      applyRendererSize(force);
-    }
+    // Resize with the next render, including after an offscreen or hidden pause.
+    adaptive.resizePending = true;
+    if (force) adaptive.resizeForce = true;
   }
 
   function updateAdaptiveQuality(frameMs) {
@@ -1103,8 +1099,6 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
       adaptive.resizePending = true;
     }
   }
-
-  applyRendererSize(true);
 
   if (window.ResizeObserver) {
     let roDebounce;
@@ -1143,19 +1137,11 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     });
   })();
 
-  if (window.visualViewport) {
-    let vpDebounce;
-
-    window.visualViewport.addEventListener('resize', () => {
-      clearTimeout(vpDebounce);
-      vpDebounce = setTimeout(() => scheduleResize(true), 60);
-    }, { passive: true });
-  }
-
   /* ── RENDER LOOP / VISIBILITY ── */
   const clock = new THREE.Clock();
 
-  let running = true;
+  let running = false;
+  let canvasVisible = true;
   let rafId = null;
   let lastFrameTime = performance.now();
   let firstRenderDone = false;
@@ -1226,25 +1212,22 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
     }
   }
 
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      stopRenderLoop();
-    } else {
+  function syncRenderLoop() {
+    if (!document.hidden && canvasVisible) {
       startRenderLoop();
+    } else {
+      stopRenderLoop();
     }
-  });
+  }
+
+  document.addEventListener('visibilitychange', syncRenderLoop);
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((entries) => {
-      const visible = entries[0]?.isIntersecting;
-
-      if (visible) {
-        startRenderLoop();
-      } else {
-        stopRenderLoop();
-      }
+      canvasVisible = entries[0]?.isIntersecting ?? false;
+      syncRenderLoop();
     }, { threshold: 0.02 }).observe(canvas);
   }
 
-  startRenderLoop();
+  syncRenderLoop();
 })();

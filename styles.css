@@ -23,6 +23,7 @@ body {
   --contact-icon-size: 1.24rem;
   --cream: #E6E1CF;
   --navy: #082660;
+  --page-gradient: linear-gradient(180deg, var(--cream) 0%, var(--navy) 100%);
   --text: #ffffff;
   --card-bg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
 }
@@ -50,15 +51,13 @@ body {
   background: transparent;
 }
 
-/* Original viewport gradient and geometry. Safari's image equivalent below
-   uses the same two colors and interpolation; keep both in sync if retheming. */
+/* Shared page and loader background. */
 .viewport-gradient {
   position: fixed;
-  inset: -4px 0;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-color: transparent;
-  background-image: linear-gradient(180deg, var(--cream) 0%, var(--navy) 100%);
+  background: var(--page-gradient);
 }
 
 section {
@@ -77,34 +76,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, var(--cream) 0%, var(--navy) 100%);
+  background: var(--page-gradient);
   transition: opacity .5s ease, visibility .5s ease;
-}
-
-/* Safari 26's fixed-edge snapshot excludes replaced content (<img>), while
-   CSS background images are still painted. An empty sample means no fixed
-   color extension, rather than a solid beige/blue fill behind the toolbars.
-   Replace the actual background paint from first paint, including the loader;
-   adding an image over a CSS gradient would leave that gradient in the sample.
-   https://github.com/WebKit/WebKit/blob/main/Source/WebCore/page/PageColorSampler.cpp
-   https://github.com/WebKit/WebKit/blob/main/Source/WebCore/rendering/RenderReplaced.cpp
-   This relies on WebKit behavior; native Safari glass needs device validation. */
-.safari-gradient-image {
-  display: none;
-}
-
-html.safari-26 .viewport-gradient,
-html.safari-26 #site-loader {
-  background-image: none;
-}
-
-html.safari-26 .safari-gradient-image {
-  display: block;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
 }
 
 #site-loader.hide {
@@ -114,7 +87,6 @@ html.safari-26 .safari-gradient-image {
 }
 
 .loader-box {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -431,20 +403,21 @@ html.safari-26 .safari-gradient-image {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  font-size: 1.1rem;
   background: transparent;
   border: none;
   transition: transform .35s cubic-bezier(.34,1.56,.64,1);
 }
 
 .aico {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  font-size: 1.1rem;
   flex-shrink: 0;
 }
 
-.aico i {
+.aico i,
+.pico i {
   color: var(--text);
 }
 
@@ -503,10 +476,6 @@ html.safari-26 .safari-gradient-image {
 #projects .project-grid-engineering {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
-}
-
-#projects .project-grid-engineering > .pc {
-  min-height: 100%;
 }
 
 #projects .project-grid-engineering > .project-centered {
@@ -570,17 +539,6 @@ html.safari-26 .safari-gradient-image {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.pico {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  font-size: 1.1rem;
-}
-
-.pico i {
-  color: var(--text);
 }
 
 .pl {
@@ -926,17 +884,9 @@ footer {
   }
 }
 
-/* ── FIXED INTRO / DESKTOP ────────────────────────────────────────────────
-   Desktop stays desktop through the user's 125%-ish zoom case.
-   The contact icons are always anchored at the bottom-left.
-   "From hardware to AI" stays directly under the chip.
-   At the next browser zoom step after 125% (133% on a 1920px-wide desktop),
-   the CSS viewport drops below 1500px and the layout reflows to mobile style.
-
-   CSS cannot read browser zoom directly, so the breakpoint is based on the
-   actual CSS viewport width. */
-
-/* Desktop / laptop split layout */
+/* ── FIXED INTRO / DESKTOP ──
+   Wide mouse-driven viewports keep the intro fixed beside the content.
+   Breakpoints use the CSS viewport width, including browser zoom. */
 @media (min-width: 1500px) and (hover: hover) and (pointer: fine) {
   .hero {
     width: 0;
@@ -1002,13 +952,8 @@ footer {
     z-index: 1;
   }
 
-  /* Keep the processor visually consistent across every responsive/zoom layout. */
   #chip3d {
     flex: 0 0 auto;
-
-    margin-top: 0;
-    margin-bottom: 0;
-
     transform: translateX(-10px);
     align-self: flex-start;
   }
@@ -1021,9 +966,7 @@ footer {
     text-align: left;
   }
 
-  /* ONLY the contact row is pushed to the bottom.
-     This keeps the icons permanently bottom-left while allowing empty space
-     between the subtitle and the contacts. */
+  /* Keep contacts at the bottom of the fixed intro. */
   .fixed-contact {
     flex: 0 0 auto;
     margin-top: auto;
@@ -1082,10 +1025,7 @@ footer {
   }
 }
 
-/* 125%-ish desktop:
-   move/compact ONLY the content ABOVE the subtitle/contact area.
-   The chip keeps the same canonical size; the subtitle stays directly below it; contacts
-   stay pinned to the bottom-left. */
+/* Compact spacing near the desktop breakpoint. */
 @media (min-width: 1500px) and (max-width: 1599px) and (hover: hover) and (pointer: fine) {
   .hero-text {
     top: 20px;
@@ -1111,14 +1051,10 @@ footer {
   .fixed-contact {
     gap: 12px;
   }
-
 }
 
-/* ── MOBILE-STYLE REFLOW / HIGHER ZOOM ────────────────────────────────────
-   The 125% case above remains desktop. At 133% on a 1920px-wide desktop,
-   the CSS viewport drops below 1500px, so the page reflows to the same
-   safe stacked layout used on mobile.
-   True touch/coarse-pointer devices also use this flow. */
+/* ── STACKED INTRO ──
+   Narrow viewports and touch devices place the intro above the content. */
 @media (max-width: 1499px),
        (hover: none) and (pointer: coarse) {
   .hero {
@@ -1221,8 +1157,7 @@ footer {
   }
 }
 
-/* Compact stacked flow for genuinely short/narrow viewports.
-   These rules apply only after the layout has already reflowed. */
+/* Compact spacing for short or narrow stacked viewports. */
 @media (max-width: 1499px) and (max-height: 679px),
        (max-width: 680px) {
   .hero {
@@ -1256,17 +1191,12 @@ footer {
     margin-top: 12px;
     gap: 12px;
   }
-
 }
 
 /* ── NARROW / MOBILE CONTENT ───────────────────────────────────────────── */
 
 /* Collapse content grids and remove desktop skill-card spans. */
 @media (max-width: 820px) {
-  .acard {
-    align-items: center;
-  }
-
   .pctop {
     justify-content: flex-start;
     gap: 12px;
@@ -1333,8 +1263,7 @@ footer {
   }
 }
 
-/* True phones may scale hero elements down only when the viewport cannot fit
-   the canonical desktop/high-zoom sizes. */
+/* Scale hero elements to fit phone widths. */
 @media (max-width: 599px) {
   .hero-text .photo-wrap {
     width: min(var(--hero-photo-size), 56vw);

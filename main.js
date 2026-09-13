@@ -54,13 +54,13 @@ document.querySelectorAll('.pc').forEach((card) => {
 
   card.addEventListener('click', (event) => {
     if (event.target.closest('a')) return;
+    // Selecting a project description should not open a new tab.
+    if (window.getSelection()?.toString()) return;
     window.open(projectLink.href, '_blank', 'noopener,noreferrer');
   });
 });
 
-/* ── FOOTER: BACK TO TOP ──
-   The footer control is now a <button>, so no URL preview/hash is exposed.
-   Keep the same smooth scroll-to-top behavior. */
+/* ── FOOTER: BACK TO TOP ── */
 const footerTopButton = document.querySelector('.footer-top-btn');
 
 footerTopButton?.addEventListener('click', (event) => {
@@ -115,8 +115,7 @@ function hideLoader(delay = 0) {
   window.setTimeout(() => {
     loader.classList.add('hide');
 
-    // Remove the fixed full-screen layer after its fade. This also keeps
-    // Safari's browser-chrome color sampling from seeing an invisible overlay.
+    // Remove the overlay after its fade completes.
     window.setTimeout(() => loader.remove(), cleanupDelay);
   }, settleDelay);
 }
