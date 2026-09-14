@@ -5,6 +5,22 @@
     <meta content="width=device-width,initial-scale=1.0,viewport-fit=cover" name="viewport">
     <meta content="light" name="color-scheme">
     <meta content="#082660" name="theme-color">
+    <script>
+      (() => {
+        const ua = navigator.userAgent;
+        const isAppleTouch =
+          /iP(ad|hone|od)/.test(ua) ||
+          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isSafari =
+          /safari/i.test(ua) &&
+          !/chrome|crios|fxios|edgios|opios|opr|android/i.test(ua);
+
+        if (!isAppleTouch || !isSafari) return;
+
+        document.documentElement.classList.add('ios-safari-flat');
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#778498');
+      })();
+    </script>
     <title>George David Tsitlauri | Portfolio</title>
     <meta content="George David Tsitlauri | Portfolio" property="og:title">
     <meta content="AI &amp; Systems Research Engineer." property="og:description">

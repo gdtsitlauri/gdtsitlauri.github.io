@@ -16,6 +16,13 @@
   --card-bg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
 }
 
+html.ios-safari-flat {
+  --background-top: #778498;
+  --background-bottom: #778498;
+  --page-gradient: linear-gradient(180deg, #778498 0%, #778498 100%);
+  --page-solid: #778498;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
