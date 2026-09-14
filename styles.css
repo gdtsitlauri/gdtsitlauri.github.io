@@ -23,10 +23,19 @@ body {
   --contact-icon-size: 1.24rem;
   --cream: #E6E1CF;
   --navy: #082660;
-  --page-gradient: linear-gradient(180deg, var(--cream) 0%, var(--navy) 100%);
+  --background-top: var(--cream);
+  --background-bottom: var(--navy);
+  --page-gradient: linear-gradient(180deg, var(--background-top) 0%, var(--background-bottom) 100%);
   --gradient-bleed: 160px;
   --text: #ffffff;
   --card-bg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
+}
+
+html.safari-blue {
+  --background-top: var(--navy);
+  --background-bottom: var(--navy);
+  background: var(--navy);
+  scrollbar-color: var(--navy) var(--navy);
 }
 
 *,
@@ -64,8 +73,8 @@ body {
   background:
     linear-gradient(
       180deg,
-      var(--cream) 0 var(--gradient-bleed),
-      var(--navy) calc(100% - var(--gradient-bleed)) 100%
+      var(--background-top) 0 var(--gradient-bleed),
+      var(--background-bottom) calc(100% - var(--gradient-bleed)) 100%
     );
 }
 
@@ -103,13 +112,16 @@ section {
 }
 
 .loader-text {
+  display: inline-block;
   font-family: "Caveat", cursive;
   font-size: 2.2rem;
-  line-height: 1.15;
+  line-height: 1.35;
   font-weight: 400;
   color: #ffffff;
   margin: 0;
+  padding: 0 .18em .06em;
   opacity: 0;
+  overflow: visible;
   transition: opacity .18s ease;
 }
 
