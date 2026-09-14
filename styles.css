@@ -11,19 +11,18 @@
   --background-top: var(--cream);
   --background-bottom: var(--navy);
   --page-gradient: linear-gradient(180deg, var(--background-top) 0%, var(--background-bottom) 100%);
+  --page-solid: var(--background-bottom);
   --text: #ffffff;
   --card-bg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
-}
-
-html.safari-blue {
-  --background-top: var(--navy);
-  --background-bottom: var(--navy);
 }
 
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background: var(--background-top);
+  color-scheme: light;
+  background-color: var(--page-solid);
+  background-image: var(--page-gradient);
+  background-attachment: fixed;
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--navy) var(--background-top);
@@ -55,15 +54,20 @@ body {
   min-height: 100dvh;
   position: relative;
   isolation: isolate;
-  background: transparent;
+  background-color: var(--page-solid);
 }
 
 /* Shared page and loader background. */
 .viewport-gradient {
   position: fixed;
-  inset: 0;
+  top: calc(0px - env(safe-area-inset-top, 0px));
+  right: 0;
+  bottom: calc(0px - env(safe-area-inset-bottom, 0px));
+  left: 0;
   z-index: 0;
   pointer-events: none;
+  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--page-gradient);
 }
 
@@ -78,7 +82,10 @@ section {
 /* ── LOADER ── */
 #site-loader {
   position: fixed;
-  inset: 0;
+  top: calc(0px - env(safe-area-inset-top, 0px));
+  right: 0;
+  bottom: calc(0px - env(safe-area-inset-bottom, 0px));
+  left: 0;
   z-index: 9999;
   display: flex;
   align-items: center;

@@ -3,18 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0,viewport-fit=cover" name="viewport">
+    <meta content="light" name="color-scheme">
     <meta content="#E6E1CF" name="theme-color">
-    <script>
-      (() => {
-        const ua = navigator.userAgent;
-        const isSafari = /safari/i.test(ua) && !/chrome|crios|fxios|edgios|opr|android/i.test(ua);
-
-        if (!isSafari) return;
-
-        document.documentElement.classList.add('safari-blue');
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#082660');
-      })();
-    </script>
     <title>George David Tsitlauri | Portfolio</title>
     <meta content="George David Tsitlauri | Portfolio" property="og:title">
     <meta content="AI &amp; Systems Research Engineer." property="og:description">
