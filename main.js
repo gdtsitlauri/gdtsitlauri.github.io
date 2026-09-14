@@ -88,6 +88,18 @@ const loader = document.getElementById('site-loader');
 let loaderHidden = false;
 let loaderFallbackTimer = null;
 
+if (loader) {
+  if (document.fonts?.load) {
+    document.fonts.load('400 2.2rem "Caveat"', 'GDT')
+      .then(() => {
+        if (!loaderHidden) loader.classList.add('font-ready');
+      })
+      .catch(() => {});
+  } else {
+    loader.classList.add('font-ready');
+  }
+}
+
 function hideLoader(delay = 0) {
   if (!loader || loaderHidden) return;
 

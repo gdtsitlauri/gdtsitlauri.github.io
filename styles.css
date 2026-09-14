@@ -109,6 +109,12 @@ section {
   font-weight: 400;
   color: #ffffff;
   margin: 0;
+  opacity: 0;
+  transition: opacity .18s ease;
+}
+
+#site-loader.font-ready .loader-text {
+  opacity: 1;
 }
 
 .loader-bar-track {
