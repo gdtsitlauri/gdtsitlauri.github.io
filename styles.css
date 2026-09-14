@@ -119,7 +119,7 @@ section {
   font-weight: 400;
   color: #ffffff;
   margin: 0;
-  padding: 0 .18em .06em;
+  padding: .14em .42em .16em .26em;
   opacity: 0;
   overflow: visible;
   transition: opacity .18s ease;

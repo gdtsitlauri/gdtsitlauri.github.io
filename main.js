@@ -92,7 +92,11 @@ if (loader) {
   if (document.fonts?.load) {
     document.fonts.load('400 2.2rem "Caveat"', 'GDT')
       .then(() => {
-        if (!loaderHidden) loader.classList.add('font-ready');
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (!loaderHidden) loader.classList.add('font-ready');
+          });
+        });
       })
       .catch(() => {});
   } else {
