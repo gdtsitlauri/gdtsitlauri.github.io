@@ -1,18 +1,3 @@
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  background: var(--cream);
-  scroll-behavior: smooth;
-  scrollbar-width: thin;
-  scrollbar-color: var(--navy) var(--cream);
-}
-
-html,
-body {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
 :root {
   --hero-photo-size: 230px;
   --hero-name-size: 3.65rem;
@@ -26,7 +11,6 @@ body {
   --background-top: var(--cream);
   --background-bottom: var(--navy);
   --page-gradient: linear-gradient(180deg, var(--background-top) 0%, var(--background-bottom) 100%);
-  --gradient-bleed: 160px;
   --text: #ffffff;
   --card-bg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
 }
@@ -34,8 +18,21 @@ body {
 html.safari-blue {
   --background-top: var(--navy);
   --background-bottom: var(--navy);
-  background: var(--navy);
-  scrollbar-color: var(--navy) var(--navy);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--background-top);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--navy) var(--background-top);
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 *,
@@ -64,18 +61,10 @@ body {
 /* Shared page and loader background. */
 .viewport-gradient {
   position: fixed;
-  top: calc(-1 * var(--gradient-bleed));
-  right: 0;
-  bottom: calc(-1 * var(--gradient-bleed));
-  left: 0;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      var(--background-top) 0 var(--gradient-bleed),
-      var(--background-bottom) calc(100% - var(--gradient-bleed)) 100%
-    );
+  background: var(--page-gradient);
 }
 
 section {
@@ -769,15 +758,15 @@ footer {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--cream);
+  background: var(--background-top);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--navy);
   border-radius: 999px;
-  border: 2px solid var(--cream);
+  border: 2px solid var(--background-top);
 }
 ::-webkit-scrollbar-corner {
-  background: var(--cream);
+  background: var(--background-top);
 }
 
 /* ── SECTION ENTRY ANIMATIONS ── */
