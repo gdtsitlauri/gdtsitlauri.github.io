@@ -1,9 +1,9 @@
 :root {
   --hero-photo-size: 230px;
   --hero-name-size: 3.65rem;
-  --hero-role-size: .95rem;
+  --hero-role-size: 1.05rem;
   --chip-size: 220px;
-  --hero-sub-size: 1.32rem;
+  --hero-sub-size: 1.15rem;
   --contact-size: 46px;
   --contact-icon-size: 1.24rem;
   --cream: #E6E1CF;
@@ -13,7 +13,12 @@
   --page-gradient: linear-gradient(180deg, var(--background-top) 0%, var(--background-bottom) 100%);
   --page-solid: var(--background-bottom);
   --text: #ffffff;
-  --card-bg: linear-gradient(135deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.022) 42%, rgba(0,116,255,0.032) 100%);
+
+  /* Shared transparent-glass tokens */
+  --glass-blur: 14px;
+  --glass-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  --glass-card-radius: 20px;
+  --glass-control-radius: 12px;
 }
 
 html.ios-safari-flat {
@@ -247,14 +252,10 @@ section {
   text-transform: uppercase;
   text-align: left;
   color: var(--text);
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 14px;
+  border: none;
+  border-radius: var(--glass-control-radius);
   padding: 7px 16px;
   margin: 0;
-  backdrop-filter: blur(14px) saturate(130%);
-  -webkit-backdrop-filter: blur(14px) saturate(130%);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.10);
   overflow: hidden;
   isolation: isolate;
 }
@@ -304,11 +305,8 @@ section {
   color: #ffffff;
   font-size: var(--contact-icon-size);
   text-decoration: none;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.16);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-radius: var(--glass-control-radius);
+  border: none;
   transition: transform .25s ease;
 }
 
@@ -366,14 +364,28 @@ section {
 }
 
 /* ── CARDS ── */
+/* Shared glass surface: no tint/fill, only backdrop blur + depth. */
+.card,
+.hero-tag,
+.fixed-contact a {
+  background: transparent;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--glass-shadow);
+}
+
 .card {
-  background: var(--card-bg);
   border: none;
-  border-radius: 20px;
+  border-radius: var(--glass-card-radius);
   padding: 26px 28px;
-  backdrop-filter: blur(14px) saturate(130%);
-  -webkit-backdrop-filter: blur(14px) saturate(130%);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* Consistent typography for card titles throughout the site. */
+.card h3 {
+  font-size: 1.15rem;
+  line-height: 1.35;
+  font-weight: 400;
+  color: var(--text);
 }
 
 /* Prevent long content from forcing horizontal overflow at high browser zoom. */
@@ -438,10 +450,7 @@ section {
   justify-content: center;
   width: 46px;
   height: 46px;
-  border-radius: 14px;
   font-size: 1.1rem;
-  background: transparent;
-  border: none;
   transition: transform .35s cubic-bezier(.34,1.56,.64,1);
 }
 
@@ -455,9 +464,6 @@ section {
 }
 
 .acard h3 {
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: var(--text);
   margin-bottom: 5px;
 }
 
@@ -534,10 +540,6 @@ section {
   min-height: 100%;
 }
 
-#projects .pc h3 {
-  line-height: 1.35;
-}
-
 .project-private {
   display: inline-flex;
   align-items: center;
@@ -548,8 +550,8 @@ section {
   font-size: .72rem;
   font-weight: 400;
   color: var(--text);
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: transparent;
+  border: 1px solid transparent;
 }
 
 .project-private i {
@@ -600,12 +602,6 @@ section {
   top: 26px;
   right: 28px;
   z-index: 2;
-}
-
-.pc h3 {
-  font-size: 1.18rem;
-  font-weight: 400;
-  color: var(--text);
 }
 
 .thesis-note {
@@ -659,11 +655,8 @@ section {
 }
 
 .scat h3 {
-  font-size: 1.15rem;
-  font-weight: 400;
   letter-spacing: .04em;
   text-transform: uppercase;
-  color: var(--text);
   margin-bottom: 14px;
   display: flex;
   align-items: center;
@@ -680,11 +673,9 @@ section {
   font-size: .77rem;
   font-weight: 400;
   padding: 5px 12px;
-  border-radius: 100px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  border: 1px solid transparent;
   color: var(--text);
-  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
   cursor: default;
 }
 
@@ -726,11 +717,6 @@ section {
   width: 34px;
   height: auto;
   border-radius: 6px;
-}
-
-.li h3 {
-  font-size: 1.16rem;
-  font-weight: 400;
 }
 
 .li p {
@@ -857,10 +843,6 @@ footer {
 
   .pc:hover .pl {
     transform: scale(1.15);
-  }
-
-  .pill:hover {
-    transform: translateY(-3px);
   }
 
   .lcard:hover .lflag {
@@ -1293,9 +1275,9 @@ footer {
     padding-left: 10px;
   }
 
-  .lcard {
-    width: 220px;
-    min-width: 220px;
+  .lgrid .lcard {
+    width: 100%;
+    min-width: 0;
     min-height: 54px;
     padding: 8px 0;
     justify-content: flex-start;
@@ -1319,7 +1301,7 @@ footer {
   }
 
   .hero-tag {
-    font-size: min(var(--hero-role-size), 3.4vw);
+    font-size: min(var(--hero-role-size), 3.6vw);
     padding: 6px 12px;
   }
 
@@ -1329,7 +1311,7 @@ footer {
   }
 
   .hero-sub {
-    font-size: min(var(--hero-sub-size), 5vw);
+    font-size: min(var(--hero-sub-size), 4.4vw);
   }
 
   .fixed-contact a {
