@@ -309,14 +309,20 @@ section {
   border: 1px solid rgba(255,255,255,0.16);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
-  transition: transform .25s ease, background .25s ease, border-color .25s ease;
+  transition: transform .25s ease;
+}
+
+.fixed-contact .cv-icon {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: .85em;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.04em;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .fixed-contact a:hover {
     transform: translateY(-3px);
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.30);
   }
 }
 
