@@ -366,12 +366,17 @@ section {
 /* ── CARDS ── */
 /* Shared glass surface: no tint/fill, only backdrop blur + depth. */
 .card,
-.hero-tag,
-.fixed-contact a {
+.hero-tag {
   background: transparent;
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   box-shadow: var(--glass-shadow);
+}
+
+/* Contact icons stand on their own: no glass box, only the hover lift. */
+.fixed-contact a {
+  background: transparent;
+  box-shadow: none;
 }
 
 .card {
@@ -490,9 +495,10 @@ section {
   max-width: 1480px;
 }
 
+/* Research is the flagship: one wide card per row. */
 #researches .research-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 22px;
   align-items: stretch;
 }
@@ -603,6 +609,45 @@ section {
   right: 28px;
   z-index: 2;
 }
+
+.acard p a,
+.pc p a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.pc .research-note {
+  flex: 0 0 auto;
+  font-size: .76rem;
+  opacity: .75;
+}
+
+/* Verse keeps its left edge; the whole block sits at the right of the card. */
+.drive-quote {
+  width: fit-content;
+  max-width: 100%;
+  margin: 14px 0 0 auto;
+  padding-left: 14px;
+  border-left: 2px solid rgba(255, 255, 255, .35);
+  text-align: left;
+  opacity: .85;
+}
+
+.acard .drive-quote p {
+  font-style: italic;
+}
+
+.drive-quote cite {
+  display: block;
+  margin-top: 6px;
+  text-align: right;
+  font-size: .76rem;
+  font-style: normal;
+  color: var(--text);
+}
+
 
 .thesis-note {
   font-size: .7em;
