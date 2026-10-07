@@ -603,6 +603,14 @@ section {
   line-height: 1;
 }
 
+/* A link over the whole card, under the corner icon. */
+.pc .card-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
 .pc .pl {
   position: absolute;
   top: 26px;

@@ -16,7 +16,7 @@ served as a PDF next to the page.
 | Who I Am | MSc and BSc, specialization (Data Management & AI), research lab (CACS Lab), what drives me |
 | Research Projects | Crypto3DStackCPU and CUDA-zkML (preliminary PhD research), TELEMACHUS (MSc thesis); supervisor Prof. G. Dimitriou |
 | Academic Projects | CryptoCPU (BSc thesis), NEXUS, CCC IR Optimizer, Parallel AES, GPBFT, Kubernetes Autoscaler |
-| Web Projects | Skyrianos, OstrichZooPark, Pavlidi Home (private) |
+| Web Projects | Skyrianos, OstrichZooPark, Pavlidi Home |
 | Technical Skills | Programming, AI / Data, Hardware, Web, Dev |
 | Spoken Languages | Greek, Russian (native); English (ECCE, University of Michigan) |
 
