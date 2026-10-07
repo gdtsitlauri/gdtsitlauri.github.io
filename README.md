@@ -15,7 +15,7 @@ served as a PDF next to the page.
 | Intro panel | photo, name, role (AI & Systems Research Engineer), the 3D processor, links to CV, email, GitHub, LinkedIn |
 | Who I Am | MSc and BSc, specialization (Data Management & AI), research lab (CACS Lab), what drives me |
 | Research Projects | Crypto3DStackCPU and CUDA-zkML (preliminary PhD research), TELEMACHUS (MSc thesis); supervisor Prof. G. Dimitriou |
-| Academic Projects | CryptoCPU (BSc thesis), NEXUS, CCC IR Optimizer, GPBFT, Kubernetes Autoscaler |
+| Academic Projects | CryptoCPU (BSc thesis), NEXUS, CCC IR Optimizer, GPBFT, Parallel AES (CUDA), Kubernetes Autoscaler |
 | Web Projects | Skyrianos, OstrichZooPark, Pavlidi Home (private) |
 | Technical Skills | Programming, AI / Data, Hardware, Web, Dev |
 | Spoken Languages | Greek, Russian (native); English (ECCE, University of Michigan) |
